@@ -76,7 +76,7 @@ export function getShape(key) {
     ctx.lineWidth = p.width;
     return ctx.isPointInStroke(p.path, x, y);
   });
-  const step = 14;
+  const step = 16;
   let seed = key.length * 9973;
   const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
   const slots = [];

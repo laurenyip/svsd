@@ -1,19 +1,18 @@
-// The child's voice as a swarm of dots that lives on the page.
-// - Quiet: faint dust roams the page in slow currents.
-// - Loudness wakes dots up: the louder the voice, the more dots light up, and the swarm ripples outward.
-// - Sharpness (where the hiss energy sits) sets character: "sss" → small, quick, twinkly coral sparks;
-//   "shhh" → bigger, slower, violet drifts.
-// - Closeness to the grown-up's target pulls the lit dots toward their spot in the picture; distance
-//   lets them scatter back into the currents. A lit dot that rests on its spot while the sound is close
-//   settles there for good.
-import { lerp } from './audio.js';
+// The child's voice as an orb of soft dots that lives on the page.
+// - Quiet: the dots rest as a slowly turning 3D orb, breathing.
+// - Loudness wakes dots up: the louder the voice, the more of them light up, and the orb swells and ripples.
+// - Sharpness (where the hiss energy sits) sets character: "sss" → smaller, brighter aqua dots that move
+//   quickly and shimmer; "shhh" → bigger, slower lavender dots.
+// - Lit dots glide out of the orb and roam. Closeness to the grown-up's target morphs them out of the
+//   orb into their spot in the picture; distance lets them float back. A dot that reaches its spot while
+//   the sound is close settles there for good.
+import { lerp, clamp, hueOf } from './audio.js';
 import { glow } from './render.js';
 
-const EXTRA = 170;              // free dots that never belong to the picture, so the page always feels alive
-const CX = 500, CY = 300;       // middle of the picture (view space is 1000×600)
-
-// Kept unwrapped (258 → 378) so colours ease smoothly from violet through pink to coral.
-const hueFor = (sharp) => 258 + 120 * sharp;
+const EXTRA = 120;                 // dots that never belong to the picture, so the orb never fully empties
+const CX = 500, CY = 285, R = 175; // the orb, in view space (1000×600)
+const TILT = 0.35;
+const smooth = (t) => t * t * (3 - 2 * t);
 
 export class Field {
   constructor(slots) {
@@ -24,18 +23,24 @@ export class Field {
     this.level = 0;
     this.sharp = 0.5;
     this.fit = 0;
+    this.swell = 0;
 
+    // Even points on a sphere (Fibonacci lattice).
+    const n = slots.length + EXTRA;
     const swarm = [];
-    for (let i = 0; i < slots.length + EXTRA; i++) {
-      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
+    for (let i = 0; i < n; i++) {
+      const uy = 1 - (2 * (i + 0.5)) / n;
+      const rr = Math.sqrt(1 - uy * uy);
+      const phi = i * 2.399963;
       swarm.push({
-        x: CX + Math.cos(a) * r * 540, y: CY + Math.sin(a) * r * 320, vx: 0, vy: 0,
-        slot: -1, th: Math.random() ** 1.3, glow: 0, hue: 300, size: 4, sharp: 0.5, fit: 0,
-        dwell: 0, seed: Math.random() * 1000, j: Math.random(), settled: false, homing: 0,
+        ux: Math.cos(phi) * rr, uy, uz: Math.sin(phi) * rr,
+        x: CX + Math.cos(phi) * rr * R, y: CY + uy * R, depth: 0.5,
+        slot: -1, th: Math.random() ** 1.3, glow: 0, m: 0, hue: hueOf(0.5), size: 6,
+        sharp: 0.5, fit: 0, dwell: 0, seed: Math.random() * 100, j: Math.random(),
+        settled: false, homing: false,
       });
     }
-    // Give each spot in the picture the dot sitting in the matching place on the page,
-    // so every dot travels a short path when the picture forms.
+    // Each spot in the picture takes the dot in the matching place, so morph paths stay short.
     const byX = (a, b) => a.x - b.x;
     const order = slots.map((s, i) => ({ x: s.x, i })).sort(byX);
     const pool = swarm.slice().sort(byX);
@@ -56,65 +61,66 @@ export class Field {
 
   update(dt, c, now) {
     const L = this.level ** 0.7;
-    const k = 9 * c * c;
+    this.swell += (this.level - this.swell) * Math.min(1, dt * (this.level > this.swell ? 6 : 2));
     const far = 1 - c;
-    const damp = 0.9 ** (dt * 60);
+    const a = now * 0.3;
+    const ca = Math.cos(a), sa = Math.sin(a), ct = Math.cos(TILT), st = Math.sin(TILT);
+    const breath = 1 + 0.025 * Math.sin((now * Math.PI * 2) / 4.5);
+    const pull = clamp((c - 0.2) / 0.6) ** 1.2;
+
     for (const p of this.swarm) {
       if (p.settled) continue;
 
-      // Wake up with the voice (fast), fall asleep slowly.
-      const awake = p.homing > 0 || L > p.th;
-      p.glow += ((awake ? 1 : 0) - p.glow) * Math.min(1, dt * (awake ? 9 : 1.1));
+      // Wake with the voice (quickly), drift back to sleep (slowly).
+      const awake = p.homing || L > p.th;
+      p.glow += ((awake ? 1 : 0) - p.glow) * Math.min(1, dt * (awake ? 6 : 0.9));
       if (awake && !p.homing) {
-        const t = Math.min(1, dt * 8);
+        const t = Math.min(1, dt * 5);
         p.sharp += (this.sharp - p.sharp) * t;
-        p.hue += (hueFor(this.sharp) + (p.j - 0.5) * 22 - p.hue) * t;
+        p.hue += (hueOf(this.sharp) + (p.j - 0.5) * 16 - p.hue) * t;
         p.fit += (this.fit - p.fit) * t;
-        p.size = lerp(7, 2.8, p.sharp) * (0.75 + p.j * 0.5);
       }
       const e = p.glow;
-      // A dot being pulled home stops drifting so it can land.
-      const free = 1 - 0.9 * (p.slot >= 0 ? (p.homing ? 1 : e * c * c) : 0);
 
-      // Slow currents across the page.
-      const n = Math.sin(p.x * 0.005 + now * 0.35 + p.seed) + Math.cos(p.y * 0.006 - now * 0.27 + p.seed * 0.5);
-      const wander = (110 + e * lerp(200, 380, p.sharp) * (0.4 + far)) * free;
-      let ax = Math.cos(n * Math.PI) * wander;
-      let ay = Math.sin(n * Math.PI) * wander;
-      // "sss" fizzes.
-      if (e > 0.05 && p.sharp > 0.5) {
-        const fizz = 1400 * e * (p.sharp - 0.5) * (0.3 + far) * free;
-        ax += (Math.random() - 0.5) * fizz;
-        ay += (Math.random() - 0.5) * fizz;
+      // Place on the turning orb.
+      const X = p.ux * ca + p.uz * sa;
+      const Z = -p.ux * sa + p.uz * ca;
+      const Y = p.uy * ct - Z * st;
+      const Z2 = p.uy * st + Z * ct;
+      const ripple = this.swell * 0.12 * Math.sin(Math.asin(p.uy) * 5 + Math.atan2(p.uz, p.ux) * 2 - now * 5);
+      const rad = R * breath * (1 + this.swell * 0.28 + ripple);
+      const persp = 1 + Z2 * 0.12;
+      let tx = CX + X * rad * persp;
+      let ty = CY + Y * rad * persp;
+      p.depth = (Z2 + 1) / 2;
+
+      // Lit dots glide away from the orb and roam the page in slow loops ("sss" loops faster).
+      const roam = e * (0.35 + 0.65 * far) * (p.homing ? 0 : 1);
+      if (roam > 0.001) {
+        const f = lerp(0.35, 0.8, p.sharp);
+        tx += (Math.sin(now * f + p.seed) * 230 + Math.sin(now * f * 0.37 + p.seed * 3) * 120) * roam;
+        ty += (Math.cos(now * f * 0.8 + p.seed * 1.7) * 130 + Math.sin(now * f * 0.53 + p.seed) * 60) * roam;
       }
-      // Stay loosely gathered on the page.
-      ax += (CX - p.x) * 0.06 * free;
-      ay += (CY - p.y) * 0.12 * free;
-      // The voice ripples outward through the swarm.
-      const dx = p.x - CX, dy = p.y - CY, r = Math.hypot(dx, dy) + 1;
-      const ripple = this.level * 260 * Math.sin(r * 0.022 - now * 7) * far;
-      ax += (dx / r) * ripple;
-      ay += (dy / r) * ripple;
 
-      // Closeness pulls lit dots home.
-      if (p.slot >= 0 && (e > 0.05 || p.homing)) {
+      // Closeness morphs a lit dot from the orb into its spot in the picture.
+      if (p.slot >= 0) {
+        const goal = p.homing ? 1 : pull * e;
+        const rate = p.homing ? 3 : 0.6 + 1.2 * p.j;
+        p.m += (goal - p.m) * Math.min(1, dt * rate);
         const s = this.slots[p.slot];
-        const hx = s.x - p.x, hy = s.y - p.y, d = Math.hypot(hx, hy);
-        const pull = p.homing ? 34 : k * e;
-        ax += hx * pull;
-        ay += hy * pull;
-        const resting = d < 12 && (p.homing || (c > 0.5 && p.fit > 0.35 && e > 0.5));
-        p.dwell = resting ? p.dwell + dt : 0;
-        if (p.homing) p.homing += dt;
-        if (p.dwell > 0.1 || p.homing > 1.6) { this.settle(p, s, now); continue; }
+        const k = smooth(clamp(p.m));
+        tx = lerp(tx, s.x, k);
+        ty = lerp(ty, s.y, k);
+        const landing = p.homing ? p.m > 0.97 : p.m > 0.9 && c > 0.5 && p.fit > 0.35 && e > 0.6;
+        p.dwell = landing ? p.dwell + dt : 0;
+        if (p.dwell > 0.12) { this.settle(p, s, now); continue; }
       }
 
-      p.vx = (p.vx + ax * dt) * damp;
-      p.vy = (p.vy + ay * dt) * damp;
-      const sp = Math.hypot(p.vx, p.vy), max = lerp(240, 440, p.sharp) * (p.homing ? 1.6 : 1);
-      if (sp > max) { p.vx *= max / sp; p.vy *= max / sp; }
-      p.x += p.vx * dt;
-      p.y += p.vy * dt;
+      // Follow the target smoothly — no jitter.
+      const follow = Math.min(1, dt * lerp(3.5, 7, p.sharp));
+      p.x += (tx - p.x) * follow;
+      p.y += (ty - p.y) * follow;
+      p.size = lerp(lerp(3.2, 6.5, p.depth), lerp(8.5, 5.5, p.sharp) * (0.85 + 0.3 * p.j), e);
     }
     this.level = 0;
   }
@@ -123,18 +129,16 @@ export class Field {
     p.settled = true;
     this.state[p.slot] = 2;
     this.filled++;
-    this.dots.push({ x: s.x, y: s.y, r: Math.max(4.4, p.size * 0.85), h: p.hue, born: now });
+    this.dots.push({ x: s.x, y: s.y, r: 6.4, h: p.hue, born: now });
   }
 
-  // The rest of the picture streams home in the child's own colours.
+  // The rest of the picture streams out of the orb in the child's own colours.
   fillRest() {
     const hs = this.dots.map((d) => d.h);
-    const avgR = this.dots.reduce((a, d) => a + d.r, 0) / (this.dots.length || 1) || 5;
     for (const p of this.swarm) {
       if (p.settled || p.slot < 0) continue;
-      p.homing = 0.0001;
-      p.hue = hs.length ? hs[(Math.random() * hs.length) | 0] : 318;
-      p.size = avgR / 0.85;
+      p.homing = true;
+      p.hue = hs.length ? hs[(Math.random() * hs.length) | 0] : hueOf(0.5);
     }
   }
 
@@ -157,28 +161,19 @@ export class Field {
     for (const d of this.dots) {
       const age = now - d.born;
       if (age < 0) continue;
-      const pop = 1 + 1.4 * Math.exp(-age * 5);
+      const pop = 1 + 0.6 * Math.exp(-age * 6) * Math.cos(age * 18);
       const wave = shimmer ? shimmer * Math.max(0, Math.sin(now * 3.2 - d.x * 0.011)) ** 6 : 0;
-      glow(ctx, d.x, d.y, d.r * (pop + wave * 0.6), d.h, Math.min(1, age * 6) * (0.9 + wave));
+      glow(ctx, d.x, d.y, d.r * (pop + wave * 0.35), d.h, Math.min(1, age * 6));
     }
   }
 
+  // Back of the orb first, so nearer dots sit on top.
   drawParticles(ctx, now) {
-    // Sleeping dust
-    ctx.globalAlpha = 0.2;
-    ctx.fillStyle = '#17161a';
-    ctx.beginPath();
-    for (const p of this.swarm) {
-      if (p.settled || p.glow > 0.9) continue;
-      ctx.moveTo(p.x + 1.8, p.y);
-      ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2);
-    }
-    ctx.fill();
-    // Dots the voice has woken
-    for (const p of this.swarm) {
-      if (p.settled || p.glow < 0.02) continue;
-      const twinkle = p.sharp > 0.55 && !p.homing ? 0.6 + 0.4 * Math.sin(now * 26 + p.seed) : 1;
-      glow(ctx, p.x, p.y, lerp(1.8, p.size, p.glow), p.hue, p.glow * twinkle);
+    const list = this.swarm.filter((p) => !p.settled).sort((a, b) => a.depth + a.glow - (b.depth + b.glow));
+    for (const p of list) {
+      const shimmer = p.sharp > 0.55 && p.glow > 0.3 && !p.homing ? 0.85 + 0.15 * Math.sin(now * 9 + p.seed) : 1;
+      const alpha = lerp(0.3 + 0.45 * p.depth, 1, p.glow) * shimmer;
+      glow(ctx, p.x, p.y, p.size, p.glow > 0.05 ? p.hue : 262, alpha, p.glow < 0.5);
     }
   }
 }
