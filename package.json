@@ -1,0 +1,10 @@
+{
+  "name": "sparkbook",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A picture book children draw with their voice — s vs sh speech practice prototype.",
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs"
+  }
+}

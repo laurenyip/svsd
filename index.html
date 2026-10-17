@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sparkbook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-dot"></span>Sparkbook</div>
+      <nav class="dots" id="dots" aria-label="Pages"></nav>
+      <div class="top-right">
+        <span class="mode" id="mode" hidden></span>
+        <button class="pill soft" id="bookBtn">My book</button>
+      </div>
+    </header>
+
+    <main class="stage-wrap" id="stageWrap">
+      <!-- Cover -->
+      <section class="screen is-active" id="cover">
+        <div class="card cover-card">
+          <div class="bubbles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="cover-inner">
+            <div class="orb" aria-hidden="true"></div>
+            <h1>Sparkbook</h1>
+            <p class="sub">A picture book you draw with your voice.</p>
+            <button class="pill primary big" id="startBtn">Open the book</button>
+            <p class="fine">We’ll ask for the microphone. Sounds never leave this device.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Story page -->
+      <section class="screen" id="page">
+        <div class="card page-card">
+          <canvas id="stage"></canvas>
+          <div class="page-top" id="pageTop">
+            <span class="page-no" id="pageNo">Page 1</span>
+            <div class="status" id="status"></div>
+          </div>
+          <div class="page-bottom" id="pageBottom">
+            <div class="slot-left">
+              <button class="pill grown" id="setBtn"><span class="wave" aria-hidden="true"></span><span id="setLabel">Grown-up: say the sound</span></button>
+              <button class="pill primary next" id="nextBtn" hidden><span class="fill"></span><span class="lbl">Turn the page →</span></button>
+            </div>
+            <p class="line" id="line"></p>
+            <div class="flower">
+              <canvas id="flower"></canvas>
+              <span id="warmth">listening</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The end -->
+      <section class="screen" id="end">
+        <div class="card end-card">
+          <div class="bubbles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="end-inner">
+            <h2>The end ✨</h2>
+            <p class="sub" id="endSub">Your voice drew these pictures today.</p>
+            <div class="end-thumbs" id="endThumbs"></div>
+            <div class="row">
+              <button class="pill soft-dark" id="againBtn">Read again</button>
+              <button class="pill primary" id="openBookBtn">Open my book</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The book (record over time) -->
+      <section class="screen" id="book">
+        <div class="card book-card">
+          <div class="book-head">
+            <div>
+              <h2>My book</h2>
+              <p class="muted">Every page your voice finished, oldest to newest.</p>
+            </div>
+            <div class="row">
+              <button class="pill ghost" id="clearBtn">Clear</button>
+              <button class="pill primary" id="closeBookBtn">Back to the story</button>
+            </div>
+          </div>
+          <div id="shelves"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="hint" id="hint">
+      No mic? Hold <kbd>S</kbd> for “sss” or <kbd>H</kbd> for “shhh” — or press and hold on the page (left = shhh, right = sss).
+    </footer>
+  </div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
