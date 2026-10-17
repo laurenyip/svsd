@@ -20,12 +20,12 @@ No mic? Hold **S** for "sss" or **H** for "shhh", or press and hold on the page
 2. **The grown-up sets the target** by saying the sound once. Its spectral centroid becomes the
    target and a faint, breathing ghost of the picture appears.
 3. **The child's voice becomes particles.** Where the hiss energy sits sets their character
-   (`s` → fine, bright, gold sparks; `sh` → softer, broader, lilac drifts). Loudness sets how many.
+   (`s` → fine, quick, coral sparks; `sh` → softer, broader, violet drifts). Loudness sets how many.
 4. **Warmer, not wrong.** Closeness to the target (distance in octaves) pulls particles toward the
    ghost; distance scatters them. There is no failure state, only closer or further. The flower in
    the corner (after Apple Watch Breathe) opens as the sound gets closer.
 5. **The match completes the illustration.** Particles from close sounds settle into the picture.
-   At 80% the rest fills in with the child's own colours and the story turns the page.
+   At 80% the rest fills in with the child's own colours, the picture lifts off the page as a sticker, and the story turns the page.
 6. **The book is the record.** Every finished page is saved (on this device only) under *My book*,
    with how many seconds of sound it took, so progress shows up over weeks.
 

@@ -7,7 +7,7 @@ export const PAGES = {
   snake: {
     key: 'snake',
     title: 'The snake says sss',
-    line: 'The snake says <span class="snd">sss</span>',
+    line: 'The snake says <span class="snd"><i>s</i><i>s</i><i>s</i></span>',
     sound: 'sss',
     defaultHz: 6800,
     done: 'You drew the snake with your voice!',
@@ -31,7 +31,7 @@ export const PAGES = {
   ship: {
     key: 'ship',
     title: 'The ship goes shhh',
-    line: 'The ship goes <span class="snd">shhh</span>',
+    line: 'The ship goes <span class="snd"><i>s</i><i>h</i><i>h</i><i>h</i></span>',
     sound: 'shhh',
     defaultHz: 3700,
     done: 'You sailed the ship with your voice!',
@@ -128,5 +128,29 @@ export function drawDeco(ctx, shape, alpha) {
       ctx.stroke(d.path);
     }
   }
+  ctx.restore();
+}
+
+// The finished picture peels off as a die-cut sticker: a white silhouette with a soft shadow.
+export function drawSticker(ctx, shape, alpha, pad = 28) {
+  if (alpha <= 0) return;
+  const pass = (color, dy) => {
+    ctx.fillStyle = ctx.strokeStyle = color;
+    for (const p of shape.parts) {
+      ctx.save();
+      ctx.translate(0, dy);
+      if (p.mode === 'fill') { ctx.fill(p.path); ctx.lineWidth = pad; ctx.stroke(p.path); }
+      else { ctx.lineWidth = p.width + pad; ctx.stroke(p.path); }
+      ctx.restore();
+    }
+  };
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.filter = 'blur(8px)';
+  pass('rgba(70, 50, 20, 0.16)', 10);
+  ctx.filter = 'none';
+  pass('#fff', 0);
   ctx.restore();
 }

@@ -14,9 +14,9 @@ export function sharpnessOf(hz) {
   return clamp((Math.log2(hz) - Math.log2(2800)) / (Math.log2(8000) - Math.log2(2800)));
 }
 
-// Lilac (shhh) → pink → peach → gold (sss).
+// Violet (shhh) → pink → coral (sss).
 export function hueOf(sharp) {
-  return (lerp(285, 410, sharp) + 360) % 360;
+  return (lerp(258, 378, sharp) + 360) % 360;
 }
 
 // "Warmer, not wrong": 1 when on target, falling smoothly with distance in octaves.

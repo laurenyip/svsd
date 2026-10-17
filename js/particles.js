@@ -91,7 +91,7 @@ export class Field {
       if (settles) {
         this.state[p.slot] = FILLED;
         this.filled++;
-        this.dots.push({ x: p.tx, y: p.ty, r: Math.max(3.2, p.size * 0.8), h: p.hue, born: now });
+        this.dots.push({ x: p.tx, y: p.ty, r: Math.max(4.4, p.size * 0.85), h: p.hue, born: now });
       } else if (p.life > 0) continue;
       else if (p.slot >= 0 && this.state[p.slot] === RESERVED) this.state[p.slot] = FREE;
       ps[i] = ps[ps.length - 1];
@@ -117,7 +117,7 @@ export class Field {
   drawSlots(ctx, alpha) {
     ctx.save();
     ctx.globalAlpha = alpha;
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#17161a';
     ctx.beginPath();
     for (let i = 0; i < this.slots.length; i++) {
       if (this.state[i] === FILLED) continue;

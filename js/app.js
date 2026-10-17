@@ -1,5 +1,5 @@
 import { Ear, Sim, sharpnessOf, hueOf, closenessOf, clamp } from './audio.js';
-import { PAGES, STORY, VIEW, getShape, drawGhost, drawDeco } from './shapes.js';
+import { PAGES, STORY, VIEW, getShape, drawGhost, drawDeco, drawSticker } from './shapes.js';
 import { Field, ORIGIN } from './particles.js';
 import { Flower } from './flower.js';
 import { drawDots } from './render.js';
@@ -116,7 +116,7 @@ function setupPage(key) {
   target = null;
   ghostIn = 0; activeTime = 0; closeness = 0; band = '';
   rings = [];
-  $('pageNo').textContent = `Page ${STORY.indexOf(key)}`;
+  $('pageNo').textContent = `Page ${['zero', 'one', 'two', 'three', 'four'][STORY.indexOf(key)]}`;
   $('line').innerHTML = def.line;
   const btn = $('setBtn');
   btn.hidden = false;
@@ -281,14 +281,27 @@ function draw(now) {
     const tHue = hueOf(sharpnessOf(target));
     const breath = 0.5 + 0.5 * Math.sin((now * Math.PI * 2) / 4.5);
     const fade = phase === 'done' ? clamp(1 - (now - doneT) / 1.5) : 1;
-    const a = ease(ghostIn) * fade * (0.06 + 0.05 * breath + 0.12 * closeness);
-    drawGhost(ctx, shape, `hsl(${tHue} 90% 80%)`, a, 36 * dpr * sc);
-    if (phase === 'ready') field.drawSlots(ctx, ease(ghostIn) * (0.14 + 0.12 * breath + 0.15 * closeness));
+    const a = ease(ghostIn) * fade * (0.07 + 0.04 * breath + 0.08 * closeness);
+    drawGhost(ctx, shape, `hsl(${tHue} 95% 74%)`, a, 30 * dpr * sc);
+    if (phase === 'ready') field.drawSlots(ctx, ease(ghostIn) * (0.12 + 0.08 * breath + 0.12 * closeness));
   }
 
-  ctx.globalCompositeOperation = 'lighter';
+  // When the page is finished, the picture lifts off the paper as a sticker.
+  const t = phase === 'done' ? now - doneT - 0.5 : -1;
+  ctx.save();
+  if (t > 0) {
+    const lift = 1 + 0.035 * ease(t * 3) + 0.05 * Math.exp(-t * 5) * Math.sin(t * 16);
+    ctx.translate(500, 330);
+    ctx.rotate(-0.03 * ease(t * 2));
+    ctx.scale(lift, lift);
+    ctx.translate(-500, -330);
+    drawSticker(ctx, shape, ease(t * 2.5));
+  }
   const shimmer = phase === 'done' ? clamp((now - doneT - 0.8) / 0.4) * clamp(1 - (now - doneT - 2.5) / 2.5) : 0;
   field.drawDots(ctx, now, shimmer);
+  ctx.globalAlpha = 1;
+  if (phase === 'done') drawDeco(ctx, shape, ease((now - doneT - 0.9) / 0.8));
+  ctx.restore();
   field.drawParticles(ctx, now);
 
   ctx.lineWidth = 1.6;
@@ -296,7 +309,7 @@ function draw(now) {
     if (g.delay > 0) continue;
     const a = Math.min(1, g.life * 1.5) * 0.85;
     ctx.globalAlpha = a;
-    ctx.strokeStyle = `hsl(${g.h} 90% 82%)`;
+    ctx.strokeStyle = `hsl(${g.h} 90% 64%)`;
     ctx.beginPath(); ctx.arc(g.x, g.y, g.r, 0, Math.PI * 2); ctx.stroke();
     ctx.globalAlpha = a * 0.8;
     ctx.fillStyle = '#fff';
@@ -304,8 +317,6 @@ function draw(now) {
   }
 
   ctx.globalAlpha = 1;
-  ctx.globalCompositeOperation = 'source-over';
-  if (phase === 'done') drawDeco(ctx, shape, ease((now - doneT - 0.9) / 0.8));
 }
 
 let lastS = performance.now() / 1000;
@@ -352,18 +363,19 @@ function thumb(entry, title) {
   c.width = 500; c.height = 300;
   const g = c.getContext('2d');
   const sh = getShape(entry.page);
-  g.scale(0.5, 0.5);
-  drawGhost(g, sh, '#fff', 0.05, 0);
+  g.translate(25, 15);
+  g.scale(0.45, 0.45);
+  drawSticker(g, sh, 1, 34);
   drawDots(g, entry.dots);
   drawDeco(g, sh, 1);
   const d = new Date(entry.date);
-  const when = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' · ' +
-    d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+  const day = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  const when = day + ' · ' + d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
   const meta = document.createElement('div');
   meta.className = 'meta';
   meta.innerHTML = `<b></b><span></span>`;
-  meta.querySelector('b').textContent = title || when;
-  meta.querySelector('span').textContent = `${entry.seconds}s`;
+  meta.querySelector('b').textContent = title || day;
+  meta.querySelector('span').textContent = `${entry.seconds} seconds of sound`;
   meta.title = `${entry.seconds}s of sound to finish · ${when}`;
   el.append(c, meta);
   return el;
@@ -411,6 +423,7 @@ function renderBook() {
 }
 
 function renderEnd() {
+  $('endDate').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
   const box = $('endThumbs');
   box.innerHTML = '';
   const latest = {};
