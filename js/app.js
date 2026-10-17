@@ -40,6 +40,7 @@ let view = { sc: 1, ox: 0, oy: 0, dpr: 1 };
 async function start() {
   if (started) return;
   started = true;
+  keepAwake();
   try {
     await ear.start();
     mic = true;
@@ -49,6 +50,21 @@ async function start() {
     setMode('Demo mode · no mic');
   }
 }
+
+// Phones: keep the screen on during a session, and wake the mic back up after the app returns
+// from the background (mobile browsers suspend audio while hidden).
+let wakeLock = null;
+async function keepAwake() {
+  try { wakeLock = await navigator.wakeLock?.request('screen'); } catch {}
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible' || !started) return;
+  if (!wakeLock || wakeLock.released) keepAwake();
+  ear.ctx?.resume?.();
+});
+
+// A small buzz you can feel, for phones that support it.
+const buzz = (pattern) => { try { navigator.vibrate?.(pattern); } catch {} };
 
 function setMode(text) {
   const el = $('mode');
@@ -177,9 +193,10 @@ function complete(now) {
     date: Date.now(),
     seconds: Math.round(activeTime * 10) / 10,
     target: Math.round(target),
-    dots: field.dots.map((d) => [Math.round(d.x), Math.round(d.y), Math.round(d.r * 10), Math.round(d.h)]),
+    dots: field.dots.map((d) => [Math.round(d.x), Math.round(d.y), Math.round(d.r * 10), d.h.map((v) => Math.round(v))]),
   };
   store.add(entry);
+  buzz([40, 60, 40, 60, 120]);
   todays.push(entry);
   setStatus(def.done);
   $('setBtn').hidden = true;
@@ -309,7 +326,7 @@ function draw(now) {
     if (g.delay > 0) continue;
     const a = Math.min(1, g.life * 1.5) * 0.85;
     ctx.globalAlpha = a;
-    ctx.strokeStyle = `hsl(${g.h} 90% 64%)`;
+    ctx.strokeStyle = `rgb(${g.h})`;
     ctx.beginPath(); ctx.arc(g.x, g.y, g.r, 0, Math.PI * 2); ctx.stroke();
     ctx.globalAlpha = a * 0.8;
     ctx.fillStyle = '#fff';
@@ -333,7 +350,7 @@ function frame(ms, manual) {
 // Dev hook: step the simulation by hand (e.g. when the tab is hidden and rAF is paused).
 window.__sparkTick = (frames = 60) => {
   for (let i = 0; i < frames; i++) frame(lastS * 1000 + 1000 / 60, true);
-  return { phase, progress: field && +field.progress.toFixed(2), closeness: +closeness.toFixed(2), sharp: +sharp.toFixed(2), hues: field?.dots.slice(0, 5).map((d) => Math.round(d.h)), particles: field?.particles.length };
+  return { phase, progress: field && +field.progress.toFixed(2), closeness: +closeness.toFixed(2), sharp: +sharp.toFixed(2), colours: field?.dots.slice(0, 3).map((d) => d.h.map((v) => Math.round(v)).join()), particles: field?.particles.length };
 };
 
 function resize() {
@@ -461,3 +478,8 @@ addEventListener('keydown', (e) => {
 
 renderDots();
 requestAnimationFrame(frame);
+
+// Installable as an app (and works offline once loaded).
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}

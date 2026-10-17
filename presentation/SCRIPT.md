@@ -18,7 +18,7 @@ Burn captions into the final cut. A video about deaf kids should be watchable wi
 ## SCENE 1: COLD OPEN (0:00–0:25) · *craft*
 
 `SCREEN`: Story page, snake. Ghost snake breathing on the dotted paper. A child-height voice (mine, softly) says
-"The snake says sssss…" A soft orb of dots turns slowly in the middle of the page. It swells and ripples with the voice, dots light up aqua and glide out, then morph into the snake. It peels off the
+"The snake says sssss…" Soft rings of sticker dots turn slowly in the middle of the page. Ripples run through them with the voice, dots light up in mint and sky and glide out, then fly into the snake. It peels off the
 page as a sticker. The flower blinks, then squints happily: *you did it!*
 
 > **VO:** This snake was drawn by a voice. Not by tapping or tracing, but by the sound "s".
@@ -74,7 +74,7 @@ Small inset: motionary's *particle onboarding* (dust morphing into shapes) and *
 > I wanted both: a child's voice becomes material, and something calm guides it, without a score.
 >
 > My first version sprayed particles up from the text, like a fountain. It felt like the voice was *spending*
-> something. So I switched to an orb of dots that always lives on the page, turning and breathing. The voice doesn't
+> something. So I switched to rings of dots that always live on the page, turning and breathing. The voice doesn't
 > create the dots, it *wakes* them. The page is never empty, and silence is never a dead screen.
 
 ---
@@ -84,7 +84,7 @@ Small inset: motionary's *particle onboarding* (dust morphing into shapes) and *
 ### 5a. What do you even visualise? (2:10–2:45)
 
 `SCREEN`: hold "s" with the pointer on the right side, then slide left to "sh". The lit dots change from small, quick,
-shimmering aqua orbs to larger, slower lavender ones. Speak louder: more dots wake, and the orb swells and ripples.
+mint, sky and sunshine dots to larger, slower violet, pink and lilac ones. Speak louder: more dots wake, and ripples run through the rings.
 
 > **VO:** My first instinct was pitch or loudness, but neither one separates "s" from "sh". What does is *where
 > the hiss energy sits*: higher for "s", lower for "sh". So that one number drives the particles' character.

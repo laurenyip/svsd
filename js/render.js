@@ -1,50 +1,45 @@
-// Soft pearly orbs for paper backgrounds: a shaded sphere with a highlight and a faint halo.
-// Pre-rendered per hue so hundreds of them stay smooth.
+// Flat sticker dots: a solid colour disc with a white rim and a soft shadow.
+// Pre-rendered per colour so hundreds of them stay smooth.
 const sprites = new Map();
-const S = 96, C = S / 2, BODY = S / 4;
+const S = 64, C = S / 2, BODY = 22, RIM = 26;
+const MUTED = '#ddd6ea';
 
-function sprite(hue, muted) {
-  const h = Math.round(hue / 3) * 3;
-  const key = `${h}${muted ? 'm' : ''}`;
+// A colour is an [r, g, b] array, or a hue number (older saved drawings).
+const fill = (col) => (Array.isArray(col) ? `rgb(${col.map((v) => Math.round(v / 8) * 8)})` : `hsl(${Math.round(col / 3) * 3}, 85%, 66%)`);
+
+function sprite(col, muted) {
+  const key = muted ? 'muted' : fill(col);
   let c = sprites.get(key);
   if (c) return c;
   c = document.createElement('canvas');
   c.width = c.height = S;
   const g = c.getContext('2d');
-  const sat = muted ? 28 : 85;
-
-  // Halo
-  const halo = g.createRadialGradient(C, C, BODY * 0.8, C, C, C);
-  halo.addColorStop(0, `hsla(${h}, ${sat}%, 72%, ${muted ? 0.12 : 0.32})`);
-  halo.addColorStop(1, `hsla(${h}, ${sat}%, 80%, 0)`);
-  g.fillStyle = halo;
-  g.fillRect(0, 0, S, S);
-
-  // Body, lit from the top left
-  const body = g.createRadialGradient(C - BODY * 0.35, C - BODY * 0.4, 0, C, C, BODY);
-  body.addColorStop(0, `hsl(${h}, ${sat}%, 97%)`);
-  body.addColorStop(0.4, `hsl(${h}, ${sat}%, ${muted ? 82 : 76}%)`);
-  body.addColorStop(1, `hsl(${h}, ${sat - 10}%, ${muted ? 68 : 58}%)`);
-  g.fillStyle = body;
-  g.beginPath();
-  g.arc(C, C, BODY, 0, Math.PI * 2);
-  g.fill();
-
+  // Shadow
+  g.filter = 'blur(2px)';
+  g.fillStyle = 'rgba(70, 50, 20, 0.16)';
+  g.beginPath(); g.arc(C, C + 3, RIM, 0, Math.PI * 2); g.fill();
+  g.filter = 'none';
+  // White rim
+  g.fillStyle = '#fff';
+  g.beginPath(); g.arc(C, C, RIM, 0, Math.PI * 2); g.fill();
+  // Flat colour
+  g.fillStyle = muted ? MUTED : key;
+  g.beginPath(); g.arc(C, C, BODY, 0, Math.PI * 2); g.fill();
   sprites.set(key, c);
   return c;
 }
 
-// r is the orb's radius; its halo reaches twice as far.
-export function glow(ctx, x, y, r, hue, alpha, muted = false) {
+// r is the radius of the coloured disc; the white rim and shadow sit just outside it.
+export function glow(ctx, x, y, r, col, alpha, muted = false) {
   if (alpha <= 0.01) return;
   ctx.globalAlpha = Math.min(1, alpha);
-  const s = r * 4;
-  ctx.drawImage(sprite(hue, muted), x - s / 2, y - s / 2, s, s);
+  const s = (r * S) / BODY;
+  ctx.drawImage(sprite(col, muted), x - s / 2, y - s / 2, s, s);
 }
 
 // A finished page's drawing (used for the book's thumbnails).
 export function drawDots(ctx, dots) {
   ctx.save();
-  for (const [x, y, r10, h] of dots) glow(ctx, x, y, r10 / 10, h, 1);
+  for (const [x, y, r10, col] of dots) glow(ctx, x, y, r10 / 10, col, 1);
   ctx.restore();
 }
