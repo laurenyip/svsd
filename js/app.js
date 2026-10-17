@@ -1,6 +1,6 @@
 import { Ear, Sim, sharpnessOf, hueOf, closenessOf, clamp } from './audio.js';
 import { PAGES, STORY, VIEW, getShape, drawGhost, drawDeco, drawSticker } from './shapes.js';
-import { Field, ORIGIN } from './particles.js';
+import { Field } from './particles.js';
 import { Flower } from './flower.js';
 import { drawDots } from './render.js';
 import * as store from './store.js';
@@ -13,7 +13,7 @@ const ear = new Ear();
 const sim = new Sim($('page'));
 
 const ease = (t) => 1 - (1 - clamp(t)) ** 3;
-const COMPLETE_AT = 0.8; // share of the picture the child's voice fills before it completes itself
+const COMPLETE_AT = 0.8; // share of the picture the child's voice fills before the rest streams home
 
 let mic = false;
 let started = false;
@@ -349,8 +349,6 @@ function resize() {
   const ox = (W - VIEW.w * sc) / 2;
   const oy = top + (availH - VIEW.h * sc) / 2;
   view = { sc, ox, oy, dpr };
-  // Voice particles rise out of the line of text.
-  ORIGIN.y = (H - bottomH * 0.55 - oy) / sc;
 }
 new ResizeObserver(resize).observe(canvas);
 

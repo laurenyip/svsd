@@ -18,7 +18,7 @@ Burn captions into the final cut. A video about deaf kids should be watchable wi
 ## SCENE 1: COLD OPEN (0:00–0:25) · *craft*
 
 `SCREEN`: Story page, snake. Ghost snake breathing on the dotted paper. A child-height voice (mine, softly) says
-"The snake says sssss…" Coral sparks rise out of the words, swirl, then pour into the snake. It peels off the
+"The snake says sssss…" The faint dust roaming the page wakes up as coral sparks, ripples, then streams into the snake. It peels off the
 page as a sticker. The flower blinks, then squints happily: *you did it!*
 
 > **VO:** This snake was drawn by a voice. Not by tapping or tracing, but by the sound "s".
@@ -66,11 +66,16 @@ band over the high end is labelled *often hardest to hear*.
 ## SCENE 4: INSPIRATION (1:45–2:10) · *depth*
 
 `SCREEN`: split. Left: `[the X clip: a performer's movement turned into particles]`. Right: Apple Watch Breathe.
+Small inset: motionary's *particle onboarding* (dust morphing into shapes) and *voice orb* (a dot cloud that ripples with the mic).
 
 > **VO:** Two references shaped the feel. One was this clip, where a performer's movement becomes a
 > cloud of particles. It's expressive, and you *are* the drawing. The other was Apple Watch Breathe.
 > It guides you without ever scoring you. You just follow the flower.
 > I wanted both: a child's voice becomes material, and something calm guides it, without a score.
+>
+> My first version sprayed particles up from the text, like a fountain. It felt like the voice was *spending*
+> something. So I switched to a swarm that always lives on the page, like dust in sunlight. The voice doesn't
+> create the dots, it *wakes* them. The page is never empty, and silence is never a dead screen.
 
 ---
 
@@ -78,12 +83,12 @@ band over the high end is labelled *often hardest to hear*.
 
 ### 5a. What do you even visualise? (2:10–2:45)
 
-`SCREEN`: hold "s" with the pointer on the right side, then slide left to "sh". Particles change from small, quick,
-twinkly coral sparks to larger, slower violet drifts.
+`SCREEN`: hold "s" with the pointer on the right side, then slide left to "sh". The lit dots change from small, quick,
+twinkly coral sparks to larger, slower violet drifts. Speak louder: more dots wake, and the swarm ripples.
 
 > **VO:** My first instinct was pitch or loudness, but neither one separates "s" from "sh". What does is *where
 > the hiss energy sits*: higher for "s", lower for "sh". So that one number drives the particles' character.
-> "S" becomes fine bright sparks and "sh" becomes soft broad drifts. Loudness only decides *how many*.
+> "S" becomes fine bright sparks and "sh" becomes soft broad drifts. Loudness only decides *how many* dots wake up.
 > That way a child can see the difference between their own two sounds, before any target is involved.
 
 ### 5b. Who decides what "right" is? (2:45–3:15)
@@ -111,9 +116,9 @@ The status chip moves through "Keep going…", "Getting warmer…" and "So close
 `SCREEN`: debug moment. Make "shhh" (particles fly), then switch quickly to "sss".
 `[optional: show the before/after of the bug as two short clips]`
 
-> **VO:** One bug taught me a design rule. Particles from a *wrong* sound were still in the air when the child
+> **VO:** One bug taught me a design rule. Dots lit by a *wrong* sound were still in the air when the child
 > switched to the right one, and they settled into the snake. The drawing showed something the child
-> didn't do. So now only particles born from a close sound can become part of the picture, and a page needs
+> didn't do. So now a dot only becomes part of the picture if it was lit by a close sound, and a page needs
 > a held sound, not one lucky moment. The illustration has to be a true record of the voice.
 
 ---

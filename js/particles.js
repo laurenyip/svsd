@@ -1,117 +1,141 @@
-// The child's voice as particles.
-// - Sharpness (where the hiss energy sits) sets character: "sss" → small, quick, twinkly sparks;
-//   "shhh" → bigger, slower, softer drifts.
-// - Loudness sets how many appear.
-// - Closeness to the grown-up's target pulls them toward the ghost picture; distance scatters them.
-//   A particle that reaches its spot while the sound is close settles there for good.
-import { lerp, hueOf } from './audio.js';
+// The child's voice as a swarm of dots that lives on the page.
+// - Quiet: faint dust roams the page in slow currents.
+// - Loudness wakes dots up: the louder the voice, the more dots light up, and the swarm ripples outward.
+// - Sharpness (where the hiss energy sits) sets character: "sss" → small, quick, twinkly coral sparks;
+//   "shhh" → bigger, slower, violet drifts.
+// - Closeness to the grown-up's target pulls the lit dots toward their spot in the picture; distance
+//   lets them scatter back into the currents. A lit dot that rests on its spot while the sound is close
+//   settles there for good.
+import { lerp } from './audio.js';
 import { glow } from './render.js';
 
-const MAX = 1400;
-const FREE = 0, RESERVED = 1, FILLED = 2;
-export const ORIGIN = { x: 500, y: 650 };
+const EXTRA = 170;              // free dots that never belong to the picture, so the page always feels alive
+const CX = 500, CY = 300;       // middle of the picture (view space is 1000×600)
+
+// Kept unwrapped (258 → 378) so colours ease smoothly from violet through pink to coral.
+const hueFor = (sharp) => 258 + 120 * sharp;
 
 export class Field {
   constructor(slots) {
     this.slots = slots;
-    this.state = new Uint8Array(slots.length);
-    this.order = slots.map((_, i) => i).sort(() => Math.random() - 0.5);
-    this.cursor = 0;
-    this.particles = [];
+    this.state = new Uint8Array(slots.length); // 0 open, 2 filled
     this.dots = [];
     this.filled = 0;
-    this.acc = 0;
+    this.level = 0;
+    this.sharp = 0.5;
+    this.fit = 0;
+
+    const swarm = [];
+    for (let i = 0; i < slots.length + EXTRA; i++) {
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
+      swarm.push({
+        x: CX + Math.cos(a) * r * 540, y: CY + Math.sin(a) * r * 320, vx: 0, vy: 0,
+        slot: -1, th: Math.random() ** 1.3, glow: 0, hue: 300, size: 4, sharp: 0.5, fit: 0,
+        dwell: 0, seed: Math.random() * 1000, j: Math.random(), settled: false, homing: 0,
+      });
+    }
+    // Give each spot in the picture the dot sitting in the matching place on the page,
+    // so every dot travels a short path when the picture forms.
+    const byX = (a, b) => a.x - b.x;
+    const order = slots.map((s, i) => ({ x: s.x, i })).sort(byX);
+    const pool = swarm.slice().sort(byX);
+    const step = pool.length / order.length;
+    order.forEach((o, k) => { pool[Math.floor(k * step + step / 2)].slot = o.i; });
+    this.swarm = swarm;
   }
 
   get progress() { return this.filled / this.slots.length; }
+  get particles() { return this.swarm; }
 
-  takeSlot() {
-    const n = this.slots.length;
-    for (let k = 0; k < n; k++) {
-      const i = this.order[(this.cursor + k) % n];
-      if (this.state[i] === FREE) {
-        this.cursor = (this.cursor + k + 1) % n;
-        this.state[i] = RESERVED;
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  // `fit` is how close this moment of sound was; only close sounds can become part of the picture.
+  // Voice for this frame. `fit` is how close this moment of sound was to the target.
   emit(dt, level, sharp, now, fit = 0) {
-    this.acc += dt * level ** 0.8 * 180;
-    while (this.acc >= 1) {
-      this.acc -= 1;
-      if (this.particles.length < MAX) this.particles.push(this.make(sharp, fit));
-    }
-  }
-
-  make(sh, fit) {
-    const slot = this.takeSlot();
-    const t = slot >= 0 ? this.slots[slot] : this.slots[(Math.random() * this.slots.length) | 0];
-    const ang = -Math.PI / 2 + (Math.random() - 0.5) * 1.4;
-    const speed = lerp(240, 560, sh) * (0.7 + Math.random() * 0.6);
-    return {
-      x: ORIGIN.x + (Math.random() - 0.5) * 160,
-      y: ORIGIN.y + Math.random() * 20,
-      vx: Math.cos(ang) * speed,
-      vy: Math.sin(ang) * speed,
-      slot, tx: t.x, ty: t.y,
-      life: 1,
-      maxLife: lerp(3.6, 2.4, sh) * (0.8 + Math.random() * 0.4),
-      size: lerp(7, 2.4, sh) * (0.75 + Math.random() * 0.5),
-      hue: hueOf(sh) + (Math.random() - 0.5) * 22,
-      sharp: sh, fit,
-      seed: Math.random() * 1000,
-      wob: lerp(1.1, 6.5, sh),
-      drag: lerp(0.955, 0.905, sh),
-    };
+    this.level = level;
+    this.sharp = sharp;
+    this.fit = fit;
   }
 
   update(dt, c, now) {
-    const k = 24 * c * c;   // pull toward the picture
-    const far = 1 - c;      // scatter
-    const ps = this.particles;
-    for (let i = ps.length - 1; i >= 0; i--) {
-      const p = ps[i];
-      const dx = p.tx - p.x, dy = p.ty - p.y;
-      const d = Math.hypot(dx, dy);
-      const sw = far * lerp(650, 1100, p.sharp);
-      let ax = dx * k + Math.sin(p.seed + now * p.wob + p.y * 0.012) * sw + (p.x - 500) * far * 0.9;
-      let ay = dy * k + Math.cos(p.seed * 1.7 + now * p.wob * 0.9 + p.x * 0.012) * sw - far * 140;
-      const damp = p.drag ** (dt * 60);
+    const L = this.level ** 0.7;
+    const k = 9 * c * c;
+    const far = 1 - c;
+    const damp = 0.9 ** (dt * 60);
+    for (const p of this.swarm) {
+      if (p.settled) continue;
+
+      // Wake up with the voice (fast), fall asleep slowly.
+      const awake = p.homing > 0 || L > p.th;
+      p.glow += ((awake ? 1 : 0) - p.glow) * Math.min(1, dt * (awake ? 9 : 1.1));
+      if (awake && !p.homing) {
+        const t = Math.min(1, dt * 8);
+        p.sharp += (this.sharp - p.sharp) * t;
+        p.hue += (hueFor(this.sharp) + (p.j - 0.5) * 22 - p.hue) * t;
+        p.fit += (this.fit - p.fit) * t;
+        p.size = lerp(7, 2.8, p.sharp) * (0.75 + p.j * 0.5);
+      }
+      const e = p.glow;
+      // A dot being pulled home stops drifting so it can land.
+      const free = 1 - 0.9 * (p.slot >= 0 ? (p.homing ? 1 : e * c * c) : 0);
+
+      // Slow currents across the page.
+      const n = Math.sin(p.x * 0.005 + now * 0.35 + p.seed) + Math.cos(p.y * 0.006 - now * 0.27 + p.seed * 0.5);
+      const wander = (110 + e * lerp(200, 380, p.sharp) * (0.4 + far)) * free;
+      let ax = Math.cos(n * Math.PI) * wander;
+      let ay = Math.sin(n * Math.PI) * wander;
+      // "sss" fizzes.
+      if (e > 0.05 && p.sharp > 0.5) {
+        const fizz = 1400 * e * (p.sharp - 0.5) * (0.3 + far) * free;
+        ax += (Math.random() - 0.5) * fizz;
+        ay += (Math.random() - 0.5) * fizz;
+      }
+      // Stay loosely gathered on the page.
+      ax += (CX - p.x) * 0.06 * free;
+      ay += (CY - p.y) * 0.12 * free;
+      // The voice ripples outward through the swarm.
+      const dx = p.x - CX, dy = p.y - CY, r = Math.hypot(dx, dy) + 1;
+      const ripple = this.level * 260 * Math.sin(r * 0.022 - now * 7) * far;
+      ax += (dx / r) * ripple;
+      ay += (dy / r) * ripple;
+
+      // Closeness pulls lit dots home.
+      if (p.slot >= 0 && (e > 0.05 || p.homing)) {
+        const s = this.slots[p.slot];
+        const hx = s.x - p.x, hy = s.y - p.y, d = Math.hypot(hx, hy);
+        const pull = p.homing ? 34 : k * e;
+        ax += hx * pull;
+        ay += hy * pull;
+        const resting = d < 12 && (p.homing || (c > 0.5 && p.fit > 0.35 && e > 0.5));
+        p.dwell = resting ? p.dwell + dt : 0;
+        if (p.homing) p.homing += dt;
+        if (p.dwell > 0.1 || p.homing > 1.6) { this.settle(p, s, now); continue; }
+      }
+
       p.vx = (p.vx + ax * dt) * damp;
       p.vy = (p.vy + ay * dt) * damp;
+      const sp = Math.hypot(p.vx, p.vy), max = lerp(240, 440, p.sharp) * (p.homing ? 1.6 : 1);
+      if (sp > max) { p.vx *= max / sp; p.vy *= max / sp; }
       p.x += p.vx * dt;
       p.y += p.vy * dt;
-      p.life -= dt / p.maxLife;
-
-      const settles = p.slot >= 0 && this.state[p.slot] === RESERVED && d < 10 && c > 0.5 && p.fit > 0.35;
-      if (settles) {
-        this.state[p.slot] = FILLED;
-        this.filled++;
-        this.dots.push({ x: p.tx, y: p.ty, r: Math.max(4.4, p.size * 0.85), h: p.hue, born: now });
-      } else if (p.life > 0) continue;
-      else if (p.slot >= 0 && this.state[p.slot] === RESERVED) this.state[p.slot] = FREE;
-      ps[i] = ps[ps.length - 1];
-      ps.pop();
     }
+    this.level = 0;
   }
 
-  // The last few spots fill in with the average of the child's own colours.
-  fillRest(now) {
-    const n = this.dots.length || 1;
-    const avgR = this.dots.reduce((s, d) => s + d.r, 0) / n || 4;
+  settle(p, s, now) {
+    p.settled = true;
+    this.state[p.slot] = 2;
+    this.filled++;
+    this.dots.push({ x: s.x, y: s.y, r: Math.max(4.4, p.size * 0.85), h: p.hue, born: now });
+  }
+
+  // The rest of the picture streams home in the child's own colours.
+  fillRest() {
     const hs = this.dots.map((d) => d.h);
-    for (let i = 0; i < this.slots.length; i++) {
-      if (this.state[i] === FILLED) continue;
-      this.state[i] = FILLED;
-      const s = this.slots[i];
-      const h = hs.length ? hs[(Math.random() * hs.length) | 0] : 330;
-      this.dots.push({ x: s.x, y: s.y, r: avgR, h, born: now + 0.2 + Math.random() * 0.9 });
+    const avgR = this.dots.reduce((a, d) => a + d.r, 0) / (this.dots.length || 1) || 5;
+    for (const p of this.swarm) {
+      if (p.settled || p.slot < 0) continue;
+      p.homing = 0.0001;
+      p.hue = hs.length ? hs[(Math.random() * hs.length) | 0] : 318;
+      p.size = avgR / 0.85;
     }
-    this.filled = this.slots.length;
   }
 
   drawSlots(ctx, alpha) {
@@ -120,7 +144,7 @@ export class Field {
     ctx.fillStyle = '#17161a';
     ctx.beginPath();
     for (let i = 0; i < this.slots.length; i++) {
-      if (this.state[i] === FILLED) continue;
+      if (this.state[i]) continue;
       const s = this.slots[i];
       ctx.moveTo(s.x + 1.6, s.y);
       ctx.arc(s.x, s.y, 1.6, 0, Math.PI * 2);
@@ -140,9 +164,21 @@ export class Field {
   }
 
   drawParticles(ctx, now) {
-    for (const p of this.particles) {
-      const twinkle = p.sharp > 0.55 ? 0.55 + 0.45 * Math.sin(now * 28 + p.seed) : 0.8;
-      glow(ctx, p.x, p.y, p.size, p.hue, Math.min(1, p.life * 2.5) * twinkle);
+    // Sleeping dust
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = '#17161a';
+    ctx.beginPath();
+    for (const p of this.swarm) {
+      if (p.settled || p.glow > 0.9) continue;
+      ctx.moveTo(p.x + 1.8, p.y);
+      ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2);
+    }
+    ctx.fill();
+    // Dots the voice has woken
+    for (const p of this.swarm) {
+      if (p.settled || p.glow < 0.02) continue;
+      const twinkle = p.sharp > 0.55 && !p.homing ? 0.6 + 0.4 * Math.sin(now * 26 + p.seed) : 1;
+      glow(ctx, p.x, p.y, lerp(1.8, p.size, p.glow), p.hue, p.glow * twinkle);
     }
   }
 }
