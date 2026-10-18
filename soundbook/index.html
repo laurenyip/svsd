@@ -878,7 +878,7 @@ function drawFx(dt,P){
    breathing when quiet. The voice makes it swell and ripple, it leans a little left of the star when the sound is too soft and
    right when it is too sharp, and as the sound gets accurate the lights fold onto the star's outline and glow. Holding the sound
    fills the star. */
-var mcv=$('meter'),mctx=mcv.getContext('2d'),MW=360,MH=120,meterC={},meterFill={},ORB=[],orbLean=0,orbSwell=0;
+var meterGrid={},mcv=$('meter'),mctx=mcv.getContext('2d'),MW=360,MH=120,meterC={},meterFill={},ORB=[],orbLean=0,orbSwell=0;
 (function(){var lats=[-62,-38,-13,13,38,62];lats.forEach(function(la,r){var lat=la*Math.PI/180,n=Math.round(17*Math.cos(lat));
   for(var i=0;i<n;i++)ORB.push({lat:lat,lon:i/n*Math.PI*2+r*.4,j:Math.random(),x:null,y:null,ring:r});});})();
 var M_INK={s:hex('#38780D'),sh:hex('#2F5BB7')},M_LIGHT={s:hex('#B9F27A'),sh:hex('#A9BEFF')},M_MID={s:hex('#7DB83A'),sh:hex('#5B7FE6')},LAV=hex('#B3A6FF');
@@ -927,24 +927,22 @@ function drawMeter(dt,now,active,P){
     var won=st.complete&&(P.kind==='sound'||st.choice===T.k),pr=won?1:(P.kind==='sound'||st.holdFor===T.k?Math.min(1,st.hold):0);
     meterFill[T.k]=(meterFill[T.k]||0)+(pr-(meterFill[T.k]||0))*Math.min(1,dt*10);
     var c=meterC[T.k],f=meterFill[T.k],lit=Math.max(c,f),pulse=1+(won?.05*Math.sin(t*6):0);
-    var RR=R*pulse,LT=M_LIGHT[T.k];
-    /* halo, always a little there, blooming as the sound gets close */
-    mctx.globalCompositeOperation='lighter';var HR=Math.min(R*2.2,cy-2,MH-cy-2),g=mctx.createRadialGradient(T.x,cy,R*.2,T.x,cy,HR);g.addColorStop(0,rgba(LT,.14+.42*lit));g.addColorStop(.6,rgba(LT,.05+.12*lit));g.addColorStop(1,rgba(LT,0));
-    mctx.fillStyle=g;mctx.beginPath();mctx.arc(T.x,cy,HR,0,7);mctx.fill();mctx.globalCompositeOperation='source-over';
-    /* glassy body */
-    mStar(T.x,cy,RR);var bg=mctx.createLinearGradient(T.x-R,cy-R,T.x+R,cy+R);bg.addColorStop(0,rgba(LT,.26+.18*lit));bg.addColorStop(1,rgba(M_MID[T.k],.1+.14*lit));mctx.fillStyle=bg;mctx.fill();
-    /* the fill as the sound is held */
-    if(f>.004){mctx.save();mStar(T.x,cy,RR);mctx.clip();var h=2*RR*f,gg=mctx.createLinearGradient(T.x-R,cy+R,T.x+R,cy-R);gg.addColorStop(0,rgba(M_MID[T.k],1));gg.addColorStop(.6,rgba(LT,1));gg.addColorStop(1,rgba(mixc(LT,[255,255,255],.55),1));
-      mctx.fillStyle=gg;mctx.fillRect(T.x-R*1.2,cy+RR-h,R*2.4,h+2);mctx.fillStyle='rgba(255,255,255,.7)';mctx.fillRect(T.x-R*1.2,cy+RR-h,R*2.4,1.5);
-      if(f>.97){var sx=T.x-R*1.6+((t*.9)%1.8)*R*1.8,sw=mctx.createLinearGradient(sx-R*.4,0,sx+R*.4,0);sw.addColorStop(0,'rgba(255,255,255,0)');sw.addColorStop(.5,'rgba(255,255,255,.55)');sw.addColorStop(1,'rgba(255,255,255,0)');
-        mctx.fillStyle=sw;mctx.save();mctx.translate(sx,cy);mctx.rotate(-.5);mctx.fillRect(-R*.4,-R*2,R*.8,R*4);mctx.restore();}
-      mctx.restore();}
-    /* gloss highlight */
-    mctx.save();mStar(T.x,cy,RR);mctx.clip();var gl=mctx.createRadialGradient(T.x-R*.35,cy-R*.55,0,T.x-R*.35,cy-R*.55,R*.9);gl.addColorStop(0,'rgba(255,255,255,'+(.35+.25*lit)+')');gl.addColorStop(1,'rgba(255,255,255,0)');
-    mctx.fillStyle=gl;mctx.fillRect(T.x-R*1.2,cy-R*1.2,R*2.4,R*2.4);mctx.restore();
-    /* bright rim */
-    mStar(T.x,cy,RR);var rim=mctx.createLinearGradient(T.x-R,cy-R,T.x+R,cy+R);rim.addColorStop(0,'rgba(255,255,255,'+(.55+.45*lit)+')');rim.addColorStop(.5,rgba(LT,.55+.45*lit));rim.addColorStop(1,rgba(M_MID[T.k],.5+.5*lit));
-    mctx.setLineDash(lit>.4||f>0?[]:[4,4]);mctx.lineWidth=2.2;mctx.strokeStyle=rim;mctx.stroke();mctx.setLineDash([]);
+    var RR=R*pulse,LT=M_LIGHT[T.k],bright=mixc(LT,[255,255,255],.35);
+    /* a soft halo only once the sound gets close */
+    if(lit>.02){mctx.globalCompositeOperation='lighter';var HR=Math.min(R*2,cy-2,MH-cy-2),g=mctx.createRadialGradient(T.x,cy,R*.2,T.x,cy,HR);g.addColorStop(0,rgba(LT,.3*lit));g.addColorStop(1,rgba(LT,0));
+      mctx.fillStyle=g;mctx.beginPath();mctx.arc(T.x,cy,HR,0,7);mctx.fill();mctx.globalCompositeOperation='source-over';}
+    /* the star is drawn only in lights: a field of points inside it lights up from the bottom as the sound is held */
+    var key=T.x.toFixed(1)+'|'+cy.toFixed(1)+'|'+R.toFixed(1)+'|'+D,grid=meterGrid[key];
+    if(!grid){grid=[];mStar(T.x,cy,R*.9);var gs=Math.max(5.5,R/8);
+      for(var gy=cy-R,row=0;gy<=cy+R;gy+=gs*.87,row++)for(var gx=T.x-R+(row%2)*gs/2;gx<=T.x+R;gx+=gs)if(mctx.isPointInPath(gx*D,gy*D))grid.push([gx,gy,Math.random()]);
+      meterGrid[key]=grid;}
+    grid.forEach(function(q){var level=(cy+RR-q[1])/(2*RR),on=f>=level-.02;
+      var a=on?(.75+.25*Math.sin(t*2+q[2]*12)*(won?1:0)):.05+.1*lit;
+      mctx.fillStyle=rgba(on?bright:LT,a);mctx.beginPath();mctx.arc(T.x+(q[0]-T.x)*pulse,cy+(q[1]-cy)*pulse,on?1.5:1.1,0,7);mctx.fill();});
+    /* the outline, traced in small lights */
+    var v=mVerts(T.x,cy,RR*1.03),NO=50;
+    for(var oi=0;oi<NO;oi++){var tt=oi/NO*10,e=Math.floor(tt),fr=tt-e,p0=v[e],p1=v[(e+1)%10],px=p0[0]+(p1[0]-p0[0])*fr,py=p0[1]+(p1[1]-p0[1])*fr;
+      mctx.fillStyle=rgba(bright,.3+.65*Math.max(lit,f));mctx.beginPath();mctx.arc(px,py,1.3+.5*Math.max(lit,f),0,7);mctx.fill();}
   });
 
   /* the globe of lights */
@@ -973,7 +971,8 @@ function drawMeter(dt,now,active,P){
 
   /* each star's name sits on top */
   L.forEach(function(T){var f=meterFill[T.k]||0,w=T.k==='s'?'SSS':'SHH';mctx.font='700 '+Math.round(R*.34)+'px Inter,system-ui,sans-serif';mctx.textAlign='center';
-    mctx.fillStyle=f>.55?rgba(M_INK[T.k],1):rgba(M_LIGHT[T.k],.95);mctx.fillText(w,T.x,cy+R*.12);});
+    mctx.lineJoin='round';mctx.lineWidth=5;mctx.strokeStyle='rgba(14,15,20,.85)';mctx.strokeText(w,T.x,cy+R*.12);
+    mctx.fillStyle=f>.55?'#fff':rgba(M_LIGHT[T.k],.95);mctx.fillText(w,T.x,cy+R*.12);});
 }
 
 /* live voice shape inside the round mic button: spiky green for SSS, wavy blue for SHH, calm rings when quiet */
