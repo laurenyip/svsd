@@ -308,6 +308,38 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .dock{margin-top:0;min-height:96px;align-content:end}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
+/* ---------- grown-up progress report ---------- */
+.navbar.split{justify-content:space-between}
+.profbtn{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--surface);color:var(--ink)}
+.profbtn:active{transform:scale(.92)}
+.linkbtn{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;border:0;background:none;color:var(--ink-2);font-size:14px;font-weight:500;padding:6px 0}
+#report{padding:100px 0 0}
+.rscroll{flex:1;overflow:auto;padding:0 20px 40px;display:flex;flex-direction:column;gap:12px}
+.rscroll .h1{margin-top:2px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
+.kpis div{background:var(--surface);border-radius:16px;padding:12px 10px;display:grid;gap:2px}
+.kpis b{font:600 22px/1.1 var(--f-body);font-variant-numeric:tabular-nums}
+.kpis span{font-size:12px;color:var(--ink-2)}
+.rh{font:600 13px var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:10px 0 -2px}
+.rcard{background:var(--surface);border-radius:18px;padding:14px;display:grid;gap:10px}
+.rrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rrow .right{margin-left:auto}
+.small{font-size:13px}
+.meterbar{height:8px;border-radius:99px;background:var(--track);overflow:hidden}
+.meterbar i{display:block;height:100%;border-radius:99px;background:currentColor}
+.snd-s{color:var(--ink)}.snd-s .meterbar i,.snd-s .trend{color:#9BE25A}
+.snd-sh .meterbar i,.snd-sh .trend{color:#8FAEFF}
+.spark{display:block}
+.seg{display:inline-flex;background:var(--track);border-radius:10px;padding:2px}
+.seg button{border:0;background:none;color:var(--ink-2);font:500 13px var(--f-body);padding:6px 12px;border-radius:8px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#0E0F14}
+.rlist{display:grid;gap:8px}
+.rsess{background:var(--surface);border-radius:16px;padding:12px 14px;display:grid;gap:6px}
+.tag{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:99px}
+.tag.ok{background:#1D3311;color:#A9E07A}.tag.part{background:#3A2A12;color:#F2C46B}
+#rNotes{font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;resize:vertical}
+.rfoot{display:grid;gap:8px;margin-top:6px}
+
 /* ---------- star style switcher (outside the phone) ---------- */
 .vpick{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:6px;width:190px;
   background:rgba(20,20,22,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;padding:8px 10px;border-radius:20px;box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
@@ -387,7 +419,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
   </section>
 
   <section class="screen" id="shelf" aria-label="Pick a story" hidden>
-    <nav class="navbar"><button class="navbtn back" type="button" id="shelfBack"><svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9.5 1.5L2 9l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Setup</button></nav>
+    <nav class="navbar"><button class="navbtn back" type="button" id="shelfBack"><svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9.5 1.5L2 9l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Setup</button><button class="profbtn" type="button" id="toReport" aria-label="Grown-ups: progress report"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c.8-4.2 4-6.5 8-6.5s7.2 2.3 8 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></nav>
     <div class="shelf-head">
       <div><div class="lbl" id="hiName">Hi, Mila</div><h1 class="h1">Pick a story</h1></div>
       <button class="pillbtn" id="toStickers" type="button">Stickers</button>
@@ -442,6 +474,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
         <button class="btn soft" type="button" id="labBtn">Sound lab</button>
         <button class="btn soft" type="button" id="closeBook">Close the book</button>
       </div>
+      <button class="btn soft" type="button" id="sheetReport">Progress report</button>
       <button class="btn" type="button" id="sheetClose">Back to the story</button>
     </div>
 
@@ -469,11 +502,17 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
     <h1 class="h1" id="rwH">You made every sound in this story!</h1>
     <div><div class="lbl" style="margin-bottom:8px">Sounds you made</div><div class="row-chips" id="rwMade"></div></div>
     <div><div class="lbl" style="margin-bottom:8px">Stickers you earned</div><div class="found" id="rwFound"></div></div>
-    <div class="summary" id="rwSum"></div>
+    <div class="summary" id="rwSum" hidden></div>
+    <button class="linkbtn" type="button" id="rwReport"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c.8-4.2 4-6.5 8-6.5s7.2 2.3 8 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> For grown-ups: progress report</button>
     <div class="reward-foot">
       <button class="btn soft" id="again" type="button">Practise again</button>
       <button class="btn" id="done" type="button">See my stickers</button>
     </div>
+  </section>
+
+  <section class="screen" id="report" aria-label="Progress report" hidden>
+    <nav class="navbar split"><button class="navbtn back" type="button" id="reportBack"><svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9.5 1.5L2 9l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="reportBackLbl">Back</span></button><button class="navbtn" type="button" id="reportShare">Share</button></nav>
+    <div class="rscroll" id="reportBody"></div>
   </section>
 
   <section class="screen" id="stickers" aria-label="Sticker book" hidden>
@@ -617,17 +656,17 @@ var st={name:'Mila',sounds:{s:true,sh:true},mode:'demo',muted:false,targets:{s:.
   pi:0,complete:false,armed:true,quiet:0,hold:0,holdFor:null,choice:null,shipX:0,boatX:0,
   disp:{p:.5,loud:0},parts:[],burst:[],flash:0,close:0,
   drag:null,demo:null,rec:null,wasActive:false,lastActive:-9,
-  stats:{s:{tries:0,holds:0},sh:{tries:0,holds:0}},found:[],stickers:{}};
+  stats:{s:{tries:0,holds:0},sh:{tries:0,holds:0}},found:[],stickers:{},sessions:[],notes:'',cur:null};
 var KEY='soundbook.v1';
-function save(){try{localStorage.setItem(KEY,JSON.stringify({name:st.name,sounds:st.sounds,targets:st.targets,easy:st.easy,
+function save(){try{localStorage.setItem(KEY,JSON.stringify({name:st.name,sounds:st.sounds,targets:st.targets,easy:st.easy,sessions:st.sessions,notes:st.notes,
   stickers:Object.keys(st.stickers).reduce(function(o,k){o[k]={img:st.stickers[k].img,when:st.stickers[k].when.toISOString()};return o;},{})}));}catch(e){}}
-(function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(!d)return;st.name=d.name||st.name;st.sounds=d.sounds||st.sounds;st.targets=d.targets||st.targets;st.easy=!!d.easy;
+(function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(!d)return;st.name=d.name||st.name;st.sounds=d.sounds||st.sounds;st.targets=d.targets||st.targets;st.easy=!!d.easy;st.sessions=Array.isArray(d.sessions)?d.sessions:[];st.notes=d.notes||'';
   Object.keys(d.stickers||{}).forEach(function(k){st.stickers[k]={img:d.stickers[k].img,when:new Date(d.stickers[k].when)};});}catch(e){}})();
 function tol(){return st.easy?.2:.11;}
 function tgt(k){return Math.max(tol(),Math.min(1-tol(),st.targets[k]));}
 
 /* ---------- navigation ---------- */
-var SCREENS=['welcome','setup','shelf','page','reward','stickers'];
+var SCREENS=['welcome','setup','shelf','page','reward','stickers','report'];
 function show(id){$('device').classList.toggle('on-scene',id==='page');SCREENS.forEach(function(s){var el=$(s);el.hidden=s!==id;if(s===id){el.classList.remove('enter');void el.offsetWidth;el.classList.add('enter');}});}
 $('start').onclick=function(){tryMic();show('setup');};
 document.querySelectorAll('.chip[data-snd]').forEach(function(c){c.onclick=function(){var on=c.getAttribute('aria-pressed')!=='true';c.setAttribute('aria-pressed',String(on));st.sounds[c.dataset.snd]=on;$('setupDone').disabled=!st.sounds.s&&!st.sounds.sh;save();};});
@@ -639,7 +678,7 @@ $('stkTop').onclick=$('stkBack').onclick;
 $('setupCancel').onclick=function(){show('welcome');};
 $('shelfBack').onclick=function(){show('setup');};
 $('rwDone').onclick=function(){buildShelf();show('shelf');};
-$('closeX').onclick=function(){buildShelf();show('shelf');};
+$('closeX').onclick=function(){endSession(false);buildShelf();show('shelf');};
 var toastT;function toast(t){var el=$('toast');el.textContent=t;el.hidden=false;el.classList.remove('in');void el.offsetWidth;el.classList.add('in');clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('in');setTimeout(function(){el.hidden=true;},300);},2200);}
 
 function buildShelf(){
@@ -652,7 +691,7 @@ function buildShelf(){
   document.querySelector('[data-book="sid"]').onclick=startStory;
   document.querySelectorAll('.book.locked').forEach(function(b){b.onclick=function(){toast('This story is coming soon');};});
 }
-function startStory(){st.stats={s:{tries:0,holds:0},sh:{tries:0,holds:0}};st.found=[];loadPage(0);show('page');}
+function startStory(){endSession(false);st.stats={s:{tries:0,holds:0},sh:{tries:0,holds:0}};st.found=[];st.cur={start:Date.now(),story:STORY.title,easy:st.easy};loadPage(0);show('page');}
 
 function loadPage(i){
   var P=STORY.pages[i];
@@ -692,7 +731,7 @@ $('micOn').onclick=tryMic;
 function openSheet(){$('scrim').hidden=false;$('sheet').hidden=false;updateMic();}
 function closeSheet(){$('scrim').hidden=true;$('sheet').hidden=true;}
 $('guBtn').onclick=openSheet;$('scrim').onclick=closeSheet;$('sheetClose').onclick=closeSheet;$('sheetCancel').onclick=closeSheet;
-$('closeBook').onclick=function(){closeSheet();buildShelf();show('shelf');};
+$('closeBook').onclick=function(){closeSheet();endSession(false);buildShelf();show('shelf');};
 $('easier').onclick=function(){st.easy=!st.easy;save();this.setAttribute('aria-pressed',String(st.easy));this.querySelector('b').textContent=st.easy?'Easier: on':'Make it easier';renderZones();};
 $('skip').onclick=function(){var P=STORY.pages[st.pi];closeSheet();if(P.kind==='sound'&&!st.complete)success(true);else if(P.kind==='choice'&&!st.choice)choose('s');};
 $('demoBtn').onclick=function(){closeSheet();startDemo();};
@@ -780,7 +819,7 @@ function spawn(P,dt){
 
 /* a burst of stars when a sound succeeds */
 function starBurst(x,y,p){
-  if(reduce)return;var n=SV===2?12:18;
+  if(reduce)return;var n=SV===2?18:30;
   for(var i=0;i<n;i++){var a=i/n*Math.PI*2+Math.random()*.2,v=(SV===2?90:120)*(.7+Math.random()*.6);
     st.burst.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-(SV===2?40:0),a:0,life:1.1+Math.random()*.4,p:p,r:(SV===2?4:2)+Math.random()*2.5,rot:Math.random()*6.28,spin:(Math.random()-.5)*6,seed:Math.random()*100});}
   st.burst.push({ring:true,x:x,y:y,a:0,life:.9,p:p});
@@ -831,8 +870,8 @@ function drawFx(dt,P){
   fctx.setTransform(FD,0,0,FD,0,0);fctx.clearRect(0,0,FW,FH);
   if(P.kind==='setup')return;
   var tg=P.kind==='sound'?P.target():null;
-  /* warm light around the goal, breathing a little as the child gets close */
-  if(tg&&st.close>.02){var q=toPx(tg[0],tg[1]),br=1+.06*Math.sin(performance.now()/300),g=fctx.createRadialGradient(q[0],q[1],2,q[0],q[1],80*q[2]*br);g.addColorStop(0,rgba(WARM,.55*st.close));g.addColorStop(1,rgba(WARM,0));fctx.fillStyle=g;fctx.fillRect(0,0,FW,FH);}
+  /* the picture stays calm while the child is trying */
+  if(false){var q=toPx(tg[0],tg[1]),br=1+.06*Math.sin(performance.now()/300),g=fctx.createRadialGradient(q[0],q[1],2,q[0],q[1],80*q[2]*br);g.addColorStop(0,rgba(WARM,.55*st.close));g.addColorStop(1,rgba(WARM,0));fctx.fillStyle=g;fctx.fillRect(0,0,FW,FH);}
 
   /* constellation drawn from hold progress */
   if(SV===3&&tg){var pts=consPoints(tg[0],tg[1]),prog=st.complete?1:Math.min(1,st.hold/1.0),lit=Math.floor(prog*pts.length+.001),deep=deepOf(P.snd==='s'?.84:.16,0),i;
@@ -890,7 +929,48 @@ var LEAN=130; /* pixels of lean per unit of sound position */
 function pToX(p){var L=meterLayout();if(!L.length)return MW/2;var R=meterR();
   if(L.length===1)return L[0].x+Math.max(-R*1.3,Math.min(R*1.3,(p-tgt(L[0].k))*LEAN));
   var a=L[0],b=L[1],ta=tgt(a.k),tb=tgt(b.k),x=a.x+(p-ta)/(tb-ta)*(b.x-a.x);return Math.max(a.x-R,Math.min(b.x+R,x));}
+/* the choice page uses a sparkly slider instead of stars: SHH (Shell Beach) on the left, SSS (Sunflower Hill) on the right */
+var SL_PAD=30,SPARKS=[],slThumb=null;
+function slX(p){return SL_PAD+p*(MW-2*SL_PAD);}
+function drawSlider(dt,t,active,P){
+  var cy=MH/2+10,half=tol()*(MW-2*SL_PAD),loud=active?st.disp.loud:0,keys=['sh','s'];
+  /* track: a line of tiny lights shading from SHH blue to SSS green */
+  for(var x=SL_PAD;x<=MW-SL_PAD;x+=7){var k=(x-SL_PAD)/(MW-2*SL_PAD);mctx.fillStyle=rgba(mixc(M_LIGHT.sh,M_LIGHT.s,k),.28);mctx.beginPath();mctx.arc(x,cy,1.2,0,7);mctx.fill();}
+  /* the two destinations, drawn in lights */
+  var nearK=Math.abs(st.disp.p-tgt('s'))<Math.abs(st.disp.p-tgt('sh'))?'s':'sh';
+  keys.forEach(function(k){if(!st.sounds[k])return;
+    var cx=slX(tgt(k)),d=Math.abs(st.disp.p-tgt(k)),goal=active&&k===nearK?Math.max(0,1-d/.45)*Math.min(1,st.disp.loud*3):0;
+    meterC[k]=(meterC[k]||0)+(goal-(meterC[k]||0))*Math.min(1,dt*6);
+    var pr=st.choice===k?1:(st.holdFor===k?Math.min(1,st.hold):0);meterFill[k]=(meterFill[k]||0)+(pr-(meterFill[k]||0))*Math.min(1,dt*10);
+    var c=meterC[k],f=meterFill[k],lit=Math.max(c,f),LT=M_LIGHT[k],br=mixc(LT,[255,255,255],.35),h=15,w=Math.max(half,22);
+    if(lit>.02){mctx.globalCompositeOperation='lighter';var g=mctx.createRadialGradient(cx,cy,4,cx,cy,w+22);g.addColorStop(0,rgba(LT,.28*lit));g.addColorStop(1,rgba(LT,0));mctx.fillStyle=g;mctx.beginPath();mctx.arc(cx,cy,w+22,0,7);mctx.fill();mctx.globalCompositeOperation='source-over';}
+    /* inside the zone: points that light up from the bottom as the sound is held */
+    for(var yy=cy-h+4,row=0;yy<=cy+h-4;yy+=5.5,row++)for(var xx=cx-w+6+(row%2)*2.75;xx<=cx+w-6;xx+=5.5){var lvl=(cy+h-yy)/(2*h),on=f>=lvl-.02;
+      mctx.fillStyle=rgba(on?br:LT,on?.9:.06+.1*lit);mctx.beginPath();mctx.arc(xx,yy,on?1.4:1,0,7);mctx.fill();}
+    /* the zone's outline, traced in lights */
+    var per=2*(2*w-2*h)+2*Math.PI*h,n=Math.round(per/6);for(var i=0;i<n;i++){var s=i/n*per,px,py,straight=2*w-2*h;
+      if(s<straight){px=cx-w+h+s;py=cy-h;}else if(s<straight+Math.PI*h){var a=(s-straight)/h-Math.PI/2;px=cx+w-h+Math.cos(a)*h;py=cy+Math.sin(a)*h;}
+      else if(s<2*straight+Math.PI*h){px=cx+w-h-(s-straight-Math.PI*h);py=cy+h;}else{var a2=(s-2*straight-Math.PI*h)/h+Math.PI/2;px=cx-w+h+Math.cos(a2)*h;py=cy+Math.sin(a2)*h;}
+      mctx.fillStyle=rgba(br,.3+.65*lit);mctx.beginPath();mctx.arc(px,py,1.3+.4*lit,0,7);mctx.fill();}
+    /* names */
+    mctx.textAlign='center';mctx.font='700 14px Inter,system-ui,sans-serif';mctx.lineJoin='round';mctx.lineWidth=5;mctx.strokeStyle='rgba(14,15,20,.85)';
+    mctx.strokeText(k==='s'?'SSS':'SHH',cx,cy+5);mctx.fillStyle=f>.55?'#fff':rgba(LT,.95);mctx.fillText(k==='s'?'SSS':'SHH',cx,cy+5);
+    mctx.font='500 12px Inter,system-ui,sans-serif';mctx.fillStyle='rgba(255,255,255,'+(.45+.5*lit)+')';mctx.fillText(k==='s'?'Sunflower Hill':'Shell Beach',cx,cy-h-12);});
+  /* the thumb follows the voice and throws off a trail of sparkles */
+  var tx=slX(st.disp.p);slThumb=slThumb==null?tx:slThumb+(tx-slThumb)*Math.min(1,dt*14);
+  var col=mixc(M_LIGHT.sh,M_LIGHT.s,st.disp.p);
+  if(active&&!st.complete){var nsp=Math.random()<.5+loud?2:1;for(var q=0;q<nsp;q++)SPARKS.push({x:slThumb+(Math.random()-.5)*6,y:cy+(Math.random()-.5)*6,vx:(Math.random()-.5)*40-(tx-slThumb)*2,vy:(Math.random()-.5)*40-12,a:0,life:.45+Math.random()*.4,s:2+Math.random()*2.5,j:Math.random()*10,c:col});}
+  SPARKS=SPARKS.filter(function(p){p.a+=dt;return p.a<p.life;});
+  SPARKS.forEach(function(p){p.x+=p.vx*dt;p.y+=p.vy*dt;var k=1-p.a/p.life,tw=.6+.4*Math.abs(Math.sin(p.a*24+p.j)),L=p.s*k;
+    mctx.strokeStyle=rgba(mixc(p.c,[255,255,255],.5),k*tw);mctx.lineWidth=1.1;mctx.beginPath();mctx.moveTo(p.x-L,p.y);mctx.lineTo(p.x+L,p.y);mctx.moveTo(p.x,p.y-L);mctx.lineTo(p.x,p.y+L);mctx.stroke();});
+  var on=active?1:.5,rr=5+3*loud;
+  mctx.strokeStyle=rgba(col,.9*on);mctx.lineWidth=2;mctx.beginPath();mctx.arc(slThumb,cy,rr+4,0,7);mctx.stroke();
+  mctx.fillStyle=rgba(mixc(col,[255,255,255],.6),on);mctx.beginPath();mctx.arc(slThumb,cy,rr,0,7);mctx.fill();
+  mctx.font='500 11.5px Inter,system-ui,sans-serif';mctx.fillStyle='rgba(255,255,255,.42)';
+  mctx.textAlign='left';mctx.fillText('SHH · soft',4,MH-4);mctx.textAlign='right';mctx.fillText('sharp · SSS',MW-4,MH-4);
+}
 function xToP(x,w){var X=x*MW/w,L=meterLayout();if(!L.length)return x/w;
+  if(L.length===2)return Math.max(0,Math.min(1,(X-SL_PAD)/(MW-2*SL_PAD)));
   if(L.length===1)return Math.max(0,Math.min(1,tgt(L[0].k)+(X-L[0].x)/LEAN));
   var a=L[0],b=L[1],ta=tgt(a.k),tb=tgt(b.k);return Math.max(0,Math.min(1,ta+(X-a.x)/(b.x-a.x)*(tb-ta)));}
 function meterR(){return Math.min(62,MH*.33);}
@@ -913,6 +993,7 @@ function drawMeter(dt,now,active,P){
   if(mcv.width!==Math.round(r.width*D)||mcv.height!==Math.round(r.height*D)){mcv.width=Math.round(r.width*D);mcv.height=Math.round(r.height*D);}
   MW=r.width;MH=r.height;mctx.setTransform(D,0,0,D,0,0);mctx.clearRect(0,0,MW,MH);
   var L=meterLayout();if(!L.length)return;
+  if(L.length===2){drawSlider(dt,now/1000,active,P);return;}
   var cy=MH/2-4,R=meterR(),loud=active?st.disp.loud:0,t=now/1000;
   orbSwell+=(loud-orbSwell)*Math.min(1,dt*(loud>orbSwell?8:2.5));
 
@@ -1008,7 +1089,7 @@ function success(skipped){
   var P=STORY.pages[st.pi],item=P.loot,T0=P.target();
   starBurst(T0[0],T0[1],skipped?(P.snd==='s'?.84:.16):st.disp.p);
   st.hold=0;st.armed=false;st.complete=true;st.demo=null;
-  if(!skipped)st.stats[P.snd].holds++;
+  if(!skipped)st.stats[P.snd].holds++;else st.stats[P.snd].skips=(st.stats[P.snd].skips||0)+1;
   st.stickers[item]={img:voiceShape(skipped?(P.snd==='s'?.84:.16):st.disp.p,.8),when:new Date()};if(st.found.indexOf(item)<0)st.found.push(item);save();
   if(P.snd==='s'){reveal('fr0');}
   else{var w=$('wind');w.style.opacity='';w.classList.remove('blow');void w.getBoundingClientRect();w.classList.add('blow');$('sail').style.transform='scaleX(3)';
@@ -1036,7 +1117,7 @@ function showReward(){
   $('rwFound').innerHTML=st.found.map(function(id){return '<i title="'+id+'">'+sv(id)+'</i>';}).join('');
   function row(k,lbl){var o=s[k];if(!o.tries&&!o.holds)return '';var t=Math.max(o.tries,o.holds);return '<div class="r"><span>'+lbl+'</span><b>'+o.holds+' held · '+t+(t===1?' try':' tries')+'</b></div>';}
   $('rwSum').innerHTML='<div class="lbl">For grown-ups</div>'+row('s','SSS (snake)')+row('sh','SHH (wind)')+'<div class="r"><span>Target width</span><b>'+(st.easy?'Easier':'Standard')+'</b></div>';
-  show('reward');burst();
+  endSession(true);show('reward');burst();
 }
 $('again').onclick=startStory;
 $('done').onclick=function(){buildStickers();show('stickers');};
@@ -1063,6 +1144,63 @@ function stickerFx(){
     b.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();b.classList.add('landed','lift');setTimeout(drop,180);}});
   });
 }
+var reportFrom='shelf';
+function endSession(done){if(!st.cur)return;var t=0;['s','sh'].forEach(function(k){t+=(st.stats[k].tries||0)+(st.stats[k].holds||0)+(st.stats[k].skips||0);});
+  if(t||done)st.sessions.push({start:st.cur.start,end:Date.now(),story:st.cur.story,easy:st.easy,done:!!done,choice:st.choice||null,
+    stats:JSON.parse(JSON.stringify(st.stats)),targets:{s:st.targets.s,sh:st.targets.sh}});
+  st.cur=null;save();}
+function openReport(from){reportFrom=from;$('reportBackLbl').textContent=from==='page'?'Story':from==='reward'?'The end':'Stories';buildReport();show('report');}
+function pct(a,b){return b?Math.round(a/b*100):0;}
+function fmtDur(ms){var m=Math.round(ms/60000);return m<1?'under 1 min':m+' min';}
+function fmtDay(t){return new Date(t).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'});}
+function fmtTime(t){return new Date(t).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});}
+function totals(k){var h=0,t=0,sk=0;st.sessions.forEach(function(x){var o=x.stats[k]||{};h+=o.holds||0;t+=Math.max(o.tries||0,o.holds||0);sk+=o.skips||0;});return {h:h,t:t,sk:sk};}
+function spark(k){var pts=st.sessions.slice(-10).map(function(x){var o=x.stats[k]||{},t=Math.max(o.tries||0,o.holds||0);return t?(o.holds||0)/t:null;}).filter(function(v){return v!=null;});
+  if(pts.length<2)return '<span class="muted small">Trend appears after 2 sessions</span>';
+  var W=120,H=34,step=W/(pts.length-1),d=pts.map(function(v,i){return (i?'L':'M')+(i*step).toFixed(1)+' '+(H-3-v*(H-6)).toFixed(1);}).join('');
+  return '<svg class="spark" width="'+W+'" height="'+H+'" viewBox="-3 0 '+(W+6)+' '+H+'" aria-label="Hold rate over the last '+pts.length+' sessions"><path d="M0 '+(H-3)+'H'+W+'" stroke="currentColor" opacity=".15"/><path d="'+d+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
+    pts.map(function(v,i){return '<circle cx="'+(i*step).toFixed(1)+'" cy="'+(H-3-v*(H-6)).toFixed(1)+'" r="2.4" fill="currentColor"/>';}).join('')+'</svg>';}
+function buildReport(){
+  var S=st.sessions,n=S.length,all={h:0,t:0},time=0;['s','sh'].forEach(function(k){var o=totals(k);all.h+=o.h;all.t+=o.t;});S.forEach(function(x){time+=Math.max(0,x.end-x.start);});
+  var since=n?fmtDay(S[0].start):'today',h='';
+  h+='<div class="lbl">Progress report · for grown-ups</div><h1 class="h1">'+st.name+'</h1>';
+  h+='<p class="muted">Practising '+['s','sh'].filter(function(k){return st.sounds[k];}).map(chip).join(' and ')+(n?' · since '+since:'')+'</p>';
+  h+='<div class="kpis"><div><b>'+n+'</b><span>sessions</span></div><div><b>'+all.h+'</b><span>sounds held</span></div><div><b>'+pct(all.h,all.t)+'%</b><span>hold rate</span></div><div><b>'+Math.round(time/60000)+'</b><span>minutes</span></div></div>';
+  h+='<h2 class="rh">By sound</h2>';
+  ['s','sh'].forEach(function(k){var o=totals(k),p=pct(o.h,o.t);
+    h+='<div class="rcard snd-'+k+'"><div class="rrow">'+chip(k)+'<span class="muted">'+(k==='s'?'snake':'wind')+'</span><span class="right"><b>'+o.h+'</b> held · '+o.t+' '+(o.t===1?'try':'tries')+'</span></div>'+
+      '<div class="meterbar"><i style="width:'+p+'%"></i></div>'+
+      '<div class="rrow small"><span>'+p+'% hold rate'+(o.sk?' · '+o.sk+' skipped':'')+'</span><span class="right trend">'+spark(k)+'</span></div>'+
+      '<div class="rrow small muted"><span>Personal target</span><span class="right">'+Math.round(tgt(k)*100)+' on the soft–sharp scale</span></div></div>';});
+  h+='<h2 class="rh">Practice settings</h2><div class="rcard"><div class="rrow"><span>Target width</span><span class="right seg" role="group" aria-label="Target width">'+
+    '<button type="button" data-easy="0" aria-pressed="'+(!st.easy)+'">Standard</button><button type="button" data-easy="1" aria-pressed="'+st.easy+'">Easier</button></span></div>'+
+    '<p class="muted small">Easier widens the target so a near sound counts. Use it while a sound is new, then switch back.</p></div>';
+  h+='<h2 class="rh">Sessions</h2>';
+  if(!n)h+='<div class="rcard muted">No sessions yet. Read a story together and it will show up here.</div>';
+  else h+='<div class="rlist">'+S.slice().reverse().map(function(x){var cell=function(k){var o=x.stats[k]||{},t=Math.max(o.tries||0,o.holds||0);return t||o.skips?chip(k)+' '+(o.holds||0)+'/'+t+(o.skips?' <span class="muted">('+o.skips+' skip)</span>':''):'';};
+    return '<div class="rsess"><div class="rrow"><b>'+fmtDay(x.start)+'</b><span class="muted">'+fmtTime(x.start)+' · '+fmtDur(x.end-x.start)+'</span><span class="right tag '+(x.done?'ok':'part')+'">'+(x.done?'Finished':'Stopped early')+'</span></div>'+
+      '<div class="rrow small"><span>'+x.story+(x.choice?' · sailed to '+(x.choice==='s'?'Sunflower Hill':'Shell Beach'):'')+'</span></div>'+
+      '<div class="rrow small">'+cell('s')+' '+cell('sh')+(x.easy?'<span class="right muted">Easier on</span>':'')+'</div></div>';}).join('')+'</div>';
+  h+='<h2 class="rh">Notes</h2><textarea id="rNotes" rows="4" placeholder="Notes for the next session, e.g. SSS clearer after modelling twice">'+(st.notes||'').replace(/</g,'&lt;')+'</textarea>';
+  h+='<div class="rfoot"><button class="btn soft" type="button" id="rClear">Clear history</button><p class="note">Saved on this device only. Share sends a text summary.</p></div>';
+  $('reportBody').innerHTML=h;$('reportBody').scrollTop=0;
+  document.querySelectorAll('#reportBody .seg button').forEach(function(b){b.onclick=function(){st.easy=b.dataset.easy==='1';save();renderZones();
+    var e=$('easier');if(e){e.setAttribute('aria-pressed',String(st.easy));e.querySelector('b').textContent=st.easy?'Easier: on':'Make it easier';}buildReport();};});
+  var nt;$('rNotes').oninput=function(){var v=this.value;clearTimeout(nt);nt=setTimeout(function(){st.notes=v;save();},300);};
+  $('rClear').onclick=function(){if(confirm('Clear all sessions? Stickers stay.')){st.sessions=[];save();buildReport();toast('History cleared');}};
+}
+function reportText(){var lines=['Soundbook progress report: '+st.name,new Date().toLocaleDateString(),''],n=st.sessions.length;
+  lines.push('Sessions: '+n);['s','sh'].forEach(function(k){var o=totals(k);lines.push((k==='s'?'SSS (snake)':'SHH (wind)')+': '+o.h+' held of '+o.t+' tries ('+pct(o.h,o.t)+'%)'+(o.sk?', '+o.sk+' skipped':''));});
+  lines.push('Target width: '+(st.easy?'Easier':'Standard'));
+  if(n){var x=st.sessions[n-1];lines.push('','Last session: '+fmtDay(x.start)+' '+fmtTime(x.start)+', '+fmtDur(x.end-x.start)+(x.done?', finished':', stopped early'));}
+  if(st.notes)lines.push('','Notes: '+st.notes);return lines.join('\n');}
+$('toReport').onclick=function(){openReport('shelf');};
+$('rwReport').onclick=function(){openReport('reward');};
+$('sheetReport').onclick=function(){closeSheet();openReport('page');};
+$('reportBack').onclick=function(){if(reportFrom==='shelf')buildShelf();show(reportFrom);};
+$('reportShare').onclick=function(){var t=reportText();
+  if(navigator.share){navigator.share({title:'Soundbook progress report',text:t}).catch(function(){});return;}
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast('Report copied');},function(){toast('Could not copy');});};
 function buildStickers(){
   $('stkH').textContent=st.name+'’s stickers';var fmt={weekday:'short',day:'numeric',month:'short'};
   $('sgrid').innerHTML=STICKERS.map(function(S,i){var got=st.stickers[S.id],snd=(S.word.match(/class="(s|sh|ch|f)"/)||[])[1]||'s',rot=[-6,5,-3,6,-5,3][i%6],isNew=got&&st.found.indexOf(S.id)>=0;
@@ -1119,7 +1257,7 @@ function frame(now){
       if(prog>=1)choose(near);
     }
     st.close+=(closeT-st.close)*Math.min(1,dt*4);
-    if(inp.active&&!reduce&&P.kind!=='setup')spawn(P,dt);
+    /* no stars while trying: the star meter shows closer/further, the picture celebrates only on success */
     drawFx(dt,P);
     if(!$('mic').hidden)drawVoice(dt,now);
     if(P.kind!=='setup')drawMeter(dt,now,inp.active,P);
