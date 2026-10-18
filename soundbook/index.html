@@ -1053,42 +1053,48 @@ function pToX(p){var L=meterLayout();if(!L.length)return MW/2;var R=meterR();
   if(L.length===1)return L[0].x+Math.max(-R*1.3,Math.min(R*1.3,(p-tgt(L[0].k))*LEAN));
   var a=L[0],b=L[1],ta=tgt(a.k),tb=tgt(b.k),x=a.x+(p-ta)/(tb-ta)*(b.x-a.x);return Math.max(a.x-R,Math.min(b.x+R,x));}
 /* the choice page uses a sparkly slider instead of stars: SHH (Shell Beach) on the left, SSS (Sunflower Hill) on the right */
-var SL_PAD=30,SPARKS=[],slThumb=null;
+var SL_PAD=14,SPARKS=[],slThumb=null;
 function slX(p){return SL_PAD+p*(MW-2*SL_PAD);}
+/* one wide band of lights, the same height end to end: SHH (Shell Beach) on the left, SSS (Sunflower Hill) on the right */
 function drawSlider(dt,t,active,P){
-  var cy=MH/2+10,half=tol()*(MW-2*SL_PAD),loud=active?st.disp.loud:0,keys=['sh','s'];
-  /* track: a line of tiny lights shading from SHH blue to SSS green */
-  for(var x=SL_PAD;x<=MW-SL_PAD;x+=7){var k=(x-SL_PAD)/(MW-2*SL_PAD);mctx.fillStyle=rgba(mixc(M_LIGHT.sh,M_LIGHT.s,k),.28);mctx.beginPath();mctx.arc(x,cy,1.2,0,7);mctx.fill();}
-  /* the two destinations, drawn in lights */
-  var nearK=Math.abs(st.disp.p-tgt('s'))<Math.abs(st.disp.p-tgt('sh'))?'s':'sh';
-  keys.forEach(function(k){if(!st.sounds[k])return;
-    var cx=slX(tgt(k)),d=Math.abs(st.disp.p-tgt(k)),goal=active&&k===nearK?Math.max(0,1-d/.45)*Math.min(1,st.disp.loud*3):0;
+  var cy=MH/2+6,H=19,x0=SL_PAD,x1=MW-SL_PAD,loud=active?st.disp.loud:0,half=tol()*(x1-x0);
+  var nearK=Math.abs(st.disp.p-tgt('s'))<Math.abs(st.disp.p-tgt('sh'))?'s':'sh',Z={};
+  ['sh','s'].forEach(function(k){if(!st.sounds[k])return;
+    var d=Math.abs(st.disp.p-tgt(k)),goal=active&&k===nearK?Math.max(0,1-d/.45)*Math.min(1,st.disp.loud*3):0;
     meterC[k]=(meterC[k]||0)+(goal-(meterC[k]||0))*Math.min(1,dt*6);
     var pr=st.choice===k?1:(st.holdFor===k?Math.min(1,st.hold):0);meterFill[k]=(meterFill[k]||0)+(pr-(meterFill[k]||0))*Math.min(1,dt*10);
-    var c=meterC[k],f=meterFill[k],lit=Math.max(c,f),LT=M_LIGHT[k],br=mixc(LT,[255,255,255],.35),h=15,w=Math.max(half,22);
-    if(lit>.02){mctx.globalCompositeOperation='lighter';var g=mctx.createRadialGradient(cx,cy,4,cx,cy,w+22);g.addColorStop(0,rgba(LT,.28*lit));g.addColorStop(1,rgba(LT,0));mctx.fillStyle=g;mctx.beginPath();mctx.arc(cx,cy,w+22,0,7);mctx.fill();mctx.globalCompositeOperation='source-over';}
-    /* inside the zone: points that light up from the bottom as the sound is held */
-    for(var yy=cy-h+4,row=0;yy<=cy+h-4;yy+=5.5,row++)for(var xx=cx-w+6+(row%2)*2.75;xx<=cx+w-6;xx+=5.5){var lvl=(cy+h-yy)/(2*h),on=f>=lvl-.02;
-      mctx.fillStyle=rgba(on?br:LT,on?.9:.06+.1*lit);mctx.beginPath();mctx.arc(xx,yy,on?1.4:1,0,7);mctx.fill();}
-    /* the zone's outline, traced in lights */
-    var per=2*(2*w-2*h)+2*Math.PI*h,n=Math.round(per/6);for(var i=0;i<n;i++){var s=i/n*per,px,py,straight=2*w-2*h;
-      if(s<straight){px=cx-w+h+s;py=cy-h;}else if(s<straight+Math.PI*h){var a=(s-straight)/h-Math.PI/2;px=cx+w-h+Math.cos(a)*h;py=cy+Math.sin(a)*h;}
-      else if(s<2*straight+Math.PI*h){px=cx+w-h-(s-straight-Math.PI*h);py=cy+h;}else{var a2=(s-2*straight-Math.PI*h)/h+Math.PI/2;px=cx-w+h+Math.cos(a2)*h;py=cy+Math.sin(a2)*h;}
-      mctx.fillStyle=rgba(br,.3+.65*lit);mctx.beginPath();mctx.arc(px,py,1.3+.4*lit,0,7);mctx.fill();}
-    /* names */
-    mctx.textAlign='center';mctx.font='700 14px Inter,system-ui,sans-serif';mctx.lineJoin='round';mctx.lineWidth=5;mctx.strokeStyle='rgba(14,15,20,.85)';
-    mctx.strokeText(k==='s'?'SSS':'SHH',cx,cy+5);mctx.fillStyle=f>.55?'#fff':rgba(LT,.95);mctx.fillText(k==='s'?'SSS':'SHH',cx,cy+5);
-    mctx.font='500 12px Inter,system-ui,sans-serif';mctx.fillStyle='rgba(255,255,255,'+(.45+.5*lit)+')';mctx.fillText(k==='s'?'Sunflower Hill':'Shell Beach',cx,cy-h-12);});
-  /* the thumb follows the voice and throws off a trail of sparkles */
+    var cx=slX(tgt(k));Z[k]={a:Math.max(x0,cx-Math.max(half,30)),b:Math.min(x1,cx+Math.max(half,30)),cx:cx,c:meterC[k],f:meterFill[k]};});
+  function zoneAt(x){for(var k in Z)if(x>=Z[k].a&&x<=Z[k].b)return k;return null;}
+  /* soft light behind a zone the voice is close to */
+  Object.keys(Z).forEach(function(k){var z=Z[k],lit=Math.max(z.c,z.f);if(lit<.02)return;mctx.globalCompositeOperation='lighter';
+    var g=mctx.createRadialGradient(z.cx,cy,4,z.cx,cy,(z.b-z.a)*.8);g.addColorStop(0,rgba(M_LIGHT[k],.28*lit));g.addColorStop(1,rgba(M_LIGHT[k],0));
+    mctx.fillStyle=g;mctx.fillRect(z.a-30,cy-H-30,z.b-z.a+60,2*H+60);mctx.globalCompositeOperation='source-over';});
+  /* the band: a grid of points, coloured from SHH blue to SSS green */
+  for(var row=-2;row<=2;row++){var yy=cy+row*7.5;for(var xx=x0+H*.6+((row+2)%2)*3.5;xx<=x1-H*.6;xx+=7){
+    var k=zoneAt(xx),col=mixc(M_LIGHT.sh,M_LIGHT.s,(xx-x0)/(x1-x0)),a=.16,r=1.1;
+    if(k){var z=Z[k],lit=Math.max(z.c,z.f),on=z.f>=(cy+H-yy)/(2*H)-.02;col=mixc(M_LIGHT[k],[255,255,255],on?.35:0);a=on?.95:.28+.5*lit;r=on?1.5:1.2;}
+    mctx.fillStyle=rgba(col,a);mctx.beginPath();mctx.arc(xx,yy,r,0,7);mctx.fill();}}
+  /* the band's outline, traced evenly in lights */
+  var straight=(x1-x0)-2*H,per=2*straight+2*Math.PI*H,n=Math.round(per/6);
+  for(var i=0;i<n;i++){var s=i/n*per,px,py;
+    if(s<straight){px=x0+H+s;py=cy-H;}else if(s<straight+Math.PI*H){var a1=(s-straight)/H-Math.PI/2;px=x1-H+Math.cos(a1)*H;py=cy+Math.sin(a1)*H;}
+    else if(s<2*straight+Math.PI*H){px=x1-H-(s-straight-Math.PI*H);py=cy+H;}else{var a2=(s-2*straight-Math.PI*H)/H+Math.PI/2;px=x0+H+Math.cos(a2)*H;py=cy+Math.sin(a2)*H;}
+    var zk=zoneAt(px),lit2=zk?Math.max(Z[zk].c,Z[zk].f):0;
+    mctx.fillStyle=rgba(zk?mixc(M_LIGHT[zk],[255,255,255],.3):mixc(M_LIGHT.sh,M_LIGHT.s,(px-x0)/(x1-x0)),zk?.45+.5*lit2:.3);mctx.beginPath();mctx.arc(px,py,1.2+(zk?.4*lit2:0),0,7);mctx.fill();}
+  /* the voice: a slim bar of light */
   var tx=slX(st.disp.p);slThumb=slThumb==null?tx:slThumb+(tx-slThumb)*Math.min(1,dt*14);
-  var col=mixc(M_LIGHT.sh,M_LIGHT.s,st.disp.p);
-  if(active&&!st.complete){var nsp=Math.random()<.5+loud?2:1;for(var q=0;q<nsp;q++)SPARKS.push({x:slThumb+(Math.random()-.5)*6,y:cy+(Math.random()-.5)*6,vx:(Math.random()-.5)*40-(tx-slThumb)*2,vy:(Math.random()-.5)*40-12,a:0,life:.45+Math.random()*.4,s:2+Math.random()*2.5,j:Math.random()*10,c:col});}
+  var tc=mixc(mixc(M_LIGHT.sh,M_LIGHT.s,st.disp.p),[255,255,255],.45),on=active&&!st.complete?1:.45;
+  mctx.fillStyle=rgba(tc,on);mctx.beginPath();if(mctx.roundRect)mctx.roundRect(slThumb-2,cy-H+3,4,2*H-6,2);else mctx.rect(slThumb-2,cy-H+3,4,2*H-6);mctx.fill();
+  /* sparkles: tiny bright points that blink in place beside the voice, no trail */
+  if(active&&!st.complete&&Math.random()<.35+loud*.5)SPARKS.push({x:slThumb+(Math.random()-.5)*34,y:cy+(Math.random()-.5)*(2*H-8),a:0,life:.22+Math.random()*.2,s:1.6+Math.random()*1.4});
   SPARKS=SPARKS.filter(function(p){p.a+=dt;return p.a<p.life;});
-  SPARKS.forEach(function(p){p.x+=p.vx*dt;p.y+=p.vy*dt;var k=1-p.a/p.life,tw=.6+.4*Math.abs(Math.sin(p.a*24+p.j)),L=p.s*k;
-    mctx.strokeStyle=rgba(mixc(p.c,[255,255,255],.5),k*tw);mctx.lineWidth=1.1;mctx.beginPath();mctx.moveTo(p.x-L,p.y);mctx.lineTo(p.x+L,p.y);mctx.moveTo(p.x,p.y-L);mctx.lineTo(p.x,p.y+L);mctx.stroke();});
-  var on=active?1:.5,rr=5+3*loud;
-  mctx.strokeStyle=rgba(col,.9*on);mctx.lineWidth=2;mctx.beginPath();mctx.arc(slThumb,cy,rr+4,0,7);mctx.stroke();
-  mctx.fillStyle=rgba(mixc(col,[255,255,255],.6),on);mctx.beginPath();mctx.arc(slThumb,cy,rr,0,7);mctx.fill();
+  SPARKS.forEach(function(p){var k=Math.sin(Math.PI*p.a/p.life),L=p.s*k;mctx.strokeStyle='rgba(255,255,255,'+(.95*k)+')';mctx.lineWidth=1;
+    mctx.beginPath();mctx.moveTo(p.x-L,p.y);mctx.lineTo(p.x+L,p.y);mctx.moveTo(p.x,p.y-L);mctx.lineTo(p.x,p.y+L);mctx.stroke();});
+  /* names: the sound inside its zone, the place above it */
+  Object.keys(Z).forEach(function(k){var z=Z[k],lit=Math.max(z.c,z.f);mctx.textAlign='center';mctx.lineJoin='round';
+    mctx.font='700 14px Inter,system-ui,sans-serif';mctx.lineWidth=5;mctx.strokeStyle='rgba(14,15,20,.85)';mctx.strokeText(k==='s'?'SSS':'SHH',z.cx,cy+5);
+    mctx.fillStyle=z.f>.55?'#fff':rgba(M_LIGHT[k],.95);mctx.fillText(k==='s'?'SSS':'SHH',z.cx,cy+5);
+    mctx.font='500 12.5px Inter,system-ui,sans-serif';mctx.fillStyle='rgba(255,255,255,'+(.5+.45*lit)+')';mctx.fillText(k==='s'?'Sunflower Hill':'Shell Beach',z.cx,cy-H-12);});
   mctx.font='500 11.5px Inter,system-ui,sans-serif';mctx.fillStyle='rgba(255,255,255,.42)';
   mctx.textAlign='left';mctx.fillText('SHH · soft',4,MH-4);mctx.textAlign='right';mctx.fillText('sharp · SSS',MW-4,MH-4);
 }
