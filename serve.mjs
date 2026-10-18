@@ -30,4 +30,4 @@ createServer(async (req, res) => {
   } catch {
     res.writeHead(404).end('Not found');
   }
-}).listen(port, () => console.log(`Sparkbook running at http://localhost:${port}`));
+}).listen(port, () => console.log(`Soundbook running at http://localhost:${port}`));

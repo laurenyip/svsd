@@ -1,8 +1,8 @@
 {
-  "name": "sparkbook",
-  "version": "0.1.0",
+  "name": "soundbook",
+  "version": "0.2.0",
   "private": true,
-  "description": "A picture book children draw with their voice — s vs sh speech practice prototype.",
+  "description": "Soundbook: storybooks children move forward with their voice. SSS vs SHH speech practice for kids with hearing aids or cochlear implants.",
   "type": "module",
   "scripts": {
     "start": "node serve.mjs"

@@ -1,4 +1,4 @@
-# SPARKBOOK — presentation screenplay (draft 1)
+# SOUNDBOOK — presentation screenplay (draft 1)
 
 **Runtime target:** 6:00 (hard cap 7:00) · **Narration:** ~830 words at a relaxed ~140 wpm
 **What they grade:** (1) picking the right problems, (2) depth of thinking on them, (3) craft of the result.
@@ -7,7 +7,7 @@ Every scene below is there to earn one of those three. The tag on each scene say
 **Formats used**
 - `SCREEN`: screen recording of the prototype (record at 1440×900, cursor hidden unless noted)
 - `CAM`: me on camera, talking head
-- `SLIDE`: one simple full-bleed card in the Sparkbook style (paper or yellow, Bricolage headline)
+- `SLIDE`: one simple full-bleed card in the Soundbook style (paper or yellow, Bricolage headline)
 - `VO`: voice-over over whatever is on screen
 - `[ ]`: things to fill in or check before filming
 
@@ -24,7 +24,7 @@ page as a sticker. The flower blinks, then squints happily: *you did it!*
 > **VO:** This snake was drawn by a voice. Not by tapping or tracing, but by the sound "s".
 > I want to show you how I got here, and mostly the problems I had to solve along the way.
 
-`SLIDE`: **Sparkbook**: *a picture book you draw with your voice.*
+`SLIDE`: **Soundbook**: *a picture book you draw with your voice.*
 
 ---
 
@@ -158,7 +158,7 @@ then *My book* with the strip of stickers over dates.
 > Next I'd put it in front of a speech therapist and a few families, tune the thresholds with real
 > hearing-aid and implant users, and test it in noisy living rooms. Thanks for watching.
 
-`SLIDE`: end card, the snake and ship stickers on yellow. **Sparkbook.**
+`SLIDE`: end card, the snake and ship stickers on yellow. **Soundbook.**
 
 ---
 
@@ -172,7 +172,7 @@ then *My book* with the strip of stickers over dates.
 | 4 | SCREEN | Ship page completion → "The end!" → My book | Pre-fill the book with a few days of entries first. |
 | 5 | SCREEN | Cover page idle for 6 s | For the craft montage. |
 | 6 | CAM | Scenes 2 and 8 | Window light, eye level. |
-| 7 | SLIDE | Title, audience stickers, frequency bar, end card | Build in the Sparkbook style. |
+| 7 | SLIDE | Title, audience stickers, frequency bar, end card | Build in the Soundbook style. |
 | 8 | SCREEN | `[the X clip]` + Apple Watch Breathe | Check you're allowed to show them; credit both on screen. |
 
 ## Before filming

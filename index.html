@@ -1,113 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Sparkbook</title>
-  <meta name="description" content="A picture book children draw with their voice.">
-  <meta name="theme-color" content="#f5f2ea">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Sparkbook">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="format-detection" content="telephone=no">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soundbook</title>
+<meta http-equiv="refresh" content="0; url=soundbook/">
+<style>body{font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;background:#E9E9E9;color:#000}a{color:#2F5BB7}</style>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="logo">Sparkbook</div>
-      <nav class="dots" id="dots" aria-label="Pages"></nav>
-      <div class="top-right">
-        <span class="mode" id="mode" hidden></span>
-        <button class="pill" id="bookBtn">My book</button>
-      </div>
-    </header>
-
-    <main class="stage-wrap" id="stageWrap">
-      <!-- Cover -->
-      <section class="screen is-active" id="cover">
-        <div class="card sun-card">
-          <div class="stickers" aria-hidden="true">
-            <span class="sticker s1">🐍</span><span class="sticker s2">⛵</span><span class="sticker s3">🌙</span>
-            <span class="sticker s4">🐚</span><span class="sticker s5">🎈</span><span class="sticker s6">⭐</span>
-          </div>
-          <div class="cover-inner">
-            <p class="kicker">a picture book for little voices</p>
-            <h1>Draw the story<br>with your <span class="rainbow"><i>v</i><i>o</i><i>i</i><i>c</i><i>e</i></span></h1>
-            <button class="pill primary big" id="startBtn">Open the book</button>
-            <p class="fine">We’ll ask for the microphone. Sounds never leave this device.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Story page -->
-      <section class="screen" id="page">
-        <div class="card paper-card page-card">
-          <canvas id="stage"></canvas>
-          <div class="page-top" id="pageTop">
-            <span class="page-no" id="pageNo">Page one</span>
-            <div class="status" id="status"></div>
-          </div>
-          <div class="page-bottom" id="pageBottom">
-            <div class="slot-left">
-              <button class="pill grown" id="setBtn"><span class="wave" aria-hidden="true"></span><span id="setLabel">Grown-up: say the sound</span></button>
-              <button class="pill primary next" id="nextBtn" hidden><span class="fill"></span><span class="lbl">Turn the page →</span></button>
-            </div>
-            <p class="line" id="line"></p>
-            <div class="flower">
-              <canvas id="flower"></canvas>
-              <span id="warmth">listening</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- The end -->
-      <section class="screen" id="end">
-        <div class="card sun-card">
-          <div class="end-inner">
-            <p class="kicker" id="endDate"></p>
-            <h2>The <span class="rainbow"><i>e</i><i>n</i><i>d</i></span>!</h2>
-            <p class="sub" id="endSub">Your voice drew these pictures today.</p>
-            <div class="end-thumbs" id="endThumbs"></div>
-            <div class="row">
-              <button class="pill" id="againBtn">Read again</button>
-              <button class="pill primary" id="openBookBtn">Open my book</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- The book (record over time) -->
-      <section class="screen" id="book">
-        <div class="card paper-card book-card">
-          <div class="book-head">
-            <div>
-              <h2>My book</h2>
-              <p class="muted">Every page your voice finished, oldest to newest.</p>
-            </div>
-            <div class="row">
-              <button class="pill ghost" id="clearBtn">Clear</button>
-              <button class="pill primary" id="closeBookBtn">Back to the story</button>
-            </div>
-          </div>
-          <div id="shelves"></div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="hint" id="hint">
-      <span class="hint-keys">No mic? Hold <kbd>S</kbd> for “sss” or <kbd>H</kbd> for “shhh” — or press and hold on the page (left = shhh, right = sss).</span>
-      <span class="hint-touch">No mic? Press and hold on the page — left side is “shhh”, right side is “sss”.</span>
-    </footer>
-  </div>
-  <script type="module" src="js/app.js"></script>
+<p>Opening <a href="soundbook/">Soundbook</a>…</p>
 </body>
 </html>
