@@ -241,7 +241,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .scene{height:380px;max-height:46%}
 
 /* ---------- the star meter sits right on the page ---------- */
-.bar.starmeter{height:150px;background:none;box-shadow:none;border-radius:0;overflow:visible}
+.bar.starmeter{height:190px;background:none;box-shadow:none;border-radius:0;overflow:visible}
 
 /* ---------- stickers that feel real ---------- */
 .stk .plate{perspective:520px}
@@ -886,14 +886,14 @@ function mSmooth(t){t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);}
 function meterLayout(){var t=(st.tg||[]).slice().sort(function(a,b){return tgt(a)-tgt(b);});
   if(t.length===1)return [{k:t[0],x:MW/2}];
   return t.map(function(k,i){return {k:k,x:MW*(i?.72:.28)};});}
-var LEAN=100; /* pixels of lean per unit of sound position */
+var LEAN=130; /* pixels of lean per unit of sound position */
 function pToX(p){var L=meterLayout();if(!L.length)return MW/2;var R=meterR();
   if(L.length===1)return L[0].x+Math.max(-R*1.3,Math.min(R*1.3,(p-tgt(L[0].k))*LEAN));
   var a=L[0],b=L[1],ta=tgt(a.k),tb=tgt(b.k),x=a.x+(p-ta)/(tb-ta)*(b.x-a.x);return Math.max(a.x-R,Math.min(b.x+R,x));}
 function xToP(x,w){var X=x*MW/w,L=meterLayout();if(!L.length)return x/w;
   if(L.length===1)return Math.max(0,Math.min(1,tgt(L[0].k)+(X-L[0].x)/LEAN));
   var a=L[0],b=L[1],ta=tgt(a.k),tb=tgt(b.k);return Math.max(0,Math.min(1,ta+(X-a.x)/(b.x-a.x)*(tb-ta)));}
-function meterR(){return Math.min(44,MH*.3);}
+function meterR(){return Math.min(62,MH*.33);}
 function mVerts(cx,cy,R){var v=[];for(var i=0;i<10;i++){var an=i*Math.PI/5-Math.PI/2,r=i%2?R*.5:R;v.push([cx+Math.cos(an)*r,cy+Math.sin(an)*r]);}return v;}
 function mStar(cx,cy,R){var v=mVerts(cx,cy,R),L=v.length,m=function(p,q){return [(p[0]+q[0])/2,(p[1]+q[1])/2];},s=m(v[L-1],v[0]);
   mctx.beginPath();mctx.moveTo(s[0],s[1]);for(var i=0;i<L;i++){var q=m(v[i],v[(i+1)%L]);mctx.arcTo(v[i][0],v[i][1],q[0],q[1],i%2?2:3.5);}mctx.closePath();}
@@ -953,7 +953,7 @@ function drawMeter(dt,now,active,P){
   orbLean+=(leanTo-orbLean)*Math.min(1,dt*4);
   var ox=L.length===1?near.x+orbLean:pToX(st.disp.p),cx=ox+(near.x-ox)*tight;
   var rot=t*(.35+.25*orbSwell)*(1-tight*.85),tilt=.38,ct=Math.cos(tilt),stt=Math.sin(tilt);
-  var Rs=R*1.42*(1+.03*Math.sin(t*1.4)+.18*orbSwell);
+  var Rs=R*1.32*(1+.03*Math.sin(t*1.4)+.15*orbSwell);
   var cool=mixc(LAV,mixc(M_LIGHT.sh,M_LIGHT.s,st.disp.p),Math.min(1,orbSwell*1.4)),hot=M_LIGHT[nearK];
   var list=ORB.map(function(o){
     var lon=o.lon+rot,ripple=.08*orbSwell*Math.sin(o.lat*5-t*7+o.lon*2);
@@ -972,8 +972,8 @@ function drawMeter(dt,now,active,P){
     mctx.fillStyle=rgba(col,Math.min(1,a));mctx.beginPath();mctx.arc(o.x,o.y,rad,0,7);mctx.fill();});
 
   /* each star's name sits on top */
-  L.forEach(function(T){var f=meterFill[T.k]||0,w=T.k==='s'?'SSS':'SHH';mctx.font='700 13px Inter,system-ui,sans-serif';mctx.textAlign='center';
-    mctx.fillStyle=f>.55?rgba(M_INK[T.k],1):rgba(M_LIGHT[T.k],.95);mctx.fillText(w,T.x,cy+5);});
+  L.forEach(function(T){var f=meterFill[T.k]||0,w=T.k==='s'?'SSS':'SHH';mctx.font='700 '+Math.round(R*.34)+'px Inter,system-ui,sans-serif';mctx.textAlign='center';
+    mctx.fillStyle=f>.55?rgba(M_INK[T.k],1):rgba(M_LIGHT[T.k],.95);mctx.fillText(w,T.x,cy+R*.12);});
 }
 
 /* live voice shape inside the round mic button: spiky green for SSS, wavy blue for SHH, calm rings when quiet */
