@@ -21,7 +21,7 @@ picked again to practise one sound (Home filters by SSS, SHH or both).
 
 | # | Chapter | Sound | Sticker |
 |---|---|---|---|
-| 1 | A Friend for Sid: Sid hisses to call a friend | SSS | mouse |
+| 1 | A Friend for Sid: Sid hisses to call a friend | SSS | squirrel |
 | 2 | The Stuck Ship: SHH makes the wind | SHH | ship |
 | 3 | Which Way?: sail to Shell Beach or Sunflower Hill | both | shell / sunflower |
 | 4 | Quiet on Shell Beach: tiptoe past sleeping crabs | SHH | starfish |
@@ -59,3 +59,5 @@ Pairs like **F vs TH** are much harder to tell apart, even for software, and are
 - `presentation/SCRIPT.md`: the presentation screenplay.
 - `explorations/sparkbook/`: the first prototype (a picture book drawn with the voice), kept for reference.
 - `serve.mjs`: a tiny zero-dependency static server (the mic needs `localhost` or HTTPS).
+
+Characters: `soundbook/img/sid.png` and `soundbook/img/squirrel.png`. The squirrel looks like a stock illustration, so check its licence before publishing.

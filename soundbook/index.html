@@ -263,37 +263,6 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .found i:nth-child(2){animation-delay:.47s}.found i:nth-child(3){animation-delay:.59s}.found i:nth-child(4){animation-delay:.71s}
 @keyframes land2{0%{transform:translateY(-24px) scale(1.4) rotate(14deg);opacity:0}60%{transform:scale(1.08,.9);opacity:1}100%{transform:none}}
 
-/* ---------- dark mode ---------- */
-:root{color-scheme:dark;--ground:#050507;--paper:#0E0F14;--surface:#1A1B22;--track:#272833;--ink:#F3F3F6;--ink-2:#9C9CA8;--line:#2E2F3A;
-  --s-bg:#1D3311;--s-ink:#A9E07A;--sh-bg:#172447;--sh-ink:#9DB7FF;--ch-bg:#3A2216;--ch-ink:#FFB48C;--f-bg:#2A1F45;--f-ink:#C9B2FF;--focus:#9DB7FF}
-.device{box-shadow:0 0 0 10px #1c1c1f,0 0 0 11.5px #3b3b3e,0 0 0 13px #0b0b0d,0 40px 80px -30px rgba(0,0,0,.8)}
-.sbar{color:#fff}.homebar{background:#fff}
-.device.on-scene .sbar{color:#000}
-.btn{background:var(--ink);color:#0E0F14}
-.btn.soft{background:var(--surface);color:var(--ink)}
-.glass{background:rgba(24,25,32,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 2px 10px rgba(0,0,0,.35);color:#fff}
-.gubtn svg *,.closebtn svg *{stroke:#fff}
-.pagectl i{background:rgba(255,255,255,.3)}.pagectl i.on{background:#fff}
-.navbtn{color:#0A84FF}
-.field input[type=text]{background:var(--surface);color:var(--ink);border-color:var(--line)}
-.chip{background:var(--surface);color:var(--ink);border-color:var(--line)}
-.chip[aria-pressed="true"]{background:var(--ink);color:#0E0F14;border-color:var(--ink)}
-.pillbtn{background:var(--surface);color:var(--ink);border-color:var(--line)}
-.scrim{background:rgba(0,0,0,.55)}
-.sheet{background:#1C1D24;box-shadow:0 -10px 40px rgba(0,0,0,.6)}
-.sheet .opt{background:var(--surface);border-color:var(--line);color:var(--ink)}
-.sheet .opt[aria-pressed="true"]{background:#2A2B35;border-color:var(--ink)}
-.grabber{background:#4A4B55}
-.mic .disc{background:#272833}
-.mic.live .disc{background:#1A1B22}
-.mic .ring circle:first-child{stroke:rgba(255,255,255,.12)}
-#ringFg{stroke:#fff}
-.toast{background:rgba(58,58,66,.96)}
-.stk.t-s{--tb:#22401A}.stk.t-sh{--tb:#1C2D5C}.stk.t-ch{--tb:#4A2A1A}.stk.t-f{--tb:#33255A}
-.stk .plate{background:radial-gradient(120% 100% at 28% 18%,rgba(255,255,255,.16) 0,var(--tb) 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 12px 22px -16px rgba(0,0,0,.9)}
-.stk .new{background:#fff;color:#000}
-.found i{background:radial-gradient(120% 100% at 28% 18%,rgba(255,255,255,.14) 0,#22232B 72%)}
-
 /* ---------- small mic toggle ---------- */
 .barwrap{position:relative}
 .mic.mini{position:absolute;top:4px;right:2px;z-index:2;width:38px;height:38px;border-radius:50%;padding:0;display:grid;place-items:center;gap:0;
@@ -387,6 +356,24 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 #moon{transition:filter 1s}#moon.glow{filter:drop-shadow(0 0 14px #FFF1C1)}
 .device.on-scene.night .sbar{color:#fff}
 .device.night .gf *{stroke:#C9CFF5!important}
+
+/* ---------- light mode ---------- */
+.bar.starmeter{height:118px}
+.mic.mini{box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.mic.mini.muted{background:#FFE4E4;color:#D23B3B}
+.seg button[aria-pressed="true"]{color:#fff}
+.tag.ok{background:#E8FFD9;color:#38780D}.tag.part{background:#FFF1D6;color:#8A5A00}
+.snd-s .meterbar i,.snd-s .trend{color:#6FB33A}.snd-sh .meterbar i,.snd-sh .trend{color:#4E74E0}
+.fchips button[aria-pressed="true"]{color:#fff}
+.chap.next .cnum{color:#fff}.chap.done .cnum{background:#B6DE6E;color:#1F3A0A}
+.bc-body .meterbar i{background:#7DB83A}
+.tabbar{background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),0 10px 30px rgba(0,0,0,.14)}
+.tabbar button{color:#7A7A7A}.tabbar button[aria-current="true"]{color:#000;background:rgba(0,0,0,.06)}
+.dust{background:rgba(150,120,70,.55)}
+/* a faint silhouette of who is about to appear */
+.gf image{filter:brightness(0);opacity:.3}
+.device.night .gf image{filter:brightness(0) invert(1);opacity:.4}
+#wChars{gap:8px;align-items:flex-end}
 
 /* ---------- star style switcher (outside the phone) ---------- */
 .vpick{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:6px;width:190px;
@@ -593,9 +580,9 @@ var ART={
  sunflower:(function(){var p='';for(var k=0;k<12;k++)p+='<ellipse cx="50" cy="20" rx="7" ry="14" fill="#F7C548" transform="rotate('+(k*30)+' 50 38)"/>';return '<svg viewBox="0 0 100 100"><path d="M50 50V98" stroke="#6FA544" stroke-width="6"/><path d="M50 80q-18 -14 -28 -2q14 10 28 2z" fill="#7FB653"/>'+p+'<circle cx="50" cy="38" r="12" fill="#9C6B3E"/></svg>';})(),
  chick:'<svg viewBox="0 0 100 100"><ellipse cx="50" cy="62" rx="28" ry="26" fill="#F7D34A"/><circle cx="50" cy="36" r="18" fill="#F7D34A"/><path d="M44 18q6 -10 10 0" fill="none" stroke="#F2B92E" stroke-width="4" stroke-linecap="round"/><path d="M60 38l10 3l-10 4z" fill="#F29A4A"/><circle cx="54" cy="33" r="2.8" fill="#1F1C17"/><path d="M30 62q-10 -2 -12 8q10 2 14 -4" fill="#F2B92E"/><path d="M42 88v8M58 88v8" stroke="#F29A4A" stroke-width="4" stroke-linecap="round"/></svg>',
  feather:'<svg viewBox="0 0 100 100"><path d="M24 86Q30 40 74 14Q84 46 52 72Q38 82 24 86Z" fill="#C8B4EC"/><path d="M24 86Q46 52 72 18" fill="none" stroke="#8E74C7" stroke-width="3" stroke-linecap="round"/><path d="M40 64l-10 -4M48 52l-10 -6M58 40l-8 -8M44 70l8 4M54 58l10 2M62 46l10 0" stroke="#8E74C7" stroke-width="2" stroke-linecap="round"/></svg>',
- snake:'<svg viewBox="0 0 120 90"><path d="M12 70C12 50 36 48 46 60C56 72 76 72 80 56C84 40 70 30 82 18" fill="none" stroke="#7DB83A" stroke-width="16" stroke-linecap="round"/><path d="M12 70C12 50 36 48 46 60C56 72 76 72 80 56C84 40 70 30 82 18" fill="none" stroke="#B6DE6E" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/><circle cx="88" cy="16" r="15" fill="#7DB83A"/><path d="M82 15q3 3 6 0M91 15q3 3 6 0" stroke="#1F1C17" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="80" cy="21" r="3.5" fill="#F4A3A0" opacity=".7"/><path d="M102 18l9 -2M102 18l8 4" stroke="#E0533D" stroke-width="2" stroke-linecap="round"/></svg>',
+ snake:'<svg viewBox="0 0 120 90"><image href="img/sid.png" x="15" y="-2" width="90" height="94" preserveAspectRatio="xMidYMid meet"/></svg>',
  ship:'<svg viewBox="0 0 120 90"><path d="M10 74q12 -8 25 0t25 0t25 0t25 0" fill="none" stroke="#8FB0F5" stroke-width="5" stroke-linecap="round"/><path d="M22 56h76l-12 16H34z" fill="#4E74E0"/><path d="M58 8v48" stroke="#1F1C17" stroke-width="3"/><path d="M60 12q26 18 0 40z" fill="#FBF8F2" stroke="#BFD0FA" stroke-width="2"/><path d="M56 16q-22 16 0 34z" fill="#DCE6FC"/><circle cx="46" cy="64" r="3" fill="#FBF8F2"/><circle cx="60" cy="64" r="3" fill="#FBF8F2"/><circle cx="74" cy="64" r="3" fill="#FBF8F2"/></svg>',
- mouse:'<svg viewBox="0 0 100 100"><path d="M80 72q14 4 12 -12" fill="none" stroke="#C9A9A0" stroke-width="4" stroke-linecap="round"/><ellipse cx="50" cy="66" rx="32" ry="22" fill="#B9B3AC"/><circle cx="30" cy="40" r="13" fill="#B9B3AC"/><circle cx="30" cy="40" r="7" fill="#F4B6B0"/><circle cx="56" cy="38" r="13" fill="#B9B3AC"/><circle cx="56" cy="38" r="7" fill="#F4B6B0"/><circle cx="42" cy="60" r="3" fill="#1F1C17"/><circle cx="24" cy="70" r="4" fill="#E58B86"/><circle cx="36" cy="68" r="4" fill="#F4B6B0" opacity=".7"/></svg>',
+ mouse:'<svg viewBox="0 0 100 100"><image href="img/squirrel.png" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid meet"/></svg>',
  starfish:'<svg viewBox="0 0 100 100"><path d="M50 8C55 30 60 34 90 38C66 52 64 58 74 90C54 72 46 72 26 90C36 58 34 52 10 38C40 34 45 30 50 8Z" fill="#F7A07E" stroke="#E5785A" stroke-width="3" stroke-linejoin="round"/><circle cx="50" cy="40" r="3" fill="#FBE0D2"/><circle cx="38" cy="54" r="2.5" fill="#FBE0D2"/><circle cx="62" cy="54" r="2.5" fill="#FBE0D2"/><circle cx="50" cy="64" r="2.5" fill="#FBE0D2"/></svg>',
  glass:'<svg viewBox="0 0 100 100"><path d="M30 22h40l-6 66H36z" fill="#FFF8D6" stroke="#E9D27A" stroke-width="3" stroke-linejoin="round"/><path d="M33 40h34l-4 46H37z" fill="#FFE36B"/><circle cx="45" cy="62" r="3" fill="#fff"/><circle cx="55" cy="72" r="2.5" fill="#fff"/><circle cx="50" cy="52" r="2" fill="#fff"/><path d="M58 22l10-16" stroke="#F2866B" stroke-width="4" stroke-linecap="round"/><circle cx="70" cy="30" r="10" fill="#9BD25A"/><circle cx="70" cy="30" r="6" fill="#C9EE95"/></svg>',
  stars:'<svg viewBox="0 0 100 100"><path d="M50 8l11 27 29 2-22 19 7 29-25-16-25 16 7-29-22-19 29-2z" fill="#FFD84D" stroke="#F2B92E" stroke-width="3" stroke-linejoin="round"/><path d="M42 52q8 6 16 0" stroke="#9C6B3E" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="42" cy="44" r="3" fill="#1F1C17"/><circle cx="58" cy="44" r="3" fill="#1F1C17"/></svg>',
@@ -607,7 +594,7 @@ function sv(name){return ART[name].replace('<svg ','<svg aria-hidden="true" ');}
 function nest(name,x,y,w,h,vb){return '<svg x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" viewBox="'+vb+'">'+inner(name)+'</svg>';}
 function pal(i,name,x,y,w){var s0=nest(name,x,y,w,w,'0 0 100 100');return '<g class="gf" id="gfr'+i+'">'+s0+'</g><g class="friend" id="fr'+i+'">'+s0+'</g>';}
 function chip(s){return '<span class="k k-'+s+'">'+({s:'SSS',sh:'SHH',ch:'CH',f:'FFF'})[s]+'</span>';}
-$('wChars').innerHTML='<div style="width:130px">'+ART.snake+'</div><div style="width:130px">'+ART.ship+'</div>';
+$('wChars').innerHTML='<div style="width:170px">'+ART.snake+'</div><div style="width:120px">'+ART.mouse+'</div>';
 
 /* ---------- scenes (400x440, room left at the top for the page control) ---------- */
 var SKY='<defs><linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7F0DC"/><stop offset="1" stop-color="#F7F1E2"/></linearGradient>'+
@@ -684,7 +671,7 @@ function cover(kind){
 
 /* ---------- story ---------- */
 /* ---------- the book: one adventure in chapters, each practising a sound ---------- */
-var P_CHOICE={kind:'choice',scene:crossing,text:'Sid and Mouse hop on the ship. Where should they go?',
+var P_CHOICE={kind:'choice',scene:crossing,text:'Sid and Squirrel hop on the ship. Where should they go?',
    instr:'Make '+chip('sh')+' for Shell Beach or '+chip('s')+' for Sunflower Hill',emit:[214,330],
    endS:'Sssuper! They sailed to Sunflower Hill and had a picnic in the sunshine.',
    endSh:'Shhh… They sailed to Shell Beach and found the shiniest shell in the sand.'};
@@ -693,18 +680,18 @@ var BOOK=[
    {kind:'setup',scene:function(){return clearing(false,true);},text:'Sid the snake lives in a quiet clearing. Today, Sid feels a little lonely.'},
    {kind:'sound',snd:'s',scene:function(){return clearing(true,false);},text:'Sid wants to call a friend. Can you help him hiss?',
     instr:'Make a long '+chip('s')+' sound to call Sid’s friend',loot:'mouse',emit:[264,296],target:function(){return [340,352];},
-    sharper:'Sharper, like a tiny whistle',softer:'A little softer',okay:'A mouse heard you!',done:'Sid has a friend!'}]},
+    sharper:'Sharper, like a tiny whistle',softer:'A little softer',okay:'A squirrel heard you!',done:'Sid has a friend!'}]},
  {id:'c2',n:2,name:'The Stuck Ship',skill:['sh'],icon:'ship',pages:[
-   {kind:'setup',scene:river,text:'Sid and Mouse find a little ship by the river. They want to sail away!'},
+   {kind:'setup',scene:river,text:'Sid and Squirrel find a little ship by the river. They want to sail away!'},
    {kind:'sound',snd:'sh',scene:river,text:'But the ship is stuck. There’s no wind!',
     instr:'Make a long '+chip('sh')+' sound to make the wind',loot:'ship',emit:[-10,200],target:function(){return [96+st.shipX,214];},
     sharper:'A little sharper',softer:'Softer, like quiet waves',okay:'Whoosh!',done:'The ship is sailing!'}]},
  {id:'c3',n:3,name:'Which Way?',skill:['sh','s'],icon:'sunflower',pages:[P_CHOICE]},
  {id:'c4',n:4,name:'Quiet on Shell Beach',skill:['sh'],icon:'starfish',pages:[
    {kind:'setup',scene:beach,text:'On Shell Beach, three baby crabs are fast asleep in the sand.'},
-   {kind:'sound',snd:'sh',scene:beach,text:'Mouse wants to see the starfish. Help him tiptoe past.',
+   {kind:'sound',snd:'sh',scene:beach,text:'Squirrel wants to see the starfish. Help him tiptoe past.',
     instr:'Make a long, soft '+chip('sh')+' so the crabs stay asleep',loot:'starfish',emit:[40,350],target:function(){return [335,285];},
-    sharper:'A little sharper',softer:'Softer, like a whisper',okay:'Shhh… they’re still asleep!',done:'Mouse found a starfish!',
+    sharper:'A little sharper',softer:'Softer, like a whisper',okay:'Shhh… they’re still asleep!',done:'Squirrel found a starfish!',
     onWin:function(){reveal('fr0');var t=$('tiptoe');if(t)t.classList.add('go');}}]},
  {id:'c5',n:5,name:'The Fizzy Picnic',skill:['s'],icon:'glass',pages:[
    {kind:'setup',scene:function(){return picnic(false);},text:'Up on Sunflower Hill, the friends lay out a picnic in the sun.'},
@@ -726,7 +713,7 @@ var BOOK=[
 BOOK.forEach(function(c){c.title='Chapter '+c.n+' · '+c.name;});
 var STORY=BOOK[0];
 var STICKERS=[
-  {id:'mouse',word:'mou<mark class="s">s</mark>e',hint:'Chapter 1'},{id:'ship',word:'<mark class="sh">sh</mark>ip',hint:'Chapter 2'},
+  {id:'mouse',word:'<mark class="s">s</mark>quirrel',hint:'Chapter 1'},{id:'ship',word:'<mark class="sh">sh</mark>ip',hint:'Chapter 2'},
   {id:'sunflower',word:'<mark class="s">s</mark>unflower',hint:'Chapter 3 · Sunflower Hill'},{id:'shell',word:'<mark class="sh">sh</mark>ell',hint:'Chapter 3 · Shell Beach'},
   {id:'starfish',word:'<mark class="s">s</mark>tarfi<mark class="sh">sh</mark>',hint:'Chapter 4'},{id:'glass',word:'gla<mark class="s">ss</mark>',hint:'Chapter 5'},
   {id:'stars',word:'<mark class="s">s</mark>tar<mark class="s">s</mark>',hint:'Chapter 6'},
@@ -1053,53 +1040,54 @@ function pToX(p){var L=meterLayout();if(!L.length)return MW/2;var R=meterR();
   if(L.length===1)return L[0].x+Math.max(-R*1.3,Math.min(R*1.3,(p-tgt(L[0].k))*LEAN));
   var a=L[0],b=L[1],ta=tgt(a.k),tb=tgt(b.k),x=a.x+(p-ta)/(tb-ta)*(b.x-a.x);return Math.max(a.x-R,Math.min(b.x+R,x));}
 /* the choice page uses a sparkly slider instead of stars: SHH (Shell Beach) on the left, SSS (Sunflower Hill) on the right */
-var SL_PAD=14,SPARKS=[],slThumb=null;
+var SL_PAD=10,SPARKS=[],slThumb=null;
+var SL_SOFT={s:hex('#E8FFD9'),sh:hex('#E3ECFF')},SL_FILL={s:hex('#A6DC6A'),sh:hex('#93B2FF')};
 function slX(p){return SL_PAD+p*(MW-2*SL_PAD);}
-/* one wide band of lights, the same height end to end: SHH (Shell Beach) on the left, SSS (Sunflower Hill) on the right */
+function slPill(x,y,w,h){var r=h/2;mctx.beginPath();mctx.moveTo(x+r,y);mctx.lineTo(x+w-r,y);mctx.arc(x+w-r,y+r,r,-Math.PI/2,Math.PI/2);mctx.lineTo(x+r,y+h);mctx.arc(x+r,y+r,r,Math.PI/2,Math.PI*1.5);mctx.closePath();}
+/* the slider between the two sounds: soft SHH on the left, sharp SSS on the right. A page that needs one sound shows one
+   target zone (one direction to go); the choice page shows both. Holding the sound fills the zone. */
 function drawSlider(dt,t,active,P){
-  var cy=MH/2+6,H=19,x0=SL_PAD,x1=MW-SL_PAD,loud=active?st.disp.loud:0,half=tol()*(x1-x0);
-  var nearK=Math.abs(st.disp.p-tgt('s'))<Math.abs(st.disp.p-tgt('sh'))?'s':'sh',Z={};
-  ['sh','s'].forEach(function(k){if(!st.sounds[k])return;
+  var x0=SL_PAD,x1=MW-SL_PAD,H=22,cy=MH/2-2,top=cy-H,loud=active?st.disp.loud:0,half=tol()*(x1-x0),keys=(st.tg||[]).slice();
+  var ZL=[];
+  var nearK=keys.length>1?(Math.abs(st.disp.p-tgt('s'))<Math.abs(st.disp.p-tgt('sh'))?'s':'sh'):keys[0];
+  /* the track */
+  mctx.save();mctx.shadowColor='rgba(40,40,60,.10)';mctx.shadowBlur=10;mctx.shadowOffsetY=3;
+  slPill(x0,top,x1-x0,2*H);var g=mctx.createLinearGradient(x0,0,x1,0);g.addColorStop(0,'#D9E5FF');g.addColorStop(.5,'#EEF0F4');g.addColorStop(1,'#E2F6CF');mctx.fillStyle=g;mctx.fill();mctx.restore();
+  slPill(x0,top,x1-x0,2*H);mctx.strokeStyle='rgba(0,0,0,.06)';mctx.lineWidth=1;mctx.stroke();
+  /* target zones */
+  keys.forEach(function(k){
     var d=Math.abs(st.disp.p-tgt(k)),goal=active&&k===nearK?Math.max(0,1-d/.45)*Math.min(1,st.disp.loud*3):0;
     meterC[k]=(meterC[k]||0)+(goal-(meterC[k]||0))*Math.min(1,dt*6);
-    var pr=st.choice===k?1:(st.holdFor===k?Math.min(1,st.hold):0);meterFill[k]=(meterFill[k]||0)+(pr-(meterFill[k]||0))*Math.min(1,dt*10);
-    var cx=slX(tgt(k));Z[k]={a:Math.max(x0,cx-Math.max(half,30)),b:Math.min(x1,cx+Math.max(half,30)),cx:cx,c:meterC[k],f:meterFill[k]};});
-  function zoneAt(x){for(var k in Z)if(x>=Z[k].a&&x<=Z[k].b)return k;return null;}
-  /* soft light behind a zone the voice is close to */
-  Object.keys(Z).forEach(function(k){var z=Z[k],lit=Math.max(z.c,z.f);if(lit<.02)return;mctx.globalCompositeOperation='lighter';
-    var g=mctx.createRadialGradient(z.cx,cy,4,z.cx,cy,(z.b-z.a)*.8);g.addColorStop(0,rgba(M_LIGHT[k],.28*lit));g.addColorStop(1,rgba(M_LIGHT[k],0));
-    mctx.fillStyle=g;mctx.fillRect(z.a-30,cy-H-30,z.b-z.a+60,2*H+60);mctx.globalCompositeOperation='source-over';});
-  /* the band: a grid of points, coloured from SHH blue to SSS green */
-  for(var row=-2;row<=2;row++){var yy=cy+row*7.5;for(var xx=x0+H*.6+((row+2)%2)*3.5;xx<=x1-H*.6;xx+=7){
-    var k=zoneAt(xx),col=mixc(M_LIGHT.sh,M_LIGHT.s,(xx-x0)/(x1-x0)),a=.16,r=1.1;
-    if(k){var z=Z[k],lit=Math.max(z.c,z.f),on=z.f>=(cy+H-yy)/(2*H)-.02;col=mixc(M_LIGHT[k],[255,255,255],on?.35:0);a=on?.95:.28+.5*lit;r=on?1.5:1.2;}
-    mctx.fillStyle=rgba(col,a);mctx.beginPath();mctx.arc(xx,yy,r,0,7);mctx.fill();}}
-  /* the band's outline, traced evenly in lights */
-  var straight=(x1-x0)-2*H,per=2*straight+2*Math.PI*H,n=Math.round(per/6);
-  for(var i=0;i<n;i++){var s=i/n*per,px,py;
-    if(s<straight){px=x0+H+s;py=cy-H;}else if(s<straight+Math.PI*H){var a1=(s-straight)/H-Math.PI/2;px=x1-H+Math.cos(a1)*H;py=cy+Math.sin(a1)*H;}
-    else if(s<2*straight+Math.PI*H){px=x1-H-(s-straight-Math.PI*H);py=cy+H;}else{var a2=(s-2*straight-Math.PI*H)/H+Math.PI/2;px=x0+H+Math.cos(a2)*H;py=cy+Math.sin(a2)*H;}
-    var zk=zoneAt(px),lit2=zk?Math.max(Z[zk].c,Z[zk].f):0;
-    mctx.fillStyle=rgba(zk?mixc(M_LIGHT[zk],[255,255,255],.3):mixc(M_LIGHT.sh,M_LIGHT.s,(px-x0)/(x1-x0)),zk?.45+.5*lit2:.3);mctx.beginPath();mctx.arc(px,py,1.2+(zk?.4*lit2:0),0,7);mctx.fill();}
-  /* the voice: a slim bar of light */
+    var won=st.complete&&(P.kind==='sound'||st.choice===k),pr=won?1:(P.kind==='sound'||st.holdFor===k?Math.min(1,st.hold):0);
+    meterFill[k]=(meterFill[k]||0)+(pr-(meterFill[k]||0))*Math.min(1,dt*10);
+    var c=meterC[k],f=meterFill[k],lit=Math.max(c,f),w=Math.max(half,34),cx=slX(tgt(k)),za=Math.max(x0+4,cx-w),zb=Math.min(x1-4,cx+w),ink=k==='s'?M_INK.s:M_INK.sh;
+    mctx.save();if(lit>.02){mctx.shadowColor=rgba(SL_FILL[k],.9);mctx.shadowBlur=18*lit;}
+    slPill(za,top+4,zb-za,2*H-8);mctx.fillStyle=rgba(SL_SOFT[k],1);mctx.fill();mctx.restore();
+    if(f>.004){mctx.save();slPill(za,top+4,zb-za,2*H-8);mctx.clip();var fg=mctx.createLinearGradient(za,0,zb,0);fg.addColorStop(0,rgba(SL_FILL[k],1));fg.addColorStop(1,rgba(mixc(SL_FILL[k],[255,255,255],.3),1));
+      mctx.fillStyle=fg;mctx.fillRect(za,top,(zb-za)*f,2*H);mctx.restore();}
+    slPill(za,top+4,zb-za,2*H-8);mctx.setLineDash(lit>.5||f>0?[]:[5,4]);mctx.lineWidth=2;mctx.strokeStyle=rgba(ink,.55+.45*lit);mctx.stroke();mctx.setLineDash([]);
+    ZL.push({k:k,cx:cx,ink:ink});
+    if(P.kind==='choice'){mctx.font='600 12.5px Inter,system-ui,sans-serif';mctx.fillStyle=rgba(ink,.6+.4*lit);mctx.fillText(k==='s'?'Sunflower Hill':'Shell Beach',cx,top-10);}
+  });
+  /* the voice: a white knob that grows with loudness */
   var tx=slX(st.disp.p);slThumb=slThumb==null?tx:slThumb+(tx-slThumb)*Math.min(1,dt*14);
-  var tc=mixc(mixc(M_LIGHT.sh,M_LIGHT.s,st.disp.p),[255,255,255],.45),on=active&&!st.complete?1:.45;
-  mctx.fillStyle=rgba(tc,on);mctx.beginPath();if(mctx.roundRect)mctx.roundRect(slThumb-2,cy-H+3,4,2*H-6,2);else mctx.rect(slThumb-2,cy-H+3,4,2*H-6);mctx.fill();
-  /* sparkles: tiny bright points that blink in place beside the voice, no trail */
-  if(active&&!st.complete&&Math.random()<.35+loud*.5)SPARKS.push({x:slThumb+(Math.random()-.5)*34,y:cy+(Math.random()-.5)*(2*H-8),a:0,life:.22+Math.random()*.2,s:1.6+Math.random()*1.4});
+  var on=active&&!st.complete,rr=(12+4*loud)*(on?1:.85),rc=mixc(M_INK.sh,M_INK.s,st.disp.p);
+  mctx.save();mctx.shadowColor='rgba(30,30,50,.25)';mctx.shadowBlur=8;mctx.shadowOffsetY=2;mctx.fillStyle='#fff';mctx.beginPath();mctx.arc(slThumb,cy,rr,0,7);mctx.fill();mctx.restore();
+  mctx.lineWidth=3;mctx.strokeStyle=rgba(rc,on?1:.45);mctx.beginPath();mctx.arc(slThumb,cy,rr-1.5,0,7);mctx.stroke();
+  mctx.fillStyle=rgba(rc,on?1:.45);mctx.beginPath();mctx.arc(slThumb,cy,rr*.35,0,7);mctx.fill();
+  /* sparkles: tiny golden glints that blink in place beside the knob, no trail */
+  if(on&&Math.random()<.3+loud*.5)SPARKS.push({x:slThumb+(Math.random()-.5)*(rr*2+26),y:cy+(Math.random()-.5)*(2*H+6),a:0,life:.25+Math.random()*.2,s:2.2+Math.random()*1.8});
   SPARKS=SPARKS.filter(function(p){p.a+=dt;return p.a<p.life;});
-  SPARKS.forEach(function(p){var k=Math.sin(Math.PI*p.a/p.life),L=p.s*k;mctx.strokeStyle='rgba(255,255,255,'+(.95*k)+')';mctx.lineWidth=1;
-    mctx.beginPath();mctx.moveTo(p.x-L,p.y);mctx.lineTo(p.x+L,p.y);mctx.moveTo(p.x,p.y-L);mctx.lineTo(p.x,p.y+L);mctx.stroke();});
-  /* names: the sound inside its zone, the place above it */
-  Object.keys(Z).forEach(function(k){var z=Z[k],lit=Math.max(z.c,z.f);mctx.textAlign='center';mctx.lineJoin='round';
-    mctx.font='700 14px Inter,system-ui,sans-serif';mctx.lineWidth=5;mctx.strokeStyle='rgba(14,15,20,.85)';mctx.strokeText(k==='s'?'SSS':'SHH',z.cx,cy+5);
-    mctx.fillStyle=z.f>.55?'#fff':rgba(M_LIGHT[k],.95);mctx.fillText(k==='s'?'SSS':'SHH',z.cx,cy+5);
-    mctx.font='500 12.5px Inter,system-ui,sans-serif';mctx.fillStyle='rgba(255,255,255,'+(.5+.45*lit)+')';mctx.fillText(k==='s'?'Sunflower Hill':'Shell Beach',z.cx,cy-H-12);});
-  mctx.font='500 11.5px Inter,system-ui,sans-serif';mctx.fillStyle='rgba(255,255,255,.42)';
-  mctx.textAlign='left';mctx.fillText('SHH · soft',4,MH-4);mctx.textAlign='right';mctx.fillText('sharp · SSS',MW-4,MH-4);
+  SPARKS.forEach(function(p){var k=Math.sin(Math.PI*p.a/p.life),L=p.s*k;if(Math.hypot(p.x-slThumb,p.y-cy)<rr+2)return;
+    mctx.fillStyle='rgba(242,178,38,'+(.95*k)+')';mctx.beginPath();mctx.moveTo(p.x,p.y-L);mctx.quadraticCurveTo(p.x,p.y,p.x+L,p.y);mctx.quadraticCurveTo(p.x,p.y,p.x,p.y+L);
+    mctx.quadraticCurveTo(p.x,p.y,p.x-L,p.y);mctx.quadraticCurveTo(p.x,p.y,p.x,p.y-L);mctx.fill();});
+  /* the sound names sit on top of everything, with a white edge so the knob never hides them */
+  ZL.forEach(function(z){mctx.textAlign='center';mctx.font='800 15px Inter,system-ui,sans-serif';mctx.lineJoin='round';mctx.lineWidth=5;mctx.strokeStyle='rgba(255,255,255,.95)';mctx.strokeText(z.k==='s'?'SSS':'SHH',z.cx,cy+5);mctx.fillStyle=rgba(z.ink,1);mctx.fillText(z.k==='s'?'SSS':'SHH',z.cx,cy+5);});
+  mctx.font='500 12px Inter,system-ui,sans-serif';mctx.fillStyle='#8A8A8A';
+  mctx.textAlign='left';mctx.fillText('SHH · soft',x0+2,MH-4);mctx.textAlign='right';mctx.fillText('sharp · SSS',x1-2,MH-4);
 }
 function xToP(x,w){var X=x*MW/w,L=meterLayout();if(!L.length)return x/w;
-  if(L.length===2)return Math.max(0,Math.min(1,(X-SL_PAD)/(MW-2*SL_PAD)));
+  return Math.max(0,Math.min(1,(X-SL_PAD)/(MW-2*SL_PAD)));
   if(L.length===1)return Math.max(0,Math.min(1,tgt(L[0].k)+(X-L[0].x)/LEAN));
   var a=L[0],b=L[1],ta=tgt(a.k),tb=tgt(b.k);return Math.max(0,Math.min(1,ta+(X-a.x)/(b.x-a.x)*(tb-ta)));}
 function meterR(){return Math.min(62,MH*.33);}
@@ -1122,7 +1110,7 @@ function drawMeter(dt,now,active,P){
   if(mcv.width!==Math.round(r.width*D)||mcv.height!==Math.round(r.height*D)){mcv.width=Math.round(r.width*D);mcv.height=Math.round(r.height*D);}
   MW=r.width;MH=r.height;mctx.setTransform(D,0,0,D,0,0);mctx.clearRect(0,0,MW,MH);
   var L=meterLayout();if(!L.length)return;
-  if(L.length===2){drawSlider(dt,now/1000,active,P);return;}
+  drawSlider(dt,now/1000,active,P);return;
   var cy=MH/2-4,R=meterR(),loud=active?st.disp.loud:0,t=now/1000;
   orbSwell+=(loud-orbSwell)*Math.min(1,dt*(loud>orbSwell?8:2.5));
 
