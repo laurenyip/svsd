@@ -14,6 +14,24 @@ Then open http://localhost:5173 (it opens Soundbook) in Chrome or Safari and all
 No mic? Tap the round button for a demo voice, use **Play demo** in the grown-up tools, or drag the
 lights onto the star.
 
+## The book
+
+One adventure, **Sid's Big Adventure**, told in chapters. Progress is finishing chapters, and any chapter can be
+picked again to practise one sound (Home filters by SSS, SHH or both).
+
+| # | Chapter | Sound | Sticker |
+|---|---|---|---|
+| 1 | A Friend for Sid: Sid hisses to call a friend | SSS | mouse |
+| 2 | The Stuck Ship: SHH makes the wind | SHH | ship |
+| 3 | Which Way?: sail to Shell Beach or Sunflower Hill | both | shell / sunflower |
+| 4 | Quiet on Shell Beach: tiptoe past sleeping crabs | SHH | starfish |
+| 5 | The Fizzy Picnic: make the lemonade fizz | SSS | glass |
+| 6 | Home by Starlight: light the stars, then a lullaby | both | stars |
+| 7–8 | The Choo-Choo Train, Birthday Candles | CH, F | coming soon |
+
+Grown-ups get a **Progress report** (profile button, the grown-up sheet, or the Grown-ups tab): sessions,
+hold rate per sound with a trend, session history, target width, notes, and share as text.
+
 ## How a page works
 
 1. **The grown-up reads the line.** Each page needs one held sound: SSS (snake) or SHH (wind).

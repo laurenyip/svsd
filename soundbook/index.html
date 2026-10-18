@@ -340,6 +340,54 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 #rNotes{font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;resize:vertical}
 .rfoot{display:grid;gap:8px;margin-top:6px}
 
+/* ---------- home: chapters ---------- */
+.shelf-head .h1{font-size:26px}
+#books{gap:14px;padding-bottom:12px}
+.fchips{display:flex;gap:8px;flex-wrap:wrap}
+.fchips button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 15px;font-weight:600;font-size:14px}
+.fchips button[aria-pressed="true"]{background:var(--ink);color:#0E0F14;border-color:var(--ink)}
+.bookcard{display:grid;grid-template-columns:84px 1fr;gap:14px;background:var(--surface);border-radius:22px;padding:12px;align-items:center}
+.bc-cover{width:84px;height:104px;border-radius:14px;overflow:hidden;display:grid}.bc-cover svg{width:100%;height:100%}
+.bc-body{display:grid;gap:6px}.bc-body b{font:400 20px/1.2 var(--f-display)}
+.bc-body .meterbar i{background:#A9E07A}
+.bc-body .btn{padding:10px 16px;font-size:15px;margin-top:4px}
+.chlist{display:grid;gap:8px;margin-top:-6px}
+.chap{display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;text-align:left;border:0;background:var(--surface);border-radius:18px;padding:10px 12px;color:var(--ink)}
+.chap .cnum{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--track);font-weight:700;font-size:14px}
+.chap.done .cnum{background:#A9E07A;color:#10220A}
+.chap.next{box-shadow:inset 0 0 0 2px var(--ink)}
+.chap.next .cnum{background:var(--ink);color:#0E0F14}
+.chap.soon{opacity:.5}
+.chap b{font:400 17px/1.25 var(--f-display);display:block}
+.chap .sounds{display:flex;gap:6px;margin-top:4px;align-items:center;flex-wrap:wrap}
+.chap .k{font-size:12px;padding:0 3px}
+.upnext{font-size:12px;font-weight:600}.chap .soon{font-size:12px;color:var(--ink-2)}
+.chap .cart{display:grid;place-items:center}.chap .cart svg{width:42px;height:42px;filter:url(#diecut-sm)}
+.chap.soon .cart svg{filter:grayscale(1);opacity:.5}
+
+/* ---------- tab bar ---------- */
+.tabbar{position:absolute;left:16px;right:16px;bottom:26px;height:62px;border-radius:31px;display:grid;grid-template-columns:repeat(3,1fr);z-index:6;
+  background:rgba(30,31,40,.85);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 10px 30px rgba(0,0,0,.45)}
+.tabbar button{border:0;background:none;color:var(--ink-2);display:grid;place-items:center;align-content:center;gap:2px;font-size:11px;font-weight:600;border-radius:26px;margin:5px}
+.tabbar button[aria-current="true"]{color:#fff;background:rgba(255,255,255,.1)}
+.tabbar svg{width:22px;height:22px}
+#shelf,#stickers{padding-bottom:104px}
+#report .rscroll{padding-bottom:112px}
+#stkBack{display:none}
+
+/* ---------- new scenes ---------- */
+.zz text{animation:zz 2.6s ease-in-out infinite}.zz text:nth-child(2){animation-delay:.4s}.zz text:nth-child(3){animation-delay:.8s}
+@keyframes zz{0%,100%{opacity:.2;transform:translateY(0)}50%{opacity:.9;transform:translateY(-5px)}}
+.tiptoe{transition:transform 2.6s cubic-bezier(.4,.1,.3,1)}.tiptoe.go{transform:translateX(230px)}
+.fizz circle{opacity:0}.fizz.on circle{animation:fizz 1.6s ease-out infinite}
+.fizz.on circle:nth-child(2){animation-delay:.3s}.fizz.on circle:nth-child(3){animation-delay:.6s}.fizz.on circle:nth-child(4){animation-delay:.9s}.fizz.on circle:nth-child(5){animation-delay:1.2s}
+@keyframes fizz{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-40px)}}
+.skystars circle{opacity:.12;transition:opacity .7s}.skystars.on circle{opacity:1}
+.zzz{opacity:0;transition:opacity 1s}.zzz.on{opacity:1}
+#moon{transition:filter 1s}#moon.glow{filter:drop-shadow(0 0 14px #FFF1C1)}
+.device.on-scene.night .sbar{color:#fff}
+.device.night .gf *{stroke:#C9CFF5!important}
+
 /* ---------- star style switcher (outside the phone) ---------- */
 .vpick{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:6px;width:190px;
   background:rgba(20,20,22,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;padding:8px 10px;border-radius:20px;box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
@@ -383,6 +431,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
     <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect id="batt" x="2" y="2" width="18" height="9" rx="2.4"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" opacity=".45"/></svg></span></div>
   <div class="homebar" aria-hidden="true"></div>
   <div class="toast" id="toast" role="status" hidden></div>
+  <nav class="tabbar" id="tabbar" aria-label="Main" hidden><button type="button" data-tab="shelf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Home</span></button><button type="button" data-tab="stickers"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Stickers</span></button><button type="button" data-tab="report"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c.8-4.2 4-6.5 8-6.5s7.2 2.3 8 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Grown-ups</span></button></nav>
 
   <section class="screen" id="welcome" aria-label="Welcome">
     <div class="w-top">
@@ -498,7 +547,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
   <section class="screen" id="reward" aria-label="Story finished" hidden>
     <nav class="navbar end"><button class="navbtn" type="button" id="rwDone">Done</button></nav>
     <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
-    <div class="lbl">The end</div>
+    <div class="lbl" id="rwLbl">The end</div>
     <h1 class="h1" id="rwH">You made every sound in this story!</h1>
     <div><div class="lbl" style="margin-bottom:8px">Sounds you made</div><div class="row-chips" id="rwMade"></div></div>
     <div><div class="lbl" style="margin-bottom:8px">Stickers you earned</div><div class="found" id="rwFound"></div></div>
@@ -547,6 +596,10 @@ var ART={
  snake:'<svg viewBox="0 0 120 90"><path d="M12 70C12 50 36 48 46 60C56 72 76 72 80 56C84 40 70 30 82 18" fill="none" stroke="#7DB83A" stroke-width="16" stroke-linecap="round"/><path d="M12 70C12 50 36 48 46 60C56 72 76 72 80 56C84 40 70 30 82 18" fill="none" stroke="#B6DE6E" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/><circle cx="88" cy="16" r="15" fill="#7DB83A"/><path d="M82 15q3 3 6 0M91 15q3 3 6 0" stroke="#1F1C17" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="80" cy="21" r="3.5" fill="#F4A3A0" opacity=".7"/><path d="M102 18l9 -2M102 18l8 4" stroke="#E0533D" stroke-width="2" stroke-linecap="round"/></svg>',
  ship:'<svg viewBox="0 0 120 90"><path d="M10 74q12 -8 25 0t25 0t25 0t25 0" fill="none" stroke="#8FB0F5" stroke-width="5" stroke-linecap="round"/><path d="M22 56h76l-12 16H34z" fill="#4E74E0"/><path d="M58 8v48" stroke="#1F1C17" stroke-width="3"/><path d="M60 12q26 18 0 40z" fill="#FBF8F2" stroke="#BFD0FA" stroke-width="2"/><path d="M56 16q-22 16 0 34z" fill="#DCE6FC"/><circle cx="46" cy="64" r="3" fill="#FBF8F2"/><circle cx="60" cy="64" r="3" fill="#FBF8F2"/><circle cx="74" cy="64" r="3" fill="#FBF8F2"/></svg>',
  mouse:'<svg viewBox="0 0 100 100"><path d="M80 72q14 4 12 -12" fill="none" stroke="#C9A9A0" stroke-width="4" stroke-linecap="round"/><ellipse cx="50" cy="66" rx="32" ry="22" fill="#B9B3AC"/><circle cx="30" cy="40" r="13" fill="#B9B3AC"/><circle cx="30" cy="40" r="7" fill="#F4B6B0"/><circle cx="56" cy="38" r="13" fill="#B9B3AC"/><circle cx="56" cy="38" r="7" fill="#F4B6B0"/><circle cx="42" cy="60" r="3" fill="#1F1C17"/><circle cx="24" cy="70" r="4" fill="#E58B86"/><circle cx="36" cy="68" r="4" fill="#F4B6B0" opacity=".7"/></svg>',
+ starfish:'<svg viewBox="0 0 100 100"><path d="M50 8C55 30 60 34 90 38C66 52 64 58 74 90C54 72 46 72 26 90C36 58 34 52 10 38C40 34 45 30 50 8Z" fill="#F7A07E" stroke="#E5785A" stroke-width="3" stroke-linejoin="round"/><circle cx="50" cy="40" r="3" fill="#FBE0D2"/><circle cx="38" cy="54" r="2.5" fill="#FBE0D2"/><circle cx="62" cy="54" r="2.5" fill="#FBE0D2"/><circle cx="50" cy="64" r="2.5" fill="#FBE0D2"/></svg>',
+ glass:'<svg viewBox="0 0 100 100"><path d="M30 22h40l-6 66H36z" fill="#FFF8D6" stroke="#E9D27A" stroke-width="3" stroke-linejoin="round"/><path d="M33 40h34l-4 46H37z" fill="#FFE36B"/><circle cx="45" cy="62" r="3" fill="#fff"/><circle cx="55" cy="72" r="2.5" fill="#fff"/><circle cx="50" cy="52" r="2" fill="#fff"/><path d="M58 22l10-16" stroke="#F2866B" stroke-width="4" stroke-linecap="round"/><circle cx="70" cy="30" r="10" fill="#9BD25A"/><circle cx="70" cy="30" r="6" fill="#C9EE95"/></svg>',
+ stars:'<svg viewBox="0 0 100 100"><path d="M50 8l11 27 29 2-22 19 7 29-25-16-25 16 7-29-22-19 29-2z" fill="#FFD84D" stroke="#F2B92E" stroke-width="3" stroke-linejoin="round"/><path d="M42 52q8 6 16 0" stroke="#9C6B3E" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="42" cy="44" r="3" fill="#1F1C17"/><circle cx="58" cy="44" r="3" fill="#1F1C17"/></svg>',
+ crab:'<svg viewBox="0 0 100 100"><path d="M22 52q-14-6-10-18q8 4 12 12" fill="#E86A50"/><path d="M78 52q14-6 10-18q-8 4-12 12" fill="#E86A50"/><path d="M28 72l-8 8M36 76l-4 9M72 72l8 8M64 76l4 9" stroke="#E86A50" stroke-width="3" stroke-linecap="round"/><ellipse cx="50" cy="60" rx="30" ry="20" fill="#F2866B"/><path d="M40 44v8M60 44v8" stroke="#F2866B" stroke-width="3"/><circle cx="40" cy="40" r="6" fill="#F2866B"/><circle cx="60" cy="40" r="6" fill="#F2866B"/><path d="M37 40q3 3 6 0M57 40q3 3 6 0" stroke="#1F1C17" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
  shell:'<svg viewBox="0 0 100 100"><path d="M50 86L16 44Q50 6 84 44Z" fill="#F7B9A8"/><path d="M50 86L28 34M50 86L40 24M50 86L50 20M50 86L60 24M50 86L72 34" stroke="#E58B7A" stroke-width="3" stroke-linecap="round"/><path d="M40 86h20v6H40z" fill="#E58B7A"/></svg>'
 };
 function inner(name){return ART[name].replace(/^<svg[^>]*>|<\/svg>$/g,'');}
@@ -596,6 +649,33 @@ function crossing(){
   nest('snake',6,30,60,45,'0 0 120 90')+nest('mouse',70,44,26,26,'0 0 100 100')+
   '<path d="M4 66h116l-16 22H20z" fill="#4E74E0"/><circle cx="40" cy="76" r="3.5" fill="#FBF8F2"/><circle cx="62" cy="76" r="3.5" fill="#FBF8F2"/><circle cx="84" cy="76" r="3.5" fill="#FBF8F2"/></g></g></svg>';
 }
+function beach(){
+  var crabs='';[[96,372],[196,398],[292,366]].forEach(function(c,i){crabs+=nest('crab',c[0]-26,c[1]-26,52,52,'0 0 100 100')+
+    '<g class="zz" font-family="Solway,Georgia,serif" fill="#7A6A55"><text x="'+(c[0]+16)+'" y="'+(c[1]-26)+'" font-size="12">z</text><text x="'+(c[0]+24)+'" y="'+(c[1]-36)+'" font-size="15">z</text><text x="'+(c[0]+34)+'" y="'+(c[1]-48)+'" font-size="18">z</text></g>';});
+  return '<svg viewBox="0 0 400 440" preserveAspectRatio="xMidYMid slice">'+SKY+'<rect width="400" height="440" fill="url(#skyC)"/><circle cx="320" cy="150" r="22" fill="#FFE3A3"/>'+
+  '<path d="M0 226H400V304H0Z" fill="#8FB0F5"/><path d="M0 236q25 -8 50 0t50 0t50 0t50 0t50 0t50 0t50 0t50 0" fill="none" stroke="#C9D8FB" stroke-width="4"/>'+
+  '<path d="M0 292Q120 262 230 284T400 276V440H0Z" fill="#F3DDB0"/>'+nest('shell',150,300,22,22,'0 0 100 100')+nest('shell',236,318,18,18,'0 0 100 100')+
+  crabs+pal(0,'starfish',300,250,70)+'<g id="tiptoe" class="tiptoe">'+nest('mouse',14,318,56,56,'0 0 100 100')+'</g></svg>';
+}
+function picnic(withGlass){
+  var flowers='';[[40,236,1.1],[78,224,1.25],[330,228,1.2],[366,240,1]].forEach(function(f){flowers+='<g transform="translate('+f[0]+' '+f[1]+') scale('+f[2]+')"><path d="M0 4v26" stroke="#6FA544" stroke-width="3"/>'+petals()+'</g>';});
+  var fizz='';[[214,268,3],[228,258,2.5],[236,272,2],[220,250,2.2],[232,244,1.8]].forEach(function(b){fizz+='<circle cx="'+b[0]+'" cy="'+b[1]+'" r="'+b[2]+'" fill="#fff" stroke="#FFE36B"/>';});
+  return '<svg viewBox="0 0 400 440" preserveAspectRatio="xMidYMid slice">'+SKY+'<rect width="400" height="440" fill="url(#skyA)"/><circle cx="90" cy="150" r="26" fill="#FFE3A3"/>'+
+  '<path d="M0 262Q200 200 400 258V440H0Z" fill="#B9DA92"/>'+flowers+'<path d="M0 330Q200 300 400 326V440H0Z" fill="#9CCB6E"/>'+
+  '<g transform="translate(120 318) skewX(-18)"><rect width="190" height="74" rx="6" fill="#F7B9A8"/><path d="M0 19H190M0 47H190M42 0V74M95 0V74M148 0V74" stroke="#FBE7DA" stroke-width="7"/></g>'+
+  nest('snake',40,300,110,82,'0 0 120 90')+nest('mouse',300,326,46,46,'0 0 100 100')+
+  (withGlass?pal(0,'glass',190,252,70)+'<g id="fizz" class="fizz">'+fizz+'</g>':'')+'</svg>';
+}
+function night(lit){
+  var dots='';[[40,60],[92,112],[140,48],[252,70],[292,152],[362,92],[60,176],[338,40],[200,52],[118,190],[372,190]].forEach(function(p,i){dots+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(1.6+i%3)+'" fill="#FFF1C1" style="transition-delay:'+(i*.12).toFixed(2)+'s"/>';});
+  return '<svg viewBox="0 0 400 440" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="skyN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B2350"/><stop offset="1" stop-color="#4A5294"/></linearGradient></defs>'+
+  '<rect width="400" height="440" fill="url(#skyN)"/><circle id="moon" cx="330" cy="214" r="22" fill="#FFF1C1"/>'+
+  '<g id="skystars" class="skystars'+(lit?' on':'')+'">'+dots+'</g>'+(lit?nest('stars',112,150,64,64,'0 0 100 100'):pal(0,'stars',112,150,64))+
+  '<path d="M0 296H400V440H0Z" fill="#2D3F86"/><path d="M0 312q25 -8 50 0t50 0t50 0t50 0t50 0t50 0t50 0t50 0" fill="none" stroke="#5A6FB8" stroke-width="4"/>'+
+  '<g transform="translate(118 236) scale(1.25)"><path d="M58 0v62" stroke="#1F1C17" stroke-width="3"/><path d="M60 4q34 26 0 54z" fill="#E6E9FA" stroke="#BFD0FA" stroke-width="2"/>'+
+  nest('snake',6,30,60,45,'0 0 120 90')+nest('mouse',70,44,26,26,'0 0 100 100')+'<path d="M4 66h116l-16 22H20z" fill="#4E74E0"/><circle cx="40" cy="76" r="3.5" fill="#FBF8F2"/><circle cx="62" cy="76" r="3.5" fill="#FBF8F2"/><circle cx="84" cy="76" r="3.5" fill="#FBF8F2"/></g>'+
+  '<g id="zzz" class="zzz" font-family="Solway,Georgia,serif" fill="#E4E8FF"><text x="196" y="258" font-size="14">z</text><text x="210" y="242" font-size="18">z</text><text x="226" y="224" font-size="22">Z</text></g></svg>';
+}
 function cover(kind){
   if(kind==='sid')return '<svg viewBox="0 0 96 112"><rect width="96" height="112" fill="#DDEBD2"/><rect y="70" width="96" height="42" fill="#8FB0F5"/>'+nest('snake',4,30,60,45,'0 0 120 90')+nest('ship',40,52,54,40,'0 0 120 90')+'</svg>';
   if(kind==='train')return '<svg viewBox="0 0 96 112"><rect width="96" height="112" fill="#FBE7DA"/><path d="M0 92h96" stroke="#9C7650" stroke-width="4"/><path d="M0 98h96" stroke="#9C7650" stroke-width="2" stroke-dasharray="6 6"/><circle cx="30" cy="34" r="7" fill="#fff" opacity=".9"/><circle cx="40" cy="22" r="9" fill="#fff" opacity=".8"/><circle cx="54" cy="14" r="6" fill="#fff" opacity=".7"/><rect x="22" y="44" width="12" height="16" rx="2" fill="#4A4A4A"/><rect x="14" y="58" width="44" height="26" rx="6" fill="#E5684A"/><rect x="44" y="46" width="22" height="38" rx="4" fill="#E5684A"/><rect x="48" y="52" width="14" height="12" rx="2" fill="#FBF8F2"/><rect x="64" y="64" width="26" height="20" rx="4" fill="#F2A23C"/><circle cx="26" cy="88" r="7" fill="#1F1C17"/><circle cx="50" cy="88" r="7" fill="#1F1C17"/><circle cx="76" cy="88" r="6" fill="#1F1C17"/></svg>';
@@ -603,25 +683,54 @@ function cover(kind){
 }
 
 /* ---------- story ---------- */
-var STORY={title:'Sid and the Little Ship',pages:[
-  {kind:'setup',scene:function(){return clearing(false,true);},text:'Sid the snake lives in a quiet clearing. Today, Sid feels a little lonely.'},
-  {kind:'sound',snd:'s',scene:function(){return clearing(true,false);},text:'Sid wants to call a friend. Can you help him hiss?',
-   instr:'Make a long '+chip('s')+' sound to call Sid’s friend',loot:'mouse',
-   emit:[264,296],target:function(){return [340,352];},
-   sharper:'Sharper, like a tiny whistle',softer:'A little softer',okay:'A mouse heard you!',done:'Sid has a friend!'},
-  {kind:'sound',snd:'sh',scene:river,text:'Down by the river, a little ship is stuck. There’s no wind!',
-   instr:'Make a long '+chip('sh')+' sound to make the wind',loot:'ship',
-   emit:[-10,200],target:function(){return [96+st.shipX,214];},
-   sharper:'A little sharper',softer:'Softer, like quiet waves',okay:'Whoosh!',done:'The ship reached the shore!'},
-  {kind:'choice',scene:crossing,text:'Sid and Mouse hop on the ship. Where should they go?',
-   instr:'Make '+chip('sh')+' for Shell Beach or '+chip('s')+' for Sunflower Hill',
-   emit:[214,330],
+/* ---------- the book: one adventure in chapters, each practising a sound ---------- */
+var P_CHOICE={kind:'choice',scene:crossing,text:'Sid and Mouse hop on the ship. Where should they go?',
+   instr:'Make '+chip('sh')+' for Shell Beach or '+chip('s')+' for Sunflower Hill',emit:[214,330],
    endS:'Sssuper! They sailed to Sunflower Hill and had a picnic in the sunshine.',
-   endSh:'Shhh… They sailed to Shell Beach and found the shiniest shell in the sand.'}
-]};
+   endSh:'Shhh… They sailed to Shell Beach and found the shiniest shell in the sand.'};
+var BOOK=[
+ {id:'c1',n:1,name:'A Friend for Sid',skill:['s'],icon:'mouse',pages:[
+   {kind:'setup',scene:function(){return clearing(false,true);},text:'Sid the snake lives in a quiet clearing. Today, Sid feels a little lonely.'},
+   {kind:'sound',snd:'s',scene:function(){return clearing(true,false);},text:'Sid wants to call a friend. Can you help him hiss?',
+    instr:'Make a long '+chip('s')+' sound to call Sid’s friend',loot:'mouse',emit:[264,296],target:function(){return [340,352];},
+    sharper:'Sharper, like a tiny whistle',softer:'A little softer',okay:'A mouse heard you!',done:'Sid has a friend!'}]},
+ {id:'c2',n:2,name:'The Stuck Ship',skill:['sh'],icon:'ship',pages:[
+   {kind:'setup',scene:river,text:'Sid and Mouse find a little ship by the river. They want to sail away!'},
+   {kind:'sound',snd:'sh',scene:river,text:'But the ship is stuck. There’s no wind!',
+    instr:'Make a long '+chip('sh')+' sound to make the wind',loot:'ship',emit:[-10,200],target:function(){return [96+st.shipX,214];},
+    sharper:'A little sharper',softer:'Softer, like quiet waves',okay:'Whoosh!',done:'The ship is sailing!'}]},
+ {id:'c3',n:3,name:'Which Way?',skill:['sh','s'],icon:'sunflower',pages:[P_CHOICE]},
+ {id:'c4',n:4,name:'Quiet on Shell Beach',skill:['sh'],icon:'starfish',pages:[
+   {kind:'setup',scene:beach,text:'On Shell Beach, three baby crabs are fast asleep in the sand.'},
+   {kind:'sound',snd:'sh',scene:beach,text:'Mouse wants to see the starfish. Help him tiptoe past.',
+    instr:'Make a long, soft '+chip('sh')+' so the crabs stay asleep',loot:'starfish',emit:[40,350],target:function(){return [335,285];},
+    sharper:'A little sharper',softer:'Softer, like a whisper',okay:'Shhh… they’re still asleep!',done:'Mouse found a starfish!',
+    onWin:function(){reveal('fr0');var t=$('tiptoe');if(t)t.classList.add('go');}}]},
+ {id:'c5',n:5,name:'The Fizzy Picnic',skill:['s'],icon:'glass',pages:[
+   {kind:'setup',scene:function(){return picnic(false);},text:'Up on Sunflower Hill, the friends lay out a picnic in the sun.'},
+   {kind:'sound',snd:'s',scene:function(){return picnic(true);},text:'Oh no, the lemonade is flat! Can you make it fizz?',
+    instr:'Make a long '+chip('s')+' sound to make it fizz',loot:'glass',emit:[150,330],target:function(){return [225,290];},
+    sharper:'Sharper, like tiny bubbles',softer:'A little softer',okay:'Fizzzz!',done:'Bubbly lemonade for everyone!',
+    onWin:function(){reveal('fr0');var f=$('fizz');if(f)f.classList.add('on');}}]},
+ {id:'c6',n:6,name:'Home by Starlight',skill:['s','sh'],icon:'stars',pages:[
+   {kind:'sound',snd:'s',night:true,scene:function(){return night(false);},text:'It’s getting dark. The friends need the stars to find the way home.',
+    instr:'Make a long '+chip('s')+' to light up the stars',loot:'stars',emit:[200,300],target:function(){return [144,182];},
+    sharper:'Sharper, like a twinkle',softer:'A little softer',okay:'The stars are out!',done:'Now they can see the way home.',
+    onWin:function(){reveal('fr0');var g=$('skystars');if(g)g.classList.add('on');}},
+   {kind:'sound',snd:'sh',night:true,scene:function(){return night(true);},text:'Sid is very sleepy after his big adventure. Sing him to sleep.',
+    instr:'Make a long, soft '+chip('sh')+' like a lullaby',loot:null,emit:[200,300],target:function(){return [210,290];},
+    sharper:'A little sharper',softer:'Softer, like a lullaby',okay:'Shhh… goodnight, Sid.',done:'The end of the adventure!',
+    onWin:function(){var z=$('zzz');if(z)z.classList.add('on');var m=$('moon');if(m)m.classList.add('glow');}}]},
+ {id:'c7',n:7,name:'The Choo-Choo Train',skill:['ch'],icon:'chick',soon:true},
+ {id:'c8',n:8,name:'Birthday Candles',skill:['f'],icon:'feather',soon:true}];
+BOOK.forEach(function(c){c.title='Chapter '+c.n+' · '+c.name;});
+var STORY=BOOK[0];
 var STICKERS=[
-  {id:'mouse',word:'mou<mark class="s">s</mark>e',hint:'In Sid’s story'},{id:'ship',word:'<mark class="sh">sh</mark>ip',hint:'In Sid’s story'},{id:'sunflower',word:'<mark class="s">s</mark>unflower',hint:'Sail to Sunflower Hill'},
-  {id:'shell',word:'<mark class="sh">sh</mark>ell',hint:'Sail to Shell Beach'},{id:'chick',word:'<mark class="ch">ch</mark>ick',hint:'Choo-Choo Train, soon'},{id:'feather',word:'<mark class="f">f</mark>eather',hint:'Birthday Candles, soon'}
+  {id:'mouse',word:'mou<mark class="s">s</mark>e',hint:'Chapter 1'},{id:'ship',word:'<mark class="sh">sh</mark>ip',hint:'Chapter 2'},
+  {id:'sunflower',word:'<mark class="s">s</mark>unflower',hint:'Chapter 3 · Sunflower Hill'},{id:'shell',word:'<mark class="sh">sh</mark>ell',hint:'Chapter 3 · Shell Beach'},
+  {id:'starfish',word:'<mark class="s">s</mark>tarfi<mark class="sh">sh</mark>',hint:'Chapter 4'},{id:'glass',word:'gla<mark class="s">ss</mark>',hint:'Chapter 5'},
+  {id:'stars',word:'<mark class="s">s</mark>tar<mark class="s">s</mark>',hint:'Chapter 6'},
+  {id:'chick',word:'<mark class="ch">ch</mark>ick',hint:'Chapter 7 · soon'},{id:'feather',word:'<mark class="f">f</mark>eather',hint:'Chapter 8 · soon'}
 ];
 
 /* ---------- colors ---------- */
@@ -656,18 +765,18 @@ var st={name:'Mila',sounds:{s:true,sh:true},mode:'demo',muted:false,targets:{s:.
   pi:0,complete:false,armed:true,quiet:0,hold:0,holdFor:null,choice:null,shipX:0,boatX:0,
   disp:{p:.5,loud:0},parts:[],burst:[],flash:0,close:0,
   drag:null,demo:null,rec:null,wasActive:false,lastActive:-9,
-  stats:{s:{tries:0,holds:0},sh:{tries:0,holds:0}},found:[],stickers:{},sessions:[],notes:'',cur:null};
+  stats:{s:{tries:0,holds:0},sh:{tries:0,holds:0}},found:[],stickers:{},sessions:[],notes:'',cur:null,done:{},chapter:0};
 var KEY='soundbook.v1';
-function save(){try{localStorage.setItem(KEY,JSON.stringify({name:st.name,sounds:st.sounds,targets:st.targets,easy:st.easy,sessions:st.sessions,notes:st.notes,
+function save(){try{localStorage.setItem(KEY,JSON.stringify({name:st.name,sounds:st.sounds,targets:st.targets,easy:st.easy,sessions:st.sessions,notes:st.notes,done:st.done,
   stickers:Object.keys(st.stickers).reduce(function(o,k){o[k]={img:st.stickers[k].img,when:st.stickers[k].when.toISOString()};return o;},{})}));}catch(e){}}
-(function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(!d)return;st.name=d.name||st.name;st.sounds=d.sounds||st.sounds;st.targets=d.targets||st.targets;st.easy=!!d.easy;st.sessions=Array.isArray(d.sessions)?d.sessions:[];st.notes=d.notes||'';
+(function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(!d)return;st.name=d.name||st.name;st.sounds=d.sounds||st.sounds;st.targets=d.targets||st.targets;st.easy=!!d.easy;st.sessions=Array.isArray(d.sessions)?d.sessions:[];st.notes=d.notes||'';st.done=d.done||{};
   Object.keys(d.stickers||{}).forEach(function(k){st.stickers[k]={img:d.stickers[k].img,when:new Date(d.stickers[k].when)};});}catch(e){}})();
 function tol(){return st.easy?.2:.11;}
 function tgt(k){return Math.max(tol(),Math.min(1-tol(),st.targets[k]));}
 
 /* ---------- navigation ---------- */
 var SCREENS=['welcome','setup','shelf','page','reward','stickers','report'];
-function show(id){$('device').classList.toggle('on-scene',id==='page');SCREENS.forEach(function(s){var el=$(s);el.hidden=s!==id;if(s===id){el.classList.remove('enter');void el.offsetWidth;el.classList.add('enter');}});}
+function show(id){$('device').classList.toggle('on-scene',id==='page');var tb=$('tabbar');if(tb){tb.hidden=['shelf','stickers','report'].indexOf(id)<0;[].forEach.call(tb.querySelectorAll('button'),function(b){b.setAttribute('aria-current',String(b.dataset.tab===id));});}SCREENS.forEach(function(s){var el=$(s);el.hidden=s!==id;if(s===id){el.classList.remove('enter');void el.offsetWidth;el.classList.add('enter');}});}
 $('start').onclick=function(){tryMic();show('setup');};
 document.querySelectorAll('.chip[data-snd]').forEach(function(c){c.onclick=function(){var on=c.getAttribute('aria-pressed')!=='true';c.setAttribute('aria-pressed',String(on));st.sounds[c.dataset.snd]=on;$('setupDone').disabled=!st.sounds.s&&!st.sounds.sh;save();};});
 $('kidName').value=st.name;document.querySelectorAll('.chip[data-snd]').forEach(function(c){c.setAttribute('aria-pressed',String(!!st.sounds[c.dataset.snd]));});
@@ -681,15 +790,28 @@ $('rwDone').onclick=function(){buildShelf();show('shelf');};
 $('closeX').onclick=function(){endSession(false);buildShelf();show('shelf');};
 var toastT;function toast(t){var el=$('toast');el.textContent=t;el.hidden=false;el.classList.remove('in');void el.offsetWidth;el.classList.add('in');clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('in');setTimeout(function(){el.hidden=true;},300);},2200);}
 
+var shelfFilter='all';
+function greet(){var h=new Date().getHours();return (h<12?'Good morning':h<18?'Good afternoon':'Good evening')+', '+st.name+'!';}
+function chDone(c){return !!(st.done||{})[c.id];}
+function nextChapter(){for(var i=0;i<BOOK.length;i++)if(!BOOK[i].soon&&!chDone(BOOK[i]))return i;return -1;}
+function startChapter(i){STORY=BOOK[i];st.chapter=i;startStory();}
 function buildShelf(){
-  $('hiName').textContent='Hi, '+st.name;
-  var books=[{id:'sid',title:STORY.title,sounds:['s','sh'],open:true},{id:'train',title:'The Choo-Choo Train',sounds:['ch'],open:false},{id:'candles',title:'The Birthday Candles',sounds:['f'],open:false}];
-  $('books').innerHTML=books.map(function(b){
-    return '<button class="book'+(b.open?'':' locked')+'" type="button" data-book="'+b.id+'"'+(b.open?'':' aria-disabled="true"')+'><span class="cover">'+cover(b.id)+'</span><span><b>'+b.title+'</b>'+
-      '<span class="sounds">'+b.sounds.map(chip).join('')+'</span>'+(b.open?'':'<span class="soon">Coming soon</span>')+'</span></button>';
-  }).join('');
-  document.querySelector('[data-book="sid"]').onclick=startStory;
-  document.querySelectorAll('.book.locked').forEach(function(b){b.onclick=function(){toast('This story is coming soon');};});
+  $('hiName').textContent=greet();
+  document.querySelector('#shelf .shelf-head .h1').textContent='What sounds do you want to practise?';
+  var made=BOOK.filter(function(c){return !c.soon;}),doneN=made.filter(chDone).length,nx=nextChapter(),p=Math.round(doneN/made.length*100);
+  var h='<div class="fchips" role="group" aria-label="Sounds">'+[['all','All'],['s','SSS'],['sh','SHH'],['mix','Both']].map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(shelfFilter===f[0])+'">'+f[1]+'</button>';}).join('')+'</div>';
+  h+='<div class="bookcard"><div class="bc-cover">'+cover('sid')+'</div><div class="bc-body"><span class="lbl">Your book</span><b>Sid’s Big Adventure</b>'+
+    '<div class="meterbar"><i style="width:'+p+'%"></i></div><span class="small muted">'+doneN+' of '+made.length+' chapters finished</span>'+
+    (nx>=0?'<button class="btn" type="button" data-ch="'+nx+'">'+(doneN?'Continue':'Start')+': Chapter '+BOOK[nx].n+'</button>':'<span class="small">Every chapter finished!</span>')+'</div></div>';
+  var list=BOOK.map(function(c,i){var match=shelfFilter==='all'||(shelfFilter==='mix'?c.skill.length>1:(c.skill.length===1&&c.skill[0]===shelfFilter));if(!match)return '';
+    var state=c.soon?'soon':chDone(c)?'done':i===nx?'next':'open';
+    return '<button class="chap '+state+'" type="button" data-ch="'+i+'"'+(c.soon?' aria-disabled="true"':'')+'><span class="cnum">'+(state==='done'?'✓':c.n)+'</span>'+
+      '<span class="cbody"><b>'+c.name+'</b><span class="sounds">'+c.skill.map(chip).join('')+(state==='next'?'<span class="upnext">Up next</span>':'')+(state==='done'?'<span class="soon">Practise again</span>':'')+(c.soon?'<span class="soon">Coming soon</span>':'')+'</span></span>'+
+      '<span class="cart">'+sv(c.icon)+'</span></button>';}).join('');
+  h+='<div class="lbl">Chapters</div><div class="chlist">'+(list||'<p class="muted">No chapters for this sound yet.</p>')+'</div>';
+  $('books').innerHTML=h;
+  document.querySelectorAll('#books [data-f]').forEach(function(b){b.onclick=function(){shelfFilter=b.dataset.f;buildShelf();};});
+  document.querySelectorAll('#books [data-ch]').forEach(function(b){b.onclick=function(){var c=BOOK[+b.dataset.ch];if(c.soon){toast('This chapter is coming soon');return;}startChapter(+b.dataset.ch);};});
 }
 function startStory(){endSession(false);st.stats={s:{tries:0,holds:0},sh:{tries:0,holds:0}};st.found=[];st.cur={start:Date.now(),story:STORY.title,easy:st.easy};loadPage(0);show('page');}
 
@@ -697,6 +819,7 @@ function loadPage(i){
   var P=STORY.pages[i];
   if(P.kind==='sound'&&!st.sounds[P.snd]&&i<STORY.pages.length-1)return loadPage(i+1);st.pi=i;st.complete=P.kind==='setup';st.armed=true;st.hold=0;st.holdFor=null;st.demo=null;st.choice=null;st.shipX=0;st.boatX=0;resetStars();st.close=0;
   closeSheet();$('lab').hidden=true;
+  $('device').classList.toggle('night',!!P.night);
   var pg=$('page');pg.className='screen page-'+P.kind;
   $('pdots').innerHTML=STORY.pages.map(function(_,k){return '<i class="'+(k===i?'on':'')+'"></i>';}).join('');
   $('sceneSvg').innerHTML=P.scene();
@@ -713,7 +836,7 @@ function loadPage(i){
   requestAnimationFrame(sizeFx);
 }
 function renderZones(){var t=tol();$('zones').innerHTML=(st.tg||[]).map(function(k){return '<div class="zone '+k+'" style="left:'+(tgt(k)*100)+'%;width:'+(t*200)+'%"></div>';}).join('');}
-$('turn').onclick=function(){var P=STORY.pages[st.pi];if(P.kind==='choice'&&st.choice){showReward();return;}if(st.pi<STORY.pages.length-1)loadPage(st.pi+1);};
+$('turn').onclick=function(){var P=STORY.pages[st.pi];if(P.kind==='choice'&&st.choice){showReward();return;}if(st.pi<STORY.pages.length-1)loadPage(st.pi+1);else showReward();};
 
 /* mic button: mute / unmute, or play the demo when there's no microphone */
 function updateMic(){
@@ -1090,12 +1213,13 @@ function success(skipped){
   starBurst(T0[0],T0[1],skipped?(P.snd==='s'?.84:.16):st.disp.p);
   st.hold=0;st.armed=false;st.complete=true;st.demo=null;
   if(!skipped)st.stats[P.snd].holds++;else st.stats[P.snd].skips=(st.stats[P.snd].skips||0)+1;
-  st.stickers[item]={img:voiceShape(skipped?(P.snd==='s'?.84:.16):st.disp.p,.8),when:new Date()};if(st.found.indexOf(item)<0)st.found.push(item);save();
-  if(P.snd==='s'){reveal('fr0');}
+  if(item)st.stickers[item]={img:voiceShape(skipped?(P.snd==='s'?.84:.16):st.disp.p,.8),when:new Date()};if(item&&st.found.indexOf(item)<0)st.found.push(item);save();
+  if(P.onWin)P.onWin();
+  else if(P.snd==='s'){reveal('fr0');}
   else{var w=$('wind');w.style.opacity='';w.classList.remove('blow');void w.getBoundingClientRect();w.classList.add('blow');$('sail').style.transform='scaleX(3)';
     setTimeout(function(){var g=$('shipG');if(g)g.style.transform='translateX(232px)';st.shipX=232;},350);}
   setStatus(P.okay);
-  setTimeout(function(){if(STORY.pages[st.pi]===P){setStatus(P.done);$('mic').hidden=true;$('turn').hidden=false;}},1100);
+  setTimeout(function(){if(STORY.pages[st.pi]===P){setStatus(P.done);$('mic').hidden=true;$('turn').hidden=false;$('turn').textContent=st.pi===STORY.pages.length-1?'Finish the chapter':'Turn the page';}},1100);
 }
 function choose(snd){
   var P=STORY.pages[st.pi];starBurst(snd==='s'?330:74,snd==='s'?214:240,st.disp.p);st.choice=snd;st.complete=true;st.demo=null;st.hold=0;st.stats[snd].holds++;
@@ -1105,13 +1229,15 @@ function choose(snd){
   var boat=$('boat');boat.classList.add('go');boat.style.transform=snd==='s'?'translate(112px,-64px) scale(.7)':'translate(-122px,-58px) scale(.7)';
   setTimeout(function(){var d=$(snd==='s'?'dS':'dSh');if(d)d.classList.add('won');},1300);
   setStatus(snd==='s'?'Off to Sunflower Hill!':'Off to Shell Beach!');
-  $('mic').hidden=true;$('turn').hidden=false;$('turn').textContent='The end';
+  $('mic').hidden=true;$('turn').hidden=false;$('turn').textContent='Finish the chapter';
 }
 
 /* ---------- reward + stickers ---------- */
 var confettiParts=[];
 function showReward(){
-  $('rwH').textContent='You made every sound in this story, '+st.name+'!';
+  st.done[STORY.id]=true;save();var nx=nextChapter();$('rwLbl').textContent='Chapter '+STORY.n+' complete';
+  $('rwH').textContent='You finished “'+STORY.name+'”, '+st.name+'!';
+  $('done').textContent=nx>=0?'Next: Chapter '+BOOK[nx].n:'See my stickers';
   var s=st.stats;
   $('rwMade').innerHTML=(s.s.holds?chip('s')+'<span class="muted">× '+s.s.holds+'</span>':'')+(s.sh.holds?chip('sh')+'<span class="muted">× '+s.sh.holds+'</span>':'');
   $('rwFound').innerHTML=st.found.map(function(id){return '<i title="'+id+'">'+sv(id)+'</i>';}).join('');
@@ -1120,7 +1246,7 @@ function showReward(){
   endSession(true);show('reward');burst();
 }
 $('again').onclick=startStory;
-$('done').onclick=function(){buildStickers();show('stickers');};
+$('done').onclick=function(){var nx=nextChapter();if(nx>=0)startChapter(nx);else{buildStickers();show('stickers');}};
 function burst(){var c=$('confetti'),r=c.getBoundingClientRect();c.width=r.width;c.height=r.height;confettiParts=[];if(reduce)return;var cols=['#B6DE6E','#9FB6F2','#FFC970','#F7B9A8'];
   for(var i=0;i<70;i++)confettiParts.push({x:Math.random()*r.width,y:-20-Math.random()*200,vx:(Math.random()-.5)*40,vy:80+Math.random()*120,r:Math.random()*6,c:cols[i%4],a:Math.random()*6});}
 function drawConfetti(dt){if(!confettiParts.length||$('reward').hidden)return;var c=$('confetti'),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);
@@ -1195,6 +1321,7 @@ function reportText(){var lines=['Soundbook progress report: '+st.name,new Date(
   if(n){var x=st.sessions[n-1];lines.push('','Last session: '+fmtDay(x.start)+' '+fmtTime(x.start)+', '+fmtDur(x.end-x.start)+(x.done?', finished':', stopped early'));}
   if(st.notes)lines.push('','Notes: '+st.notes);return lines.join('\n');}
 $('toReport').onclick=function(){openReport('shelf');};
+document.querySelectorAll('#tabbar button').forEach(function(b){b.onclick=function(){var t=b.dataset.tab;if(t==='shelf'){buildShelf();show('shelf');}else if(t==='stickers'){buildStickers();show('stickers');}else openReport('shelf');};});
 $('rwReport').onclick=function(){openReport('reward');};
 $('sheetReport').onclick=function(){closeSheet();openReport('page');};
 $('reportBack').onclick=function(){if(reportFrom==='shelf')buildShelf();show(reportFrom);};
@@ -1280,7 +1407,7 @@ function pickStyle(v){SV=v;try{localStorage.setItem('soundbook.stars',String(v))
   document.querySelectorAll('#vpick [data-v]').forEach(function(b){b.setAttribute('aria-pressed',String(+b.dataset.v===v));});
   var S=STYLES[v-1];$('vnote').innerHTML='<b>SHH</b> '+S.soft+' · <b>SSS</b> '+S.hard;}
 document.querySelectorAll('#vpick [data-v]').forEach(function(b){b.onclick=function(){pickStyle(+b.dataset.v);};});
-document.querySelectorAll('#vpick [data-try]').forEach(function(b){b.onclick=function(){var i=+b.dataset.try,P=STORY.pages[i];
+document.querySelectorAll('#vpick [data-try]').forEach(function(b){b.onclick=function(){var i=+b.dataset.try;STORY=BOOK[i-1];var P=STORY.pages[1];i=1;
   if(!st.sounds[P.snd]){st.sounds[P.snd]=true;}if(!st.stats)st.stats={s:{tries:0,holds:0},sh:{tries:0,holds:0}};
   loadPage(i);show('page');requestAnimationFrame(function(){sizeFx();startDemo();});};});
 pickStyle(SV);
