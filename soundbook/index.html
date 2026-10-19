@@ -1,4 +1,5 @@
 <title>Soundbook</title>
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +13,7 @@
   --s-bg:#E8FFD9; --s-ink:#38780D; --sh-bg:#E3ECFF; --sh-ink:#2F5BB7; --ch-bg:#FFE9DC; --ch-ink:#B4532A; --f-bg:#F1E8FF; --f-ink:#6B4BB0;
   --focus:#2F5BB7;
   --f-display:"Solway",Georgia,"Times New Roman",serif;
+  --f-logo:"Solway",Georgia,serif;
   --f-body:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
@@ -273,6 +275,9 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .mic.mini.muted{background:#3A1D20;color:#FF6B6B}
 .mic.mini.muted .i-off{display:block}
 .mic.mini[data-mode="demo"] .i-demo{display:block}
+.mic.mini.talking .i-on{display:block}.mic.mini.talking .i-demo{display:none}
+.mic.mini.hearing{box-shadow:inset 0 0 0 2px #2DB84C,0 2px 10px rgba(45,184,76,.25)}
+#micLvl{transition:none}
 .page-sound .barwrap,.page-choice .barwrap{margin-top:auto;margin-bottom:auto}
 .dock{margin-top:0;min-height:96px;align-content:end}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -377,6 +382,28 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .device.night .gf image{filter:brightness(0) invert(1);opacity:.4}
 #wChars{gap:8px;align-items:flex-end}
 
+/* ---------- logo + loading screen ---------- */
+.wlogo{display:flex;align-items:center;gap:10px;font:700 38px/1 var(--f-logo);letter-spacing:-.5px;color:#18263A}
+.wlogo svg{width:64px;flex:none}
+.splash{position:absolute;inset:0;z-index:60;display:grid;place-items:center;background:linear-gradient(#EEF3FF,#F1F9E8);pointer-events:none;transition:opacity .45s ease}
+.splash.out{opacity:0}
+.sp-in{display:grid;justify-items:center;gap:8px;transform:translateY(-24px)}
+.sp-in svg{width:156px;overflow:visible}
+.sp-word{font:700 44px/1 var(--f-logo);letter-spacing:-.5px;color:#18263A;opacity:0;animation:spUp .6s 1.05s ease-out forwards}
+.sp-tag{font-size:15px;font-weight:500;color:#33475C;opacity:0;animation:spUp .6s 1.3s ease-out forwards}
+.splash .sp-line{stroke-dasharray:141;stroke-dashoffset:141;animation:spLine .5s .05s ease-out forwards}
+.splash .sp-sun{transform:translateY(24px);animation:spSun .8s .3s cubic-bezier(.2,.8,.2,1) forwards}
+.splash .sp-r{opacity:0;transform-origin:100px 130px;transform:scale(.55)}
+.splash .sp-r1{animation:spRip .45s .7s ease-out forwards,spPulse 1.5s 1.8s ease-in-out infinite}
+.splash .sp-r2{animation:spRip .45s .84s ease-out forwards,spPulse 1.5s 1.95s ease-in-out infinite}
+.splash .sp-r3{animation:spRip .45s .98s ease-out forwards,spPulse 1.5s 2.1s ease-in-out infinite}
+@keyframes spLine{to{stroke-dashoffset:0}}
+@keyframes spSun{to{transform:none}}
+@keyframes spRip{to{opacity:1;transform:none}}
+@keyframes spPulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes spUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.splash *{animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}}
+
 /* ---------- star style switcher (outside the phone) ---------- */
 .vpick{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:6px;width:190px;
   background:rgba(20,20,22,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;padding:8px 10px;border-radius:20px;box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
@@ -422,10 +449,11 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
   <div class="toast" id="toast" role="status" hidden></div>
   <nav class="tabbar" id="tabbar" aria-label="Main" hidden><button type="button" data-tab="shelf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Home</span></button><button type="button" data-tab="stickers"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Stickers</span></button><button type="button" data-tab="report"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c.8-4.2 4-6.5 8-6.5s7.2 2.3 8 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Grown-ups</span></button></nav>
 
+  <div class="splash" id="splash" aria-hidden="true"><div class="sp-in"><svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="spG" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient><clipPath id="spGc"><rect x="0" y="0" width="200" height="130"/></clipPath></defs><g clip-path="url(#spGc)"><path class="sp-sun" d="M78 130A22 22 0 0 1 122 130Z" fill="url(#spG)"/></g><g fill="none" stroke="url(#spG)" stroke-width="7" stroke-linecap="round"><path class="sp-r sp-r1" d="M64.29 117A38 38 0 0 1 135.71 117"/><path class="sp-r sp-r2" d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path class="sp-r sp-r3" d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path class="sp-line" d="M30 130H170"/></g></svg><div class="sp-word">soundbook</div><div class="sp-tag">Storybooks you read out loud</div></div></div>
   <section class="screen" id="welcome" aria-label="Welcome">
     <div class="w-top">
       <div class="lbl">Storybooks you read out loud</div>
-      <h1 class="h1">Soundbook</h1>
+      <h1 class="h1 wlogo" aria-label="Soundbook"><svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="wlG" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient><clipPath id="wlGc"><rect x="0" y="0" width="200" height="130"/></clipPath></defs><g clip-path="url(#wlGc)"><path class="sp-sun" d="M78 130A22 22 0 0 1 122 130Z" fill="url(#wlG)"/></g><g fill="none" stroke="url(#wlG)" stroke-width="7" stroke-linecap="round"><path class="sp-r sp-r1" d="M64.29 117A38 38 0 0 1 135.71 117"/><path class="sp-r sp-r2" d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path class="sp-r sp-r3" d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path class="sp-line" d="M30 130H170"/></g></svg><span>soundbook</span></h1>
       <p class="muted">You read the story. Your child makes the sounds that move it forward.</p>
     </div>
     <div class="w-mid" aria-hidden="true" id="wChars"></div>
@@ -476,7 +504,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
       </button>
       <button class="mic mini glass" id="mic" type="button">
           <canvas id="vs" hidden></canvas><svg hidden><circle id="ringFg"/></svg>
-          <svg class="i-on" width="16" height="19" viewBox="0 0 22 26" aria-hidden="true"><rect x="6" y="1" width="10" height="15" rx="5" fill="currentColor"/><path d="M2 12a9 9 0 0 0 18 0M11 21v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <svg class="i-on" width="18" height="21" viewBox="0 0 22 26" aria-hidden="true"><defs><clipPath id="micClip"><rect x="6" y="1" width="10" height="15" rx="5"/></clipPath></defs><rect id="micLvl" clip-path="url(#micClip)" x="6" y="16" width="10" height="0" fill="#2DB84C"/><rect x="6" y="1" width="10" height="15" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2 12a9 9 0 0 0 18 0M11 21v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
           <svg class="i-off" width="18" height="19" viewBox="0 0 24 26" aria-hidden="true"><rect x="7" y="1" width="10" height="15" rx="5" fill="currentColor" opacity=".9"/><path d="M3 12a9 9 0 0 0 18 0M12 21v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M3 2l18 22" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
           <svg class="i-demo" width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path d="M2 1.5l11 6.5-11 6.5z" fill="currentColor"/></svg>
           <span id="micLbl" class="sr">Mute</span>
@@ -1383,6 +1411,9 @@ function frame(now){
     /* no stars while trying: the star meter shows closer/further, the picture celebrates only on success */
     drawFx(dt,P);
     if(!$('mic').hidden)drawVoice(dt,now);
+    var mb=$('mic'),talk=!!st.demo,live=(st.mode==='mic'&&!st.muted)||talk,lv=live?Math.min(1,st.disp.loud*1.15):0,lh=(15*lv).toFixed(1);
+    mb.classList.toggle('talking',talk);mb.classList.toggle('hearing',lv>.08);
+    if(mb._lh!==lh){mb._lh=lh;var lr=$('micLvl');lr.setAttribute('height',lh);lr.setAttribute('y',(16-15*lv).toFixed(1));}
     if(P.kind!=='setup')drawMeter(dt,now,inp.active,P);
 
     ring.style.strokeDashoffset=(282.7*(1-prog)).toFixed(1);
@@ -1408,6 +1439,9 @@ document.querySelectorAll('#vpick [data-try]').forEach(function(b){b.onclick=fun
   loadPage(i);show('page');requestAnimationFrame(function(){sizeFx();startDemo();});};});
 pickStyle(SV);
 $('vtoggle').onclick=function(){var o=$('vpick').classList.toggle('open');this.setAttribute('aria-expanded',String(o));};
+(function(){var sp=$('splash');if(!sp)return;var done=false,rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go(){if(done)return;done=true;sp.classList.add('out');setTimeout(function(){sp.remove();},500);}
+  setTimeout(go,rm?900:2800);document.addEventListener('pointerdown',go,{once:true});})();
 function tick(){var d=new Date(),h=d.getHours()%12||12;$('clock').textContent=h+':'+String(d.getMinutes()).padStart(2,'0');}
 tick();setInterval(tick,10000);
 if(navigator.getBattery)navigator.getBattery().then(function(b){function u(){$('batt').setAttribute('width',String(Math.max(2,18*b.level)));}u();b.addEventListener('levelchange',u);}).catch(function(){});
