@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Soundbook video draft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Solway:wght@400;700&family=Inter:wght@500;600;700&display=swap">
+<style>
+:root{--ink:#18263A;--ink2:#33475C;--s:#38780D;--s-bg:#E8FFD9;--sh:#2F5BB7;--sh-bg:#E3ECFF;--ch:#B4532A;--ch-bg:#FFE9DC;--f:#6B4BB0;--f-bg:#F1E8FF}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0d0f12}
+.stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(#EEF3FF,#F1F9E8);font-family:Inter,system-ui,sans-serif;color:var(--ink);transform-origin:0 0}
+.brand{position:absolute;left:56px;top:40px;display:flex;align-items:center;gap:14px;font:700 34px/1 Solway,serif;z-index:5}
+.brand svg{width:58px}
+.part{position:absolute;right:56px;top:44px;font:600 22px/1 Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);background:rgba(255,255,255,.7);padding:12px 18px;border-radius:999px;z-index:5;transition:opacity .3s}
+.scene{position:absolute;inset:120px 80px 190px;display:flex;align-items:center;justify-content:center;gap:80px;opacity:0;transition:opacity .45s ease;pointer-events:none}
+.scene.on{opacity:1}
+/* captions */
+.cap{position:absolute;left:0;right:0;bottom:56px;display:flex;justify-content:center;z-index:6}
+.cap span{display:inline-block;max-width:1500px;text-align:center;font:600 40px/1.32 Inter;color:#fff;background:rgba(24,38,58,.9);padding:14px 30px;border-radius:18px;opacity:0;transition:opacity .15s}
+.cap span.on{opacity:1}
+/* placeholders for filmed shots */
+.cam{width:1180px;height:664px;border-radius:36px;border:4px dashed #8FA6BF;background:repeating-linear-gradient(135deg,rgba(255,255,255,.55) 0 22px,rgba(255,255,255,.3) 22px 44px);display:grid;place-items:center;align-content:center;gap:18px;color:var(--ink2)}
+.cam.tall{width:560px;height:760px}
+.cam svg{width:96px;opacity:.7}
+.cam b{font:700 44px/1.1 Solway}
+.cam i{font:500 26px/1.3 Inter;font-style:normal;max-width:80%;text-align:center}
+.tag{font:700 18px/1 Inter;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#E0644B;padding:8px 12px;border-radius:8px}
+/* phone footage */
+.phone{height:780px;width:auto;border-radius:20px;filter:drop-shadow(0 30px 50px rgba(24,38,58,.25))}
+.side{max-width:640px;display:grid;gap:18px}
+.side b{font:700 76px/1.05 Solway;letter-spacing:-.5px}
+.side i{font:500 34px/1.3 Inter;font-style:normal;color:var(--ink2)}
+.shot{max-height:700px;max-width:900px;border-radius:28px;background:#fff;box-shadow:0 30px 60px rgba(24,38,58,.18)}
+/* letters */
+.letters{display:flex;gap:26px}
+.letters span{width:170px;height:200px;border-radius:30px;display:grid;place-items:center;font:700 96px/1 Solway;border:4px solid;opacity:0;transform:translateY(30px) scale(.9)}
+.on .letters span{animation:pop .5s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes pop{to{opacity:1;transform:none}}
+/* chair / shair */
+.pair{display:flex;gap:120px;align-items:flex-end}
+.word{display:grid;justify-items:center;gap:22px;opacity:0}
+.on .word{animation:pop .6s forwards}.on .word+.word{animation-delay:1.6s}
+.word b{font:700 170px/1 Solway;letter-spacing:-2px}
+.word i{font:600 34px/1 Inter;font-style:normal;color:var(--ink2)}
+.word.no b{color:#8a96a6}
+/* research */
+.research{display:grid;grid-template-columns:1fr 1fr;gap:50px;max-width:1640px}
+.card{background:#fff;border-radius:32px;padding:56px 60px;box-shadow:0 24px 50px rgba(24,38,58,.12);display:grid;gap:22px;align-content:start}
+.card b{font:700 50px/1.15 Solway}
+.card p{margin:0;font:500 30px/1.4 Inter;color:var(--ink2)}
+.card small{font:500 22px/1.4 Inter;color:#6a7a8c}
+.card.prob{background:var(--ink);color:#fff}.card.prob p{color:#cfe0f0}
+.on .card{animation:pop .6s forwards;opacity:0;transform:translateY(20px)}.on .card+.card{animation-delay:1.4s}
+/* grids and comparisons */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1700px}
+.grid.n4{grid-template-columns:repeat(4,1fr)}
+.grid figure{margin:0;display:grid;gap:14px;justify-items:center;opacity:0;transform:translateY(20px)}
+.on .grid figure{animation:pop .5s forwards}
+.grid img{width:100%;height:300px;object-fit:cover;border-radius:22px;background:#fff;box-shadow:0 16px 36px rgba(24,38,58,.15)}
+.grid.n3 img{height:380px;object-fit:contain;padding:24px}
+.grid figcaption{font:600 30px/1.2 Inter}
+.cmp{display:flex;align-items:center;gap:46px}
+.cmp figure{margin:0;display:grid;gap:18px;justify-items:center}
+.cmp img{width:720px;height:560px;object-fit:contain;background:#fff;border-radius:28px;padding:20px;box-shadow:0 20px 44px rgba(24,38,58,.15)}
+.cmp figcaption{font:600 32px/1.2 Inter}
+.cmp .after{opacity:0}.on .cmp .after{animation:pop .6s 1.1s forwards}
+.cmp .arrow{font:700 70px/1 Inter;color:#8FA6BF}
+/* end card */
+.end{display:grid;justify-items:center;gap:22px;text-align:center}
+.end svg{width:300px}
+.end b{font:700 96px/1 Solway;letter-spacing:-1px}
+.end i{font:500 36px/1.4 Inter;font-style:normal;color:var(--ink2)}
+.start{position:fixed;inset:0;display:grid;place-items:center;z-index:20;background:rgba(13,15,18,.55);color:#fff;font:600 28px Inter;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="brand" id="brand"></div>
+  <div class="part" id="part"></div>
+  <div id="scenes"></div>
+  <div class="cap"><span id="cap"></span></div>
+</div>
+<script>
+const MARK = (id) => `<svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="${id}" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient></defs><path d="M78 130A22 22 0 0 1 122 130Z" fill="url(#${id})"/><g fill="none" stroke="url(#${id})" stroke-width="7" stroke-linecap="round"><path d="M64.29 117A38 38 0 0 1 135.71 117"/><path d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path d="M30 130H170"/></g></svg>`;
+const CAMICON = '<svg viewBox="0 0 24 24"><path d="M3 7h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm13 4l6-3.5v9L16 13z" fill="currentColor"/></svg>';
+const cam = (note, tall) => `<div class="cam${tall ? ' tall' : ''}">${CAMICON}<span class="tag">Placeholder</span><b>Film this shot</b><i>${note}</i></div>`;
+const LET = [['s', 's'], ['f', 'f'], ['th', 'f'], ['sh', 'sh'], ['ch', 'ch'], ['k', 'ch'], ['p', 'f'], ['h', 'sh']];
+function render(s, i) {
+  const v = s.v;
+  switch (v.type) {
+    case 'cam': return cam(v.note);
+    case 'letters': return `<div class="letters">${LET.map(([l, k], j) => `<span style="color:var(--${k});background:var(--${k}-bg);border-color:var(--${k});animation-delay:${(5.6 + j * .32).toFixed(2)}s">${l}</span>`).join('')}</div>`;
+    case 'chair': return `<div class="pair"><div class="word"><b><span style="color:var(--ch)">ch</span>air</b><i>What I meant</i></div><div class="word no"><b><span style="color:var(--sh)">sh</span>air</b><i>What I said</i></div></div>`;
+    case 'research': return `<div class="research"><div class="card"><small>Research · placeholder, swap in your screenshot</small><b>Children with hearing loss are slowest to learn sounds like S and SH.</b><p>Hearing aids can’t fully carry these high-frequency sounds, so they are the hardest to hear and the slowest to learn.</p><small>Stelmachowicz et al. (2004), Archives of Otolaryngology–Head &amp; Neck Surgery</small></div><div class="card prob"><small style="color:#9fb6cc">The problem</small><b>Children are asked to say sounds they can’t hear, with no way to check themselves.</b><p>Practice is slow and frustrating for the child, the parent and the therapist.</p></div></div>`;
+    case 'phone': return `<video class="phone" src="${v.src}" muted playsinline preload="auto"></video><div class="side"><b>${v.side}</b><i>${v.sideSub}</i></div>`;
+    case 'split': return `${cam(v.note, true)}<video class="phone" src="${v.src}" muted playsinline preload="auto"></video>`;
+    case 'image': return `<img class="shot" src="${v.src}"><div class="side"><b>${v.side}</b><i>${v.sideSub}</i></div>`;
+    case 'grid': return `<div class="grid n${v.srcs.length === 4 ? 4 : v.srcs.length === 3 ? 3 : 6}">${v.srcs.map((src, j) => `<figure style="animation-delay:${(j * .3).toFixed(1)}s"><img src="${src}">${v.labels ? `<figcaption>${v.labels[j]}</figcaption>` : ''}</figure>`).join('')}</div>`;
+    case 'compare': return `<div class="cmp"><figure><img src="${v.a}"><figcaption>${v.la}</figcaption></figure><div class="arrow">→</div><figure class="after"><img src="${v.b}"><figcaption>${v.lb}</figcaption></figure></div>`;
+    case 'end': return `<div class="end">${MARK('endG')}<b>soundbook</b><i>See what your voice looks like</i></div>`;
+  }
+}
+const $ = (id) => document.getElementById(id);
+let TL, els = [], cur = -1, curCue = null, t0 = 0;
+async function load() {
+  TL = await (await fetch('timeline.json')).json();
+  $('brand').innerHTML = MARK('brandG') + '<span>soundbook</span>';
+  $('scenes').innerHTML = TL.scenes.map((s, i) => `<div class="scene" data-i="${i}">${render(s, i)}</div>`).join('');
+  els = [...document.querySelectorAll('.scene')];
+  const waits = [...document.images].map((im) => im.complete ? 0 : new Promise((r) => { im.onload = im.onerror = r; }))
+    .concat([...document.querySelectorAll('video')].map((vd) => new Promise((r) => { if (vd.readyState >= 4) r(); else vd.addEventListener('canplaythrough', r, { once: true }); vd.load(); })));
+  await Promise.all(waits); await document.fonts.ready;
+}
+function tick() {
+  const t = (performance.now() - t0) / 1000;
+  const i = TL.scenes.findIndex((s) => t >= s.start && t < s.start + s.dur);
+  if (i !== cur) {
+    if (cur >= 0) els[cur].classList.remove('on');
+    cur = i;
+    if (i >= 0) { els[i].classList.add('on'); const vd = els[i].querySelector('video'); if (vd) { vd.currentTime = 0; vd.play(); } $('part').textContent = TL.scenes[i].part; $('part').style.opacity = TL.scenes[i].part ? 1 : 0; }
+  }
+  const cue = i >= 0 ? TL.scenes[i].sub.find((c) => t >= c.start && t < c.end) : null;
+  if (cue !== curCue) { curCue = cue; const cp = $('cap'); if (cue) { cp.innerHTML = cue.lines.join('<br>'); cp.classList.add('on'); } else cp.classList.remove('on'); }
+  window.__done = t >= TL.end;
+}
+let gen = 0;
+window.__go = (off = 0) => { const g = ++gen; els.forEach((e) => e.classList.remove("on")); document.querySelectorAll("video").forEach((v) => v.pause()); t0 = performance.now() - off * 1000; cur = -1; curCue = null; const loop = () => { if (g !== gen) return; tick(); if (!window.__done || g !== gen) requestAnimationFrame(loop); }; requestAnimationFrame(loop); };
+window.__ready = load();
+// in a normal browser: fit the stage to the window and click to play
+if (!location.search.includes('rec')) {
+  const fit = () => { const k = Math.min(innerWidth / 1920, innerHeight / 1080); $('stage').style.transform = `scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.__ready.then(() => { const b = document.createElement('div'); b.className = 'start'; b.textContent = 'Click to play the draft'; b.onclick = () => { b.remove(); window.__go(); }; document.body.appendChild(b); });
+}
+</script>
+</body>
+</html>

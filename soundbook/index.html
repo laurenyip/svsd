@@ -9,7 +9,7 @@
 /* Layout follows the Figma frame "iPhone 16 & 17 Pro - 1" (402x874): full-bleed scene on top (440px), story text, instruction line with a sound chip, the soft/sharp bar, and a round mic button. Single light look by choice. */
 :root{
   color-scheme:light;
-  --ground:#E9E9E9; --paper:#FFFFFF; --surface:#F4F4F4; --track:#E0E0E0; --ink:#000000; --ink-2:#696969; --line:#E0E0E0;
+  --ground:#E9E6E0; --paper:#F7F3EC; --surface:#FFFFFF; --track:#ECE6DB; --ink:#000000; --ink-2:#696969; --line:#E7E0D4;
   --s-bg:#E8FFD9; --s-ink:#38780D; --sh-bg:#E3ECFF; --sh-ink:#2F5BB7; --ch-bg:#FFE9DC; --ch-ink:#B4532A; --f-bg:#F1E8FF; --f-ink:#6B4BB0;
   --focus:#2F5BB7;
   --f-display:"Solway",Georgia,"Times New Roman",serif;
@@ -403,6 +403,33 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 @keyframes spPulse{0%,100%{opacity:1}50%{opacity:.35}}
 @keyframes spUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.splash *{animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}}
+
+/* ---------- page flip ---------- */
+.flip-leaf{z-index:40;pointer-events:none;background:var(--paper);transform-origin:0 50%;backface-visibility:hidden;
+  box-shadow:0 0 0 rgba(0,0,0,0);animation:flipLeaf .75s cubic-bezier(.45,.05,.35,1) forwards;will-change:transform}
+.flip-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.18));opacity:0;animation:flipShade .75s ease-in forwards}
+.flip-under{position:absolute;inset:0;z-index:39;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.22),rgba(0,0,0,0) 45%);animation:flipUnder .75s ease-out forwards}
+@keyframes flipLeaf{0%{transform:perspective(1600px) rotateY(0);box-shadow:0 0 0 rgba(0,0,0,0)}
+  30%{box-shadow:18px 0 40px rgba(0,0,0,.18)}
+  100%{transform:perspective(1600px) rotateY(-96deg);box-shadow:30px 0 50px rgba(0,0,0,.08)}}
+@keyframes flipShade{to{opacity:1}}
+.device .sbar,.device .homebar{z-index:45}
+@keyframes flipUnder{0%{opacity:0}35%{opacity:1}100%{opacity:0}}
+
+/* ---------- report, tidied ---------- */
+.kpis{grid-template-columns:repeat(3,1fr)}
+.kpis span{font-size:13px}
+.rcard,.rsess,.kpis div{box-shadow:0 1px 2px rgba(60,40,10,.05)}
+.rsess b{font-weight:600}
+.res{display:inline-flex;align-items:center;gap:6px;margin-right:12px}
+.rh label{cursor:pointer}
+#rNotes{background:var(--surface);min-height:84px}
+.rfoot{display:grid;justify-items:center;gap:4px;margin-top:6px}
+.linkbtn.danger{align-self:center;color:#B42318;font-weight:600}
+#report .rscroll{padding-bottom:140px}
+.meterbar{background:var(--track)}
+.stk.empty .plate{border-color:#D8CDBA;background:rgba(255,255,255,.5)}
+.stk.empty .art{opacity:.24}
 
 /* ---------- star style switcher (outside the phone) ---------- */
 .vpick{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:6px;width:190px;
@@ -853,7 +880,15 @@ function loadPage(i){
   requestAnimationFrame(sizeFx);
 }
 function renderZones(){var t=tol();$('zones').innerHTML=(st.tg||[]).map(function(k){return '<div class="zone '+k+'" style="left:'+(tgt(k)*100)+'%;width:'+(t*200)+'%"></div>';}).join('');}
-$('turn').onclick=function(){var P=STORY.pages[st.pi];if(P.kind==='choice'&&st.choice){showReward();return;}if(st.pi<STORY.pages.length-1)loadPage(st.pi+1);else showReward();};
+/* a copy of the page we're leaving lifts off its left edge and turns over, revealing the next page underneath */
+function flipPage(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var pg=$('page'),leaf=pg.cloneNode(true),src=pg.querySelectorAll('canvas'),dst=leaf.querySelectorAll('canvas');
+  for(var i=0;i<src.length;i++){try{dst[i].width=src[i].width;dst[i].height=src[i].height;dst[i].getContext('2d').drawImage(src[i],0,0);}catch(e){}}
+  leaf.removeAttribute('id');leaf.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});leaf.classList.remove('enter');leaf.classList.add('flip-leaf');leaf.setAttribute('aria-hidden','true');
+  var sh=document.createElement('div');sh.className='flip-shade';leaf.appendChild(sh);
+  var under=document.createElement('div');under.className='flip-under';
+  pg.parentNode.appendChild(under);pg.parentNode.appendChild(leaf);
+  setTimeout(function(){leaf.remove();under.remove();},820);}
+$('turn').onclick=function(){var P=STORY.pages[st.pi];if(P.kind==='choice'&&st.choice){showReward();return;}if(st.pi<STORY.pages.length-1){flipPage();loadPage(st.pi+1);}else showReward();};
 
 /* mic button: mute / unmute, or play the demo when there's no microphone */
 function updateMic(){
@@ -1306,33 +1341,36 @@ function fmtDay(t){return new Date(t).toLocaleDateString(undefined,{weekday:'sho
 function fmtTime(t){return new Date(t).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});}
 function totals(k){var h=0,t=0,sk=0;st.sessions.forEach(function(x){var o=x.stats[k]||{};h+=o.holds||0;t+=Math.max(o.tries||0,o.holds||0);sk+=o.skips||0;});return {h:h,t:t,sk:sk};}
 function spark(k){var pts=st.sessions.slice(-10).map(function(x){var o=x.stats[k]||{},t=Math.max(o.tries||0,o.holds||0);return t?(o.holds||0)/t:null;}).filter(function(v){return v!=null;});
-  if(pts.length<2)return '<span class="muted small">Trend appears after 2 sessions</span>';
+  if(pts.length<2)return '';
   var W=120,H=34,step=W/(pts.length-1),d=pts.map(function(v,i){return (i?'L':'M')+(i*step).toFixed(1)+' '+(H-3-v*(H-6)).toFixed(1);}).join('');
   return '<svg class="spark" width="'+W+'" height="'+H+'" viewBox="-3 0 '+(W+6)+' '+H+'" aria-label="Hold rate over the last '+pts.length+' sessions"><path d="M0 '+(H-3)+'H'+W+'" stroke="currentColor" opacity=".15"/><path d="'+d+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
     pts.map(function(v,i){return '<circle cx="'+(i*step).toFixed(1)+'" cy="'+(H-3-v*(H-6)).toFixed(1)+'" r="2.4" fill="currentColor"/>';}).join('')+'</svg>';}
 function buildReport(){
-  var S=st.sessions,n=S.length,all={h:0,t:0},time=0;['s','sh'].forEach(function(k){var o=totals(k);all.h+=o.h;all.t+=o.t;});S.forEach(function(x){time+=Math.max(0,x.end-x.start);});
-  var since=n?fmtDay(S[0].start):'today',h='';
-  h+='<div class="lbl">Progress report · for grown-ups</div><h1 class="h1">'+st.name+'</h1>';
-  h+='<p class="muted">Practising '+['s','sh'].filter(function(k){return st.sounds[k];}).map(chip).join(' and ')+(n?' · since '+since:'')+'</p>';
-  h+='<div class="kpis"><div><b>'+n+'</b><span>sessions</span></div><div><b>'+all.h+'</b><span>sounds held</span></div><div><b>'+pct(all.h,all.t)+'%</b><span>hold rate</span></div><div><b>'+Math.round(time/60000)+'</b><span>minutes</span></div></div>';
+  var S=st.sessions,n=S.length,held=0,time=0,ks=['s','sh'].filter(function(k){return st.sounds[k];});
+  ks.forEach(function(k){held+=totals(k).h;});S.forEach(function(x){time+=Math.max(0,x.end-x.start);});
+  var mins=Math.round(time/60000),h='';
+  h+='<div class="lbl">Progress report</div><h1 class="h1">'+st.name+'</h1>';
+  h+='<p class="muted">Practising '+ks.map(chip).join(' and ')+(n?' since '+fmtDay(S[0].start):'')+'</p>';
+  h+='<div class="kpis"><div><b>'+n+'</b><span>'+(n===1?'session':'sessions')+'</span></div><div><b>'+(n&&mins<1?'&lt;1':mins)+'</b><span>minutes</span></div><div><b>'+held+'</b><span>sounds held</span></div></div>';
   h+='<h2 class="rh">By sound</h2>';
-  ['s','sh'].forEach(function(k){var o=totals(k),p=pct(o.h,o.t);
-    h+='<div class="rcard snd-'+k+'"><div class="rrow">'+chip(k)+'<span class="muted">'+(k==='s'?'snake':'wind')+'</span><span class="right"><b>'+o.h+'</b> held · '+o.t+' '+(o.t===1?'try':'tries')+'</span></div>'+
-      '<div class="meterbar"><i style="width:'+p+'%"></i></div>'+
-      '<div class="rrow small"><span>'+p+'% hold rate'+(o.sk?' · '+o.sk+' skipped':'')+'</span><span class="right trend">'+spark(k)+'</span></div>'+
-      '<div class="rrow small muted"><span>Personal target</span><span class="right">'+Math.round(tgt(k)*100)+' on the soft–sharp scale</span></div></div>';});
+  ks.forEach(function(k){var o=totals(k),p=pct(o.h,o.t),rate=o.t>=3?p+'% held':o.t?'Rate after 3 tries':(o.sk?'Skipped '+(o.sk===1?'once':o.sk+' times'):'Not practised yet');
+    h+='<div class="rcard snd-'+k+'"><div class="rrow">'+chip(k)+(o.t?'<span class="right"><b>'+o.h+'</b> of '+o.t+' held</span>':'')+'</div>'+
+      '<div class="meterbar" role="img" aria-label="'+p+'% held"><i style="width:'+p+'%"></i></div>'+
+      '<div class="rrow small muted"><span>'+rate+(o.t&&o.sk?' · '+o.sk+' skipped':'')+'</span><span class="right trend">'+spark(k)+'</span></div></div>';});
   h+='<h2 class="rh">Practice settings</h2><div class="rcard"><div class="rrow"><span>Target width</span><span class="right seg" role="group" aria-label="Target width">'+
     '<button type="button" data-easy="0" aria-pressed="'+(!st.easy)+'">Standard</button><button type="button" data-easy="1" aria-pressed="'+st.easy+'">Easier</button></span></div>'+
-    '<p class="muted small">Easier widens the target so a near sound counts. Use it while a sound is new, then switch back.</p></div>';
+    '<p class="muted small">Easier counts a near sound. Use it while a sound is new.</p>'+
+    '<div class="rrow small"><span>Targets</span><span class="right muted">'+ks.map(function(k){return chip(k)+' '+Math.round(tgt(k)*100);}).join('&nbsp;&nbsp;')+'</span></div></div>';
   h+='<h2 class="rh">Sessions</h2>';
-  if(!n)h+='<div class="rcard muted">No sessions yet. Read a story together and it will show up here.</div>';
-  else h+='<div class="rlist">'+S.slice().reverse().map(function(x){var cell=function(k){var o=x.stats[k]||{},t=Math.max(o.tries||0,o.holds||0);return t||o.skips?chip(k)+' '+(o.holds||0)+'/'+t+(o.skips?' <span class="muted">('+o.skips+' skip)</span>':''):'';};
-    return '<div class="rsess"><div class="rrow"><b>'+fmtDay(x.start)+'</b><span class="muted">'+fmtTime(x.start)+' · '+fmtDur(x.end-x.start)+'</span><span class="right tag '+(x.done?'ok':'part')+'">'+(x.done?'Finished':'Stopped early')+'</span></div>'+
-      '<div class="rrow small"><span>'+x.story+(x.choice?' · sailed to '+(x.choice==='s'?'Sunflower Hill':'Shell Beach'):'')+'</span></div>'+
-      '<div class="rrow small">'+cell('s')+' '+cell('sh')+(x.easy?'<span class="right muted">Easier on</span>':'')+'</div></div>';}).join('')+'</div>';
-  h+='<h2 class="rh">Notes</h2><textarea id="rNotes" rows="4" placeholder="Notes for the next session, e.g. SSS clearer after modelling twice">'+(st.notes||'').replace(/</g,'&lt;')+'</textarea>';
-  h+='<div class="rfoot"><button class="btn soft" type="button" id="rClear">Clear history</button><p class="note">Saved on this device only. Share sends a text summary.</p></div>';
+  if(!n)h+='<div class="rcard muted">No sessions yet. Read a story together and it shows up here.</div>';
+  else h+='<div class="rlist">'+S.slice().reverse().map(function(x){
+    var res=ks.map(function(k){var o=x.stats[k]||{},t=Math.max(o.tries||0,o.holds||0);if(!t&&!o.skips)return '';
+      return '<span class="res">'+chip(k)+' '+(t?(o.holds||0)+' of '+t+' held':'')+(o.skips?(t?' · ':'')+'skipped':'')+'</span>';}).join('');
+    return '<div class="rsess"><div class="rrow"><b>'+x.story+'</b><span class="right tag '+(x.done?'ok':'part')+'">'+(x.done?'Finished':'Stopped early')+'</span></div>'+
+      '<div class="small muted">'+fmtDay(x.start)+', '+fmtTime(x.start)+' · '+fmtDur(x.end-x.start)+(x.choice?' · sailed to '+(x.choice==='s'?'Sunflower Hill':'Shell Beach'):'')+(x.easy?' · Easier on':'')+'</div>'+
+      (res?'<div class="rrow small">'+res+'</div>':'')+'</div>';}).join('')+'</div>';
+  h+='<h2 class="rh"><label for="rNotes">Notes</label></h2><textarea id="rNotes" rows="3" placeholder="For the next session, e.g. SSS clearer after modelling twice">'+(st.notes||'').replace(/</g,'&lt;')+'</textarea>';
+  h+='<div class="rfoot"><p class="note">Saved on this device only. Share sends a text summary.</p><button class="linkbtn danger" type="button" id="rClear">Clear history</button></div>';
   $('reportBody').innerHTML=h;$('reportBody').scrollTop=0;
   document.querySelectorAll('#reportBody .seg button').forEach(function(b){b.onclick=function(){st.easy=b.dataset.easy==='1';save();renderZones();
     var e=$('easier');if(e){e.setAttribute('aria-pressed',String(st.easy));e.querySelector('b').textContent=st.easy?'Easier: on':'Make it easier';}buildReport();};});
@@ -1340,7 +1378,7 @@ function buildReport(){
   $('rClear').onclick=function(){if(confirm('Clear all sessions? Stickers stay.')){st.sessions=[];save();buildReport();toast('History cleared');}};
 }
 function reportText(){var lines=['Soundbook progress report: '+st.name,new Date().toLocaleDateString(),''],n=st.sessions.length;
-  lines.push('Sessions: '+n);['s','sh'].forEach(function(k){var o=totals(k);lines.push((k==='s'?'SSS (snake)':'SHH (wind)')+': '+o.h+' held of '+o.t+' tries ('+pct(o.h,o.t)+'%)'+(o.sk?', '+o.sk+' skipped':''));});
+  lines.push('Sessions: '+n);['s','sh'].forEach(function(k){var o=totals(k);lines.push((k==='s'?'SSS':'SHH')+': '+o.h+' of '+o.t+' held'+(o.t>=3?' ('+pct(o.h,o.t)+'%)':'')+(o.sk?', '+o.sk+' skipped':''));});
   lines.push('Target width: '+(st.easy?'Easier':'Standard'));
   if(n){var x=st.sessions[n-1];lines.push('','Last session: '+fmtDay(x.start)+' '+fmtTime(x.start)+', '+fmtDur(x.end-x.start)+(x.done?', finished':', stopped early'));}
   if(st.notes)lines.push('','Notes: '+st.notes);return lines.join('\n');}

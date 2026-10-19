@@ -5,3 +5,12 @@ demo/clips/
 demo/zooms/
 demo/process/
 demo/logo/
+demo/video/frames/
+demo/video/clips/
+demo/video/stills/
+demo/video/flip/
+demo/video/*.mp4
+demo/video/*.jpg
+demo/report/
+demo/tofu/
+demo/merged/

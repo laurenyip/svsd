@@ -1,0 +1,774 @@
+{
+ "end": 249.52,
+ "scenes": [
+  {
+   "part": "Context",
+   "v": {
+    "type": "cam",
+    "note": "Riya on camera, talking to the viewer"
+   },
+   "say": "When I was one month old, I lost about 90 to 95% of my hearing. I’ve worn hearing aids ever since. They made accessibility a lot easier, but they don’t solve every problem.",
+   "start": 0.6,
+   "dur": 13.89,
+   "sub": [
+    {
+     "start": 0.9,
+     "end": 5.67,
+     "lines": [
+      "When I was one month old, I lost",
+      "about 90 to 95% of my hearing."
+     ]
+    },
+    {
+     "start": 5.75,
+     "end": 8.29,
+     "lines": [
+      "I’ve worn hearing aids ever since."
+     ]
+    },
+    {
+     "start": 8.37,
+     "end": 13.91,
+     "lines": [
+      "They made accessibility a lot easier,",
+      "but they don’t solve every problem."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "Context",
+   "v": {
+    "type": "letters"
+   },
+   "say": "One problem is that you can’t hear some frequencies of sound, like consonants. That makes it hard to tell these sounds apart: s, f, th, sh, ch, k, p and h.",
+   "start": 14.49,
+   "dur": 13.12,
+   "sub": [
+    {
+     "start": 14.79,
+     "end": 20.95,
+     "lines": [
+      "One problem is that you can’t hear some",
+      "frequencies of sound, like consonants."
+     ]
+    },
+    {
+     "start": 21.03,
+     "end": 27.04,
+     "lines": [
+      "That makes it hard to tell these sounds",
+      "apart: s, f, th, sh, ch, k, p and h."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "Context",
+   "v": {
+    "type": "chair"
+   },
+   "say": "So when you’re a kid and you can’t hear them, it’s hard to learn how to pronounce words. For the longest time, I said “chair” as “shair”, because I couldn’t hear the difference.",
+   "start": 27.62,
+   "dur": 13.89,
+   "sub": [
+    {
+     "start": 27.92,
+     "end": 31.6,
+     "lines": [
+      "So when you’re a kid and",
+      "you can’t hear them, it’s"
+     ]
+    },
+    {
+     "start": 31.68,
+     "end": 34.38,
+     "lines": [
+      "hard to learn how to pronounce words."
+     ]
+    },
+    {
+     "start": 34.46,
+     "end": 37.99,
+     "lines": [
+      "For the longest time, I",
+      "said “chair” as “shair”,"
+     ]
+    },
+    {
+     "start": 38.07,
+     "end": 40.93,
+     "lines": [
+      "because I couldn’t hear the difference."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "Context",
+   "v": {
+    "type": "cam",
+    "note": "Riya on camera"
+   },
+   "say": "It took a lot of speech therapy. Trying to say what you literally can’t hear was frustrating and time-consuming for the child, the parent and the therapist.",
+   "start": 41.51,
+   "dur": 11.58,
+   "sub": [
+    {
+     "start": 41.81,
+     "end": 43.97,
+     "lines": [
+      "It took a lot of speech therapy."
+     ]
+    },
+    {
+     "start": 44.05,
+     "end": 48.38,
+     "lines": [
+      "Trying to say what you literally",
+      "can’t hear was frustrating and"
+     ]
+    },
+    {
+     "start": 48.46,
+     "end": 52.51,
+     "lines": [
+      "time-consuming for the child,",
+      "the parent and the therapist."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "Context",
+   "v": {
+    "type": "cam",
+    "note": "Riya on camera, lighter tone"
+   },
+   "say": "It’s like doing maths with your dad at the dinner table, but ten times worse. I wouldn’t wish it on my worst enemy. I’m traumatised to this day, and I’m not the only one.",
+   "start": 53.09,
+   "dur": 14.28,
+   "sub": [
+    {
+     "start": 53.39,
+     "end": 59.49,
+     "lines": [
+      "It’s like doing maths with your dad at",
+      "the dinner table, but ten times worse."
+     ]
+    },
+    {
+     "start": 59.57,
+     "end": 62.46,
+     "lines": [
+      "I wouldn’t wish it on my worst enemy."
+     ]
+    },
+    {
+     "start": 62.54,
+     "end": 66.79,
+     "lines": [
+      "I’m traumatised to this day,",
+      "and I’m not the only one."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "The problem",
+   "v": {
+    "type": "research"
+   },
+   "say": "Research shows that children with hearing loss are slowest to learn sounds like S and SH, because hearing aids can’t fully carry them. They’re asked to say sounds they can’t hear, with no way to check themselves.",
+   "start": 67.37,
+   "dur": 15.43,
+   "sub": [
+    {
+     "start": 67.67,
+     "end": 72.74,
+     "lines": [
+      "Research shows that children with",
+      "hearing loss are slowest to learn sounds"
+     ]
+    },
+    {
+     "start": 72.82,
+     "end": 76.86,
+     "lines": [
+      "like S and SH, because hearing",
+      "aids can’t fully carry them."
+     ]
+    },
+    {
+     "start": 76.94,
+     "end": 82.22,
+     "lines": [
+      "They’re asked to say sounds they can’t",
+      "hear, with no way to check themselves."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "The idea",
+   "v": {
+    "type": "phone",
+    "src": "clips/v1-loading.mp4",
+    "side": "Soundbook",
+    "sideSub": "See what your voice looks like"
+   },
+   "say": "So I came up with a way to visualise your voice. Soundbook is a gamified storytelling app for deaf and hard of hearing children, where they can see what their voice looks like.",
+   "start": 82.8,
+   "dur": 13.89,
+   "sub": [
+    {
+     "start": 83.1,
+     "end": 86.63,
+     "lines": [
+      "So I came up with a way",
+      "to visualise your voice."
+     ]
+    },
+    {
+     "start": 86.71,
+     "end": 91.82,
+     "lines": [
+      "Soundbook is a gamified storytelling",
+      "app for deaf and hard of hearing"
+     ]
+    },
+    {
+     "start": 91.9,
+     "end": 96.11,
+     "lines": [
+      "children, where they can see",
+      "what their voice looks like."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "The app",
+   "v": {
+    "type": "phone",
+    "src": "clips/v2-setup.mp4",
+    "side": "Pick the sounds",
+    "sideSub": "The grown-up sets up once"
+   },
+   "say": "The parent or therapist picks the family of sounds they want their child to practise. Each family of sounds is linked to a story.",
+   "start": 96.69,
+   "dur": 10.43,
+   "sub": [
+    {
+     "start": 96.99,
+     "end": 100.7,
+     "lines": [
+      "The parent or therapist",
+      "picks the family of sounds"
+     ]
+    },
+    {
+     "start": 100.78,
+     "end": 103.28,
+     "lines": [
+      "they want their child to practise."
+     ]
+    },
+    {
+     "start": 103.36,
+     "end": 106.54,
+     "lines": [
+      "Each family of sounds",
+      "is linked to a story."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "The app",
+   "v": {
+    "type": "phone",
+    "src": "clips/v3-story.mp4",
+    "side": "Read it together",
+    "sideSub": "Tap “Turn the page” to flip it"
+   },
+   "say": "They pick a story and read it aloud with their child. Throughout the story, the child is asked to make letter sounds, like this.",
+   "start": 107.12,
+   "dur": 10.43,
+   "sub": [
+    {
+     "start": 107.42,
+     "end": 111.36,
+     "lines": [
+      "They pick a story and read",
+      "it aloud with their child."
+     ]
+    },
+    {
+     "start": 111.44,
+     "end": 116.97,
+     "lines": [
+      "Throughout the story, the child is",
+      "asked to make letter sounds, like this."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "The app",
+   "v": {
+    "type": "split",
+    "src": "clips/v4-hiss.mp4",
+    "note": "Riya holding her phone, hissing into it"
+   },
+   "say": "Sssssss… I need practice, y’all. I can’t do it at my grown age.",
+   "min": 9.5,
+   "start": 117.55,
+   "dur": 9.5,
+   "sub": [
+    {
+     "start": 117.85,
+     "end": 118.91,
+     "lines": [
+      "Sssssss…"
+     ]
+    },
+    {
+     "start": 118.99,
+     "end": 122.2,
+     "lines": [
+      "I need practice, y’all."
+     ]
+    },
+    {
+     "start": 122.28,
+     "end": 126.47,
+     "lines": [
+      "I can’t do it at my grown age."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "The app",
+   "v": {
+    "type": "image",
+    "src": "../zooms/07-slider-states.png",
+    "side": "Soft ↔ sharp",
+    "sideSub": "Not quiet ↔ loud"
+   },
+   "say": "The slider shows the child how soft or sharp their voice is, which is very different from quiet and loud. They can see the difference between two sounds, and get better with practice.",
+   "start": 127.05,
+   "dur": 13.89,
+   "sub": [
+    {
+     "start": 127.35,
+     "end": 131.61,
+     "lines": [
+      "The slider shows the child how",
+      "soft or sharp their voice is,"
+     ]
+    },
+    {
+     "start": 131.69,
+     "end": 134.8,
+     "lines": [
+      "which is very different",
+      "from quiet and loud."
+     ]
+    },
+    {
+     "start": 134.88,
+     "end": 140.37,
+     "lines": [
+      "They can see the difference between two",
+      "sounds, and get better with practice."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "The app",
+   "v": {
+    "type": "phone",
+    "src": "clips/v5-choice.mp4",
+    "side": "Your voice steers",
+    "sideSub": "SHH → Shell Beach · SSS → Sunflower Hill"
+   },
+   "say": "The child’s voice moves the plot forward. Here, Sid and his friend need to pick where to go. The child can make either sound to choose. I choose Shell Beach, so I say “Shhh”… and there I go.",
+   "start": 140.95,
+   "dur": 15.82,
+   "sub": [
+    {
+     "start": 141.25,
+     "end": 144.48,
+     "lines": [
+      "The child’s voice moves the plot forward."
+     ]
+    },
+    {
+     "start": 144.56,
+     "end": 148.51,
+     "lines": [
+      "Here, Sid and his friend",
+      "need to pick where to go."
+     ]
+    },
+    {
+     "start": 148.59,
+     "end": 151.9,
+     "lines": [
+      "The child can make either sound to choose."
+     ]
+    },
+    {
+     "start": 151.98,
+     "end": 154.97,
+     "lines": [
+      "I choose Shell Beach, so I say “Shhh”…"
+     ]
+    },
+    {
+     "start": 155.05,
+     "end": 156.18,
+     "lines": [
+      "and there I go."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "Why it matters",
+   "v": {
+    "type": "cam",
+    "note": "Riya on camera"
+   },
+   "say": "Soundbook doesn’t replace speech therapy or human support. It’s a tool within speech therapy that makes learning faster, and more fun, for children with hearing loss.",
+   "start": 156.76,
+   "dur": 11.2,
+   "sub": [
+    {
+     "start": 157.06,
+     "end": 160.66,
+     "lines": [
+      "Soundbook doesn’t replace",
+      "speech therapy or human support."
+     ]
+    },
+    {
+     "start": 160.74,
+     "end": 164.53,
+     "lines": [
+      "It’s a tool within speech therapy",
+      "that makes learning faster,"
+     ]
+    },
+    {
+     "start": 164.61,
+     "end": 167.38,
+     "lines": [
+      "and more fun, for children",
+      "with hearing loss."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "How we used AI",
+   "v": {
+    "type": "grid",
+    "srcs": [
+     "../process/lights-star.jpg",
+     "../process/early-star-meter.jpg",
+     "../process/early-star-page.jpg",
+     "../process/orb-states.jpg",
+     "../process/glass-phones.jpg",
+     "../process/dark.jpg"
+    ]
+   },
+   "say": "AI served as an accelerator for research and for exploring different directions, but human judgement was always needed. It showed us many directions, and we judged which ones actually worked in practice.",
+   "start": 167.96,
+   "dur": 13.51,
+   "sub": [
+    {
+     "start": 168.26,
+     "end": 171.85,
+     "lines": [
+      "AI served as an accelerator",
+      "for research and for exploring"
+     ]
+    },
+    {
+     "start": 171.93,
+     "end": 175.64,
+     "lines": [
+      "different directions, but human",
+      "judgement was always needed."
+     ]
+    },
+    {
+     "start": 175.72,
+     "end": 180.89,
+     "lines": [
+      "It showed us many directions, and we judged",
+      "which ones actually worked in practice."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "How we used AI",
+   "v": {
+    "type": "grid",
+    "srcs": [
+     "../process/lights-star.jpg",
+     "../process/early-star-meter.jpg",
+     "../process/glass-phones.jpg",
+     "../process/dark.jpg"
+    ],
+    "labels": [
+     "Particle stars",
+     "Glowing star orb",
+     "Glass sliders",
+     "Dark theme"
+    ]
+   },
+   "say": "Claude generated a lot of options quickly: particle stars, glowing orbs, glass sliders, dark and light themes. We asked whether each one would actually work for a five-year-old with a cochlear implant.",
+   "start": 181.47,
+   "dur": 13.51,
+   "sub": [
+    {
+     "start": 181.77,
+     "end": 185.41,
+     "lines": [
+      "Claude generated a lot of",
+      "options quickly: particle stars,"
+     ]
+    },
+    {
+     "start": 185.49,
+     "end": 188.68,
+     "lines": [
+      "glowing orbs, glass sliders,",
+      "dark and light themes."
+     ]
+    },
+    {
+     "start": 188.76,
+     "end": 191.96,
+     "lines": [
+      "We asked whether each one",
+      "would actually work for a"
+     ]
+    },
+    {
+     "start": 192.04,
+     "end": 194.4,
+     "lines": [
+      "five-year-old with a cochlear implant."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "How we used AI",
+   "v": {
+    "type": "compare",
+    "a": "../process/early-star-page.jpg",
+    "b": "../zooms/07-slider-states.png",
+    "la": "Before: star target over the slider",
+    "lb": "After: a slider between two sounds"
+   },
+   "say": "The particle star was beautiful, but children couldn’t tell which way to change their sound. So we moved to a simple slider between the two sounds.",
+   "start": 194.98,
+   "dur": 11.2,
+   "sub": [
+    {
+     "start": 195.28,
+     "end": 199.07,
+     "lines": [
+      "The particle star was",
+      "beautiful, but children couldn’t"
+     ]
+    },
+    {
+     "start": 199.15,
+     "end": 201.72,
+     "lines": [
+      "tell which way to change their sound."
+     ]
+    },
+    {
+     "start": 201.8,
+     "end": 205.6,
+     "lines": [
+      "So we moved to a simple",
+      "slider between the two sounds."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "How we used AI",
+   "v": {
+    "type": "compare",
+    "a": "../process/glass-phones.jpg",
+    "b": "../zooms/07a-slider-idle.png",
+    "la": "Before: glass knob",
+    "lb": "After: high-contrast ring"
+   },
+   "say": "The glass knob looked nice but was hard to see, so we made it a plain, high-contrast ring.",
+   "start": 206.18,
+   "dur": 8.12,
+   "sub": [
+    {
+     "start": 206.48,
+     "end": 210.76,
+     "lines": [
+      "The glass knob looked nice",
+      "but was hard to see, so we"
+     ]
+    },
+    {
+     "start": 210.84,
+     "end": 213.72,
+     "lines": [
+      "made it a plain, high-contrast ring."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "How we used AI",
+   "v": {
+    "type": "compare",
+    "a": "../process/dark.jpg",
+    "b": "../process/light1.jpg",
+    "la": "Before: dark mode",
+    "lb": "After: a bright storybook"
+   },
+   "say": "Dark mode looked polished, but a bright storybook felt friendlier for young children.",
+   "start": 214.3,
+   "dur": 6.2,
+   "sub": [
+    {
+     "start": 214.6,
+     "end": 217.67,
+     "lines": [
+      "Dark mode looked polished,",
+      "but a bright storybook"
+     ]
+    },
+    {
+     "start": 217.75,
+     "end": 219.92,
+     "lines": [
+      "felt friendlier for young children."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "Our own ideas",
+   "v": {
+    "type": "grid",
+    "srcs": [
+     "../zooms/04-instruction-chip.png",
+     "../zooms/11a-choice-slider.png",
+     "../zooms/05-silhouette-hint.png"
+    ],
+    "labels": [
+     "One-direction pages",
+     "Dotted target zone",
+     "Who’s about to appear"
+    ]
+   },
+   "say": "We didn’t just take the suggestions as they were. We added our own ideas, like one-direction pages, a dotted target zone, and a silhouette of who’s about to appear.",
+   "start": 220.5,
+   "dur": 12.35,
+   "sub": [
+    {
+     "start": 220.8,
+     "end": 224.21,
+     "lines": [
+      "We didn’t just take the",
+      "suggestions as they were."
+     ]
+    },
+    {
+     "start": 224.29,
+     "end": 228.85,
+     "lines": [
+      "We added our own ideas, like",
+      "one-direction pages, a dotted target"
+     ]
+    },
+    {
+     "start": 228.93,
+     "end": 232.27,
+     "lines": [
+      "zone, and a silhouette",
+      "of who’s about to appear."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "Our own ideas",
+   "v": {
+    "type": "compare",
+    "a": "../process/styles.jpg",
+    "b": "../zooms/01-characters.png",
+    "la": "Before: first-draft characters",
+    "lb": "After: redrawn by us"
+   },
+   "say": "And we redrew the characters ourselves. AI gave us breadth; our judgement gave us the right answer, and pushed the quality higher.",
+   "start": 232.85,
+   "dur": 9.66,
+   "sub": [
+    {
+     "start": 233.15,
+     "end": 235.77,
+     "lines": [
+      "And we redrew the characters ourselves."
+     ]
+    },
+    {
+     "start": 235.85,
+     "end": 239.3,
+     "lines": [
+      "AI gave us breadth; our",
+      "judgement gave us the right"
+     ]
+    },
+    {
+     "start": 239.38,
+     "end": 241.94,
+     "lines": [
+      "answer, and pushed the quality higher."
+     ]
+    }
+   ]
+  },
+  {
+   "part": "",
+   "v": {
+    "type": "end"
+   },
+   "say": "Thank you for watching, and thank you for hosting the SVSD design competition.",
+   "min": 6,
+   "start": 242.52,
+   "dur": 6.2,
+   "sub": [
+    {
+     "start": 242.82,
+     "end": 248.14,
+     "lines": [
+      "Thank you for watching, and thank you",
+      "for hosting the SVSD design competition."
+     ]
+    }
+   ]
+  }
+ ]
+}
