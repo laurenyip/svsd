@@ -9,7 +9,7 @@
 /* Layout follows the Figma frame "iPhone 16 & 17 Pro - 1" (402x874): full-bleed scene on top (440px), story text, instruction line with a sound chip, the soft/sharp bar, and a round mic button. Single light look by choice. */
 :root{
   color-scheme:light;
-  --ground:#E9E6E0; --paper:#F7F3EC; --surface:#FFFFFF; --track:#ECE6DB; --ink:#000000; --ink-2:#696969; --line:#E7E0D4;
+  --ground:#E9E9E9; --paper:#FFFFFF; --surface:#F4F4F4; --track:#E0E0E0; --ink:#000000; --ink-2:#696969; --line:#E0E0E0;
   --s-bg:#E8FFD9; --s-ink:#38780D; --sh-bg:#E3ECFF; --sh-ink:#2F5BB7; --ch-bg:#FFE9DC; --ch-ink:#B4532A; --f-bg:#F1E8FF; --f-ink:#6B4BB0;
   --focus:#2F5BB7;
   --f-display:"Solway",Georgia,"Times New Roman",serif;
@@ -419,7 +419,6 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 /* ---------- report, tidied ---------- */
 .kpis{grid-template-columns:repeat(3,1fr)}
 .kpis span{font-size:13px}
-.rcard,.rsess,.kpis div{box-shadow:0 1px 2px rgba(60,40,10,.05)}
 .rsess b{font-weight:600}
 .res{display:inline-flex;align-items:center;gap:6px;margin-right:12px}
 .rh label{cursor:pointer}
@@ -428,8 +427,6 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .linkbtn.danger{align-self:center;color:#B42318;font-weight:600}
 #report .rscroll{padding-bottom:140px}
 .meterbar{background:var(--track)}
-.stk.empty .plate{border-color:#D8CDBA;background:rgba(255,255,255,.5)}
-.stk.empty .art{opacity:.24}
 
 /* ---------- star style switcher (outside the phone) ---------- */
 .vpick{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:6px;width:190px;
