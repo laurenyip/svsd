@@ -1,4 +1,5 @@
 <title>SoundBook</title>
+<link rel="icon" href="soundbook/img/logo.svg" type="image/svg+xml">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,6 +12,7 @@
   --s-bg:#E8FFD9; --s-ink:#38780D; --sh-bg:#E6F3FF; --sh-ink:#130D78; --ch-bg:#FFF5EF; --ch-ink:#B4532A; --f-bg:#F9F5FF; --f-ink:#6B4BB0; --v-bg:#FFE6F0; --v-ink:#A61E5C;
   --focus:#2F5BB7;
   --f-display:"Solway",Georgia,"Times New Roman",serif;
+  --f-logo:"Solway",Georgia,serif;
   --f-body:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
@@ -243,7 +245,29 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .stk b mark.ch{color:var(--ch-ink);background:var(--ch-bg)} .stk b mark.f{color:var(--f-ink);background:var(--f-bg)}
 .stk small{font-size:12px;color:var(--ink-2)}
 
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ---------- logo + loading screen ---------- */
+.wlogo{display:flex;align-items:center;gap:10px;font:700 38px/1 var(--f-logo)!important;letter-spacing:-.5px;color:#18263A}
+.wlogo svg{width:64px;flex:none}
+.splash{position:absolute;inset:0;z-index:70;display:grid;place-items:center;background:linear-gradient(#EEF3FF,#F1F9E8);pointer-events:none;transition:opacity .45s ease}
+.splash.out{opacity:0}
+.sp-in{display:grid;justify-items:center;gap:8px;transform:translateY(-24px)}
+.sp-in svg{width:156px;overflow:visible}
+.sp-word{font:700 44px/1 var(--f-logo);letter-spacing:-.5px;color:#18263A;opacity:0;animation:spUp .6s 1.05s ease-out forwards}
+.sp-tag{font-size:15px;font-weight:500;color:#33475C;opacity:0;animation:spUp .6s 1.3s ease-out forwards}
+.splash .sp-line{stroke-dasharray:141;stroke-dashoffset:141;animation:spLine .5s .05s ease-out forwards}
+.splash .sp-sun{transform:translateY(24px);animation:spSun .8s .3s cubic-bezier(.2,.8,.2,1) forwards}
+.splash .sp-r{opacity:0;transform-origin:100px 130px;transform:scale(.55)}
+.splash .sp-r1{animation:spRip .45s .7s ease-out forwards,spPulse 1.5s 1.8s ease-in-out infinite}
+.splash .sp-r2{animation:spRip .45s .84s ease-out forwards,spPulse 1.5s 1.95s ease-in-out infinite}
+.splash .sp-r3{animation:spRip .45s .98s ease-out forwards,spPulse 1.5s 2.1s ease-in-out infinite}
+@keyframes spLine{to{stroke-dashoffset:0}}
+@keyframes spSun{to{transform:none}}
+@keyframes spRip{to{opacity:1;transform:none}}
+@keyframes spPulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes spUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}
+  .splash *{opacity:1!important;transform:none!important;stroke-dashoffset:0!important}}
 </style>
 
 <div class="phone" id="phone">
@@ -256,10 +280,11 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
     <span class="sb-ic"><svg width="19" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="1"/><rect x="5" y="5" width="3.2" height="7" rx="1"/><rect x="10" y="2.5" width="3.2" height="9.5" rx="1"/><rect x="15" y="0" width="3.2" height="12" rx="1"/></svg><svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.6c2.3 0 4.4.9 6 2.4l1.2-1.2C13.8 1.9 11.3.8 8.5.8S3.2 1.9 1.3 3.8L2.5 5c1.6-1.5 3.7-2.4 6-2.4z"/><path d="M8.5 6.1c1.3 0 2.5.5 3.5 1.4l1.2-1.2c-1.2-1.2-2.9-1.9-4.7-1.9S5 5.1 3.8 6.3L5 7.5c1-.9 2.2-1.4 3.5-1.4z"/><path d="M8.5 9.4c.4 0 .8.2 1.1.4L8.5 11 7.4 9.8c.3-.2.7-.4 1.1-.4z"/></svg><svg width="28" height="13" viewBox="0 0 28 13"><rect x=".5" y=".5" width="24" height="12" rx="3.8" fill="none" stroke="#000" stroke-opacity=".35"/><rect x="2" y="2" width="21" height="9" rx="2.5"/><path d="M26 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill-opacity=".4"/></svg></span>
   </div>
 
+  <div class="splash" id="splash" aria-hidden="true"><div class="sp-in"><svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="spG" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient><clipPath id="spGc"><rect x="0" y="0" width="200" height="130"/></clipPath></defs><g clip-path="url(#spGc)"><path class="sp-sun" d="M78 130A22 22 0 0 1 122 130Z" fill="url(#spG)"/></g><g fill="none" stroke="url(#spG)" stroke-width="7" stroke-linecap="round"><path class="sp-r sp-r1" d="M64.29 117A38 38 0 0 1 135.71 117"/><path class="sp-r sp-r2" d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path class="sp-r sp-r3" d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path class="sp-line" d="M30 130H170"/></g></svg><div class="sp-word">soundbook</div><div class="sp-tag">Storybooks you read out loud</div></div></div>
   <section class="screen" id="welcome" aria-label="Welcome">
     <div class="w-top">
       <div class="lbl">Storybooks you read out loud</div>
-      <h1 class="h1">SoundBook</h1>
+      <h1 class="h1 wlogo" aria-label="SoundBook"><svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="wlG" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient><clipPath id="wlGc"><rect x="0" y="0" width="200" height="130"/></clipPath></defs><g clip-path="url(#wlGc)"><path class="sp-sun" d="M78 130A22 22 0 0 1 122 130Z" fill="url(#wlG)"/></g><g fill="none" stroke="url(#wlG)" stroke-width="7" stroke-linecap="round"><path class="sp-r sp-r1" d="M64.29 117A38 38 0 0 1 135.71 117"/><path class="sp-r sp-r2" d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path class="sp-r sp-r3" d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path class="sp-line" d="M30 130H170"/></g></svg><span>soundbook</span></h1>
       <p class="muted">You read the story. Your child makes the sounds that move it forward.</p>
     </div>
     <div class="w-mid" aria-hidden="true" id="wChars"></div>
@@ -1122,5 +1147,8 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 updateMic();requestAnimationFrame(frame);
+(function(){var sp=$('splash');if(!sp)return;var done=false;
+  function go(){if(done)return;done=true;sp.classList.add('out');setTimeout(function(){sp.remove();},500);}
+  setTimeout(go,reduce?900:2800);document.addEventListener('pointerdown',go,{once:true});})();
 })();
 </script>
