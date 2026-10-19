@@ -1,3 +1,4 @@
 node_modules/
 .DS_Store
 demo/*.mp4
+demo/clips/
