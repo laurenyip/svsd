@@ -309,6 +309,9 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 #rNotes{font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;resize:vertical}
 .rfoot{display:grid;gap:8px;margin-top:6px}
 
+/* the choice page: one line per sound */
+.instr .ln{flex-basis:100%;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
 /* ---------- home: chapters ---------- */
 .shelf-head .h1{font-size:26px}
 #books{gap:14px;padding-bottom:12px}
@@ -672,7 +675,7 @@ function cover(kind){
 /* ---------- story ---------- */
 /* ---------- the book: one adventure in chapters, each practising a sound ---------- */
 var P_CHOICE={kind:'choice',scene:crossing,text:'Sid and Squirrel hop on the ship. Where should they go?',
-   instr:'Make '+chip('sh')+' for Shell Beach or '+chip('s')+' for Sunflower Hill',emit:[214,330],
+   instr:'<span class="ln">Make '+chip('sh')+' to sail to Shell Beach</span><span class="ln">Make '+chip('s')+' to sail to Sunflower Hill</span>',emit:[214,330],
    endS:'Sssuper! They sailed to Sunflower Hill and had a picnic in the sunshine.',
    endSh:'Shhh… They sailed to Shell Beach and found the shiniest shell in the sand.'};
 var BOOK=[
@@ -1067,7 +1070,7 @@ function drawSlider(dt,t,active,P){
       mctx.fillStyle=fg;mctx.fillRect(za,top,(zb-za)*f,2*H);mctx.restore();}
     slPill(za,top+4,zb-za,2*H-8);mctx.setLineDash([0,7]);mctx.lineCap='round';mctx.lineWidth=3.2;mctx.strokeStyle=rgba(ink,.6+.4*lit);mctx.stroke();mctx.setLineDash([]);mctx.lineCap='butt';
     ZL.push({k:k,cx:cx,ink:ink});
-    if(P.kind==='choice'){mctx.font='600 12.5px Inter,system-ui,sans-serif';mctx.fillStyle=rgba(ink,.6+.4*lit);var nm=k==='s'?'Sunflower Hill':'Shell Beach',hw=mctx.measureText(nm).width/2+2;mctx.fillText(nm,Math.max(hw,Math.min(MW-hw,cx)),top-10);}
+    if(P.kind==='choice'){mctx.textAlign='center';mctx.font='600 12.5px Inter,system-ui,sans-serif';mctx.fillStyle=rgba(ink,.6+.4*lit);var nm=k==='s'?'Sunflower Hill':'Shell Beach',hw=mctx.measureText(nm).width/2+2;mctx.fillText(nm,Math.max(hw,Math.min(MW-hw,cx)),top-10);}
   });
   /* the voice: a simple white ring with a dark edge; the tube's colour shows through the middle */
   var tx=slX(st.disp.p);slThumb=slThumb==null?tx:slThumb+(tx-slThumb)*Math.min(1,dt*14);
