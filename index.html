@@ -1,3 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SoundBook">
+<meta name="theme-color" content="#F3F2F1">
 <title>SoundBook</title>
 <link rel="icon" href="soundbook/img/logo.svg" type="image/svg+xml">
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -27,7 +37,7 @@ body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-si
 .phone .hw{position:absolute;width:4px;border-radius:2px;background:linear-gradient(90deg,#7E8187,#D9DBDF 55%,#A3A6AB)}
 .phone .hw.l{left:-7px}.phone .hw.r{right:-7px}
 .device{position:relative;flex:none;width:402px;height:874px;background:var(--paper);border-radius:56px;overflow:hidden;isolation:isolate}
-@media (max-width:520px){body{padding:0}.phone{padding:0;border:0;border-radius:0;background:none;box-shadow:none}.phone .hw{display:none}.device{width:100vw;height:100vh;height:100dvh;border-radius:0}.sbar{display:none}}
+@media (max-width:520px){body{padding:0}.phone{padding:0;border:0;border-radius:0;background:none;box-shadow:none}.phone .hw{display:none}.device{width:100vw;height:100vh;height:100dvh;border-radius:0}.sbar{display:none!important}}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column}
 .screen.enter{animation:enter .4s cubic-bezier(.2,.8,.2,1)}
 @keyframes enter{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
@@ -294,7 +304,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 /* ---------- logo + loading screen ---------- */
 .wlogo{display:flex;align-items:center;gap:10px;font:700 38px/1 var(--f-logo)!important;letter-spacing:-.5px;color:#18263A}
 .wlogo svg{width:64px;flex:none}
-.splash{position:absolute;inset:0;z-index:70;display:grid;place-items:center;background:linear-gradient(#EEF3FF,#F1F9E8);pointer-events:none;transition:opacity .45s ease}
+.splash{position:absolute;inset:0;z-index:70;display:grid;place-items:center;background:linear-gradient(#EEF3FF,#F1F9E8);cursor:pointer;transition:opacity .45s ease}
 .splash.out{opacity:0}
 .sp-note{position:absolute;left:24px;right:24px;bottom:50px;line-height:1.5;opacity:0;animation:spUp .5s 1.05s ease-out forwards}
 .sp-in{display:grid;justify-items:center;gap:0;transform:translateY(-68px)}
@@ -304,9 +314,9 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .splash .sp-line{stroke-dasharray:141;stroke-dashoffset:141;animation:spLine .3s 0s ease-out forwards}
 .splash .sp-sun{transform:translateY(24px);animation:spSun .5s .12s cubic-bezier(.34,1.7,.5,1) forwards}
 .splash .sp-r{opacity:0;transform-origin:100px 130px;transform:scale(.55)}
-.splash .sp-r1{animation:spRip .42s .3s cubic-bezier(.34,1.7,.5,1) forwards,spPulse 1.5s 1s ease-in-out infinite}
-.splash .sp-r2{animation:spRip .42s .38s cubic-bezier(.34,1.7,.5,1) forwards,spPulse 1.5s 1.08s ease-in-out infinite}
-.splash .sp-r3{animation:spRip .42s .46s cubic-bezier(.34,1.7,.5,1) forwards,spPulse 1.5s 1.16s ease-in-out infinite}
+.splash .sp-r1{animation:spRip .42s .3s cubic-bezier(.34,1.7,.5,1) forwards}
+.splash .sp-r2{animation:spRip .42s .38s cubic-bezier(.34,1.7,.5,1) forwards}
+.splash .sp-r3{animation:spRip .42s .46s cubic-bezier(.34,1.7,.5,1) forwards}
 @keyframes spLine{to{stroke-dashoffset:0}}
 @keyframes spSun{to{transform:none}}
 @keyframes spRip{to{opacity:1;transform:none}}
@@ -705,7 +715,7 @@ var STORY={title:'Sid’s Adventure',pages:[
   {kind:'choice',scene:crossing,text:'Sid and Snip hop on the ship. Where should they go?',
    instr:'<span class="iline">Make a '+chip('s')+' sound to go to <b class="place s">Sunflower Hill</b></span><span class="iline">Make a '+chip('sh')+' sound to go to <b class="place sh">Shell Beach</b></span>',
    emit:[200,430],
-   endS:'Sssuper! They sailed to Sunflower Hill and had a picnic in the sunshine.',
+   endS:'Sssuper! They sail to Sunflower Hill to have a picnic in the sunshine!',
    endSh:'Shhh… They sailed to Shell Beach and found the shiniest shell in the sand.'}
 ]};
 var STICKERS=[
@@ -1134,7 +1144,7 @@ function choose(snd){
   var boat=$('boat');boat.classList.add('go');boat.style.transform=snd==='s'?'translate(-222px,9px) scale(1.5)':'translate(219px,-32px) scale(1.5)';
   setTimeout(function(){var d=$(snd==='s'?'dS':'dSh');if(d){sparkleBurst(d,snd==='s'?330:84,snd==='s'?200:232,1.1);}},1300);
   setStatus(snd==='s'?'Off to Sunflower Hill!':'Off to Shell Beach!');
-  $('mic').hidden=true;$('turn').hidden=false;$('turn').textContent='Tap to finish';
+  $('mic').hidden=true;$('turn').hidden=false;$('turn').textContent='Tap to continue';
 }
 
 /* ---------- reward + stickers ---------- */
@@ -1235,6 +1245,6 @@ buildShelf();
 (function(){var sp=$('splash');if(!sp){tryMic();return;}var done=false;
   function go(){if(done)return;done=true;tryMic();sp.classList.add('out');setTimeout(function(){sp.remove();},500);}
   /* auto-dismiss timer removed while the logo animation is being worked on: the splash now stays until you tap */
-  document.addEventListener('pointerdown',go,{once:true});})();
+  sp.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go();});})();
 })();
 </script>
