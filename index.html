@@ -181,6 +181,52 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .flipwrap{position:absolute;inset:0;z-index:40;pointer-events:none}
 .flipleaf{position:absolute;inset:0;background:var(--paper)}
 .flipsvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+
+/* ---------- grown-up progress ---------- */
+#progress{background:var(--paper)}
+#progress::before{content:"";position:absolute;left:0;right:0;top:0;height:64px;background:linear-gradient(var(--paper) 70%,rgba(243,242,241,0));z-index:4;pointer-events:none}
+.pg-main{flex:1;overflow:auto;padding:68px 17px 124px;display:flex;flex-direction:column;gap:24px;scrollbar-width:none}
+.pg-main::-webkit-scrollbar{display:none}
+.pg-head{display:flex;flex-direction:column;gap:8px}
+.pg-h{font:500 32px/1.3 var(--f-display);letter-spacing:-.32px;margin:0}
+.pg-sub{font-size:14px;line-height:1.5;color:var(--ink-2);margin:0}
+.pg-sec{font:500 20px/1.3 var(--f-display);letter-spacing:-.2px;margin:0 0 12px}
+.pg-card{background:#fff;border-radius:18px;padding:16px}
+.pg-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pg-tile{background:#fff;border-radius:18px;padding:14px 12px 12px}
+.pg-num{font:500 28px/1.1 var(--f-display);letter-spacing:-.3px;color:#18263A}
+.pg-num small{font:400 15px/1 var(--f-display);color:var(--ink-2);margin-left:2px;letter-spacing:0}
+.pg-cap{font-size:12.5px;line-height:1.35;color:var(--ink-2);margin-top:6px}
+.pg-week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;height:132px;align-items:end}
+.pg-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;height:100%}
+.pg-bar{width:22px;border-radius:8px;overflow:hidden;display:flex;flex-direction:column-reverse}
+.pg-bar i{display:block}
+.pg-bar .s{background:#A9DA82}.pg-bar .sh{background:#9DB7F5}
+.pg-none{width:6px;height:6px;border-radius:50%;background:#E0DDD8;margin-bottom:2px}
+.pg-day{font-size:12px;color:var(--ink-2)}
+.pg-day.today{color:#000;font-weight:600}
+.pg-legend{display:flex;gap:16px;margin-top:14px;font-size:13px;color:var(--ink-2);align-items:center}
+.pg-legend span{display:inline-flex;align-items:center;gap:6px}
+.pg-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.pg-snd{display:grid;gap:10px}
+.pg-snd + .pg-snd{border-top:1px solid #EFEDEA;margin-top:16px;padding-top:16px}
+.pg-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pg-row .who{display:flex;align-items:center;gap:10px;font-size:15px}
+.pg-pct{font:500 20px/1 var(--f-display);color:#18263A}
+.pg-track{height:8px;border-radius:99px;background:#EFEDEA;overflow:hidden}
+.pg-track b{display:block;height:100%;border-radius:99px}
+.pg-note{font-size:13.5px;line-height:1.5;color:var(--ink-2);margin:0}
+.pg-note .up{color:#38780D;font-weight:600}
+.pg-soon{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2)}
+.pg-sess{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+.pg-sess + .pg-sess{border-top:1px solid #EFEDEA}
+.pg-sess b{display:block;font-size:15px;font-weight:600}
+.pg-sess small{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.pg-sess .r{display:flex;gap:6px;align-items:center;flex:none}
+.pg-sess .r .k{font-size:13px;padding:0 3px}
+.pg-tip{border-radius:18px;padding:18px 16px;background:linear-gradient(90deg,#CCDAFB 0%,#D2E8EF 35%,#D5EFE2 58%,#D8F0D4 75%,#DBF1C2 100%)}
+.pg-tip p{font:500 18px/1.4 var(--f-display);letter-spacing:-.18px;margin:6px 0 0;color:#18263A}
+.pg-share{display:flex;align-items:center;justify-content:center;gap:8px}
 @keyframes gust{0%{opacity:0;transform:translateX(-30px)}20%{opacity:1}75%{opacity:.9}100%{opacity:0;transform:translateX(150px)}}
 #shipTilt{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(-5deg);transition:transform 1s cubic-bezier(.3,1.4,.5,1)}
 #shipTilt.free{transform:rotate(0deg)}
@@ -250,16 +296,17 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .wlogo svg{width:64px;flex:none}
 .splash{position:absolute;inset:0;z-index:70;display:grid;place-items:center;background:linear-gradient(#EEF3FF,#F1F9E8);pointer-events:none;transition:opacity .45s ease}
 .splash.out{opacity:0}
-.sp-in{display:grid;justify-items:center;gap:8px;transform:translateY(-24px)}
+.sp-note{position:absolute;left:24px;right:24px;bottom:50px;line-height:1.5;opacity:0;animation:spUp .5s 1.05s ease-out forwards}
+.sp-in{display:grid;justify-items:center;gap:0;transform:translateY(-68px)}
 .sp-in svg{width:156px;overflow:visible}
-.sp-word{font:700 44px/1 var(--f-logo);letter-spacing:-.5px;color:#18263A;opacity:0;animation:spUp .6s 1.05s ease-out forwards}
-.sp-tag{font-size:15px;font-weight:500;color:#33475C;opacity:0;animation:spUp .6s 1.3s ease-out forwards}
-.splash .sp-line{stroke-dasharray:141;stroke-dashoffset:141;animation:spLine .5s .05s ease-out forwards}
-.splash .sp-sun{transform:translateY(24px);animation:spSun .8s .3s cubic-bezier(.2,.8,.2,1) forwards}
+.sp-word{font:500 44px/1 var(--f-logo);letter-spacing:-.5px;color:#18263A;margin-top:-8px;opacity:0;animation:spUp .5s .7s ease-out forwards}
+.sp-tag{font-size:15px;font-weight:400;line-height:1.5;margin-top:24px;color:var(--ink-2);max-width:250px;text-align:center;text-wrap:balance;opacity:0;animation:spUp .5s .88s ease-out forwards}
+.splash .sp-line{stroke-dasharray:141;stroke-dashoffset:141;animation:spLine .3s 0s ease-out forwards}
+.splash .sp-sun{transform:translateY(24px);animation:spSun .5s .12s cubic-bezier(.34,1.7,.5,1) forwards}
 .splash .sp-r{opacity:0;transform-origin:100px 130px;transform:scale(.55)}
-.splash .sp-r1{animation:spRip .45s .7s ease-out forwards,spPulse 1.5s 1.8s ease-in-out infinite}
-.splash .sp-r2{animation:spRip .45s .84s ease-out forwards,spPulse 1.5s 1.95s ease-in-out infinite}
-.splash .sp-r3{animation:spRip .45s .98s ease-out forwards,spPulse 1.5s 2.1s ease-in-out infinite}
+.splash .sp-r1{animation:spRip .42s .3s cubic-bezier(.34,1.7,.5,1) forwards,spPulse 1.5s 1s ease-in-out infinite}
+.splash .sp-r2{animation:spRip .42s .38s cubic-bezier(.34,1.7,.5,1) forwards,spPulse 1.5s 1.08s ease-in-out infinite}
+.splash .sp-r3{animation:spRip .42s .46s cubic-bezier(.34,1.7,.5,1) forwards,spPulse 1.5s 1.16s ease-in-out infinite}
 @keyframes spLine{to{stroke-dashoffset:0}}
 @keyframes spSun{to{transform:none}}
 @keyframes spRip{to{opacity:1;transform:none}}
@@ -280,22 +327,10 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
     <span class="sb-ic"><svg width="19" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx="1"/><rect x="5" y="5" width="3.2" height="7" rx="1"/><rect x="10" y="2.5" width="3.2" height="9.5" rx="1"/><rect x="15" y="0" width="3.2" height="12" rx="1"/></svg><svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.6c2.3 0 4.4.9 6 2.4l1.2-1.2C13.8 1.9 11.3.8 8.5.8S3.2 1.9 1.3 3.8L2.5 5c1.6-1.5 3.7-2.4 6-2.4z"/><path d="M8.5 6.1c1.3 0 2.5.5 3.5 1.4l1.2-1.2c-1.2-1.2-2.9-1.9-4.7-1.9S5 5.1 3.8 6.3L5 7.5c1-.9 2.2-1.4 3.5-1.4z"/><path d="M8.5 9.4c.4 0 .8.2 1.1.4L8.5 11 7.4 9.8c.3-.2.7-.4 1.1-.4z"/></svg><svg width="28" height="13" viewBox="0 0 28 13"><rect x=".5" y=".5" width="24" height="12" rx="3.8" fill="none" stroke="#000" stroke-opacity=".35"/><rect x="2" y="2" width="21" height="9" rx="2.5"/><path d="M26 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill-opacity=".4"/></svg></span>
   </div>
 
-  <div class="splash" id="splash" aria-hidden="true"><div class="sp-in"><svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="spG" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient><clipPath id="spGc"><rect x="0" y="0" width="200" height="130"/></clipPath></defs><g clip-path="url(#spGc)"><path class="sp-sun" d="M78 130A22 22 0 0 1 122 130Z" fill="url(#spG)"/></g><g fill="none" stroke="url(#spG)" stroke-width="7" stroke-linecap="round"><path class="sp-r sp-r1" d="M64.29 117A38 38 0 0 1 135.71 117"/><path class="sp-r sp-r2" d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path class="sp-r sp-r3" d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path class="sp-line" d="M30 130H170"/></g></svg><div class="sp-word">soundbook</div><div class="sp-tag">Storybooks you read out loud</div></div></div>
-  <section class="screen" id="welcome" aria-label="Welcome">
-    <div class="w-top">
-      <div class="lbl">Storybooks you read out loud</div>
-      <h1 class="h1 wlogo" aria-label="SoundBook"><svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="wlG" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient><clipPath id="wlGc"><rect x="0" y="0" width="200" height="130"/></clipPath></defs><g clip-path="url(#wlGc)"><path class="sp-sun" d="M78 130A22 22 0 0 1 122 130Z" fill="url(#wlG)"/></g><g fill="none" stroke="url(#wlG)" stroke-width="7" stroke-linecap="round"><path class="sp-r sp-r1" d="M64.29 117A38 38 0 0 1 135.71 117"/><path class="sp-r sp-r2" d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path class="sp-r sp-r3" d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path class="sp-line" d="M30 130H170"/></g></svg><span>soundbook</span></h1>
-      <p class="muted">You read the story. Your child makes the sounds that move it forward.</p>
-    </div>
-    <div class="w-mid" aria-hidden="true" id="wChars"></div>
-    <div class="w-bot">
-      <button class="btn" id="start" type="button">Get started</button>
-      <p class="note">For families who have chosen spoken language as a goal. It works alongside sign, never instead of it.</p>
-    </div>
-  </section>
+  <div class="splash" id="splash" aria-hidden="true"><p class="note sp-note">For families who have chosen spoken language as a goal. It works alongside sign, never instead of it.</p><div class="sp-in"><svg viewBox="20 30 160 130" aria-hidden="true"><defs><linearGradient id="spG" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4E74E0"/><stop offset=".5" stop-color="#2FA7A0"/><stop offset="1" stop-color="#5FAE2E"/></linearGradient><clipPath id="spGc"><rect x="0" y="0" width="200" height="130"/></clipPath></defs><g clip-path="url(#spGc)"><path class="sp-sun" d="M78 130A22 22 0 0 1 122 130Z" fill="url(#spG)"/></g><g fill="none" stroke="url(#spG)" stroke-width="7" stroke-linecap="round"><path class="sp-r sp-r1" d="M64.29 117A38 38 0 0 1 135.71 117"/><path class="sp-r sp-r2" d="M48.09 115.12A54 54 0 0 1 151.91 115.12"/><path class="sp-r sp-r3" d="M31.53 115.45A70 70 0 0 1 168.47 115.45"/><path class="sp-line" d="M30 130H170"/></g></svg><div class="sp-word">SoundBook</div><div class="sp-tag">Voice visualiser for deaf and hard of hearing children</div></div></div>
 
 
-  <section class="screen" id="shelf" aria-label="Home" hidden>
+  <section class="screen" id="shelf" aria-label="Home">
     <div class="shelf-main">
       <div class="shelf-head">
         <p class="greet" id="hiName">Afternoon, Maria! ☀️</p>
@@ -385,6 +420,16 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
     </div>
   </section>
 
+  <section class="screen" id="progress" aria-label="Practice progress for grown-ups" hidden>
+    <div class="pg-main" id="pgMain"></div>
+    <nav class="tabbar" aria-label="Main">
+      <div class="tabs">
+        <button class="tab" data-tab="home" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg><span>Home</span></button>
+        <button class="tab" data-tab="badges" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="7"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg><span>My Badges</span></button>
+        <button class="tab" data-tab="account" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>My Account</span></button>
+      </div>
+    </nav>
+  </section>
   <section class="screen" id="stickers" aria-label="My badges" hidden>
     <h1 class="h1" id="stkH">Maria's badges</h1>
     <p class="muted" style="font-size:14.5px">Every sound you make in a story earns a badge.</p>
@@ -425,7 +470,7 @@ function sv(name){return ART[name].replace('<svg ','<svg aria-hidden="true" ');}
 function nest(name,x,y,w,h,vb){return '<svg x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" viewBox="'+vb+'">'+inner(name)+'</svg>';}
 function pal(i,name,x,y,w,h,vb){var s0=nest(name,x,y,w,h||w,vb||'0 0 100 100');return '<g class="gf gf-'+name+'" id="gfr'+i+'">'+s0+'</g><g class="friend" id="fr'+i+'">'+s0+'</g>';}
 function chip(s){return '<span class="k k-'+s+'">'+({s:'SSS',sh:'SHH',ch:'CH',f:'FFF',v:'VVV'})[s]+'</span>';}
-$('wChars').innerHTML='<div style="width:140px">'+ART.sid+'</div><div style="width:130px">'+ART.ship+'</div>';
+
 
 /* ---------- scenes (400x440, room left at the top for the page control) ---------- */
 var SKY='<defs><linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7F0DC"/><stop offset="1" stop-color="#F7F1E2"/></linearGradient>'+
@@ -718,14 +763,47 @@ function zerr(k,p){var t=tgt(k);return k==='s'?Math.min(0,p-t):Math.max(0,p-t);}
 function dz(k,p){return Math.abs(zerr(k,p));}
 
 /* ---------- navigation ---------- */
-var SCREENS=['welcome','shelf','page','reward','stickers'];
+var SCREENS=['shelf','page','reward','stickers','progress'];
 function show(id){SCREENS.forEach(function(s){var el=$(s);el.hidden=s!==id;if(s===id){el.classList.remove('enter');if(!st.noEnter){void el.offsetWidth;el.classList.add('enter');}}});}
-$('start').onclick=function(){tryMic();st.name=st.name||'Maria';buildShelf();show('shelf');};
-function setTabs(){document.querySelectorAll('.tabbar').forEach(function(nv){var cur=nv.closest('#stickers')?'badges':'home';nv.querySelectorAll('.tab').forEach(function(t){var on=t.dataset.tab===cur;t.classList.toggle('on',on);if(on)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});});}
+
+
+/* ---------- grown-up progress (sample week, plus anything practised in this session) ---------- */
+function buildProgress(){
+  var days=['S','M','T','W','T','F','S'],now=new Date(),wk=[],sample=[[4,3],[5,2],[0,0],[3,5],[6,4],[0,0],[2,3]];
+  for(var i=6;i>=0;i--){var d=new Date(now);d.setDate(now.getDate()-i);wk.push({lbl:days[d.getDay()],today:i===0,s:sample[6-i][0],sh:sample[6-i][1]});}
+  var f=function(d){return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});},d0=new Date(now);d0.setDate(now.getDate()-6);var rng=f(d0)+' – '+f(now);
+  var live=st.stats||{s:{tries:0,holds:0},sh:{tries:0,holds:0}},liveMin=Math.round(((live.s.tries+live.sh.tries)*.6)*10)/10;
+  wk[6].s+=Math.ceil(live.s.tries*.5);wk[6].sh+=Math.ceil(live.sh.tries*.5);
+  var mins=wk.reduce(function(a,d){return a+d.s+d.sh;},0),daysOn=wk.filter(function(d){return d.s+d.sh>0;}).length,max=Math.max.apply(null,wk.map(function(d){return d.s+d.sh;}))||1;
+  var S={s:{held:12+live.s.holds,tries:15+live.s.tries,last:64,lean:'a little soft',name:'snake sound'},sh:{held:9+live.sh.holds,tries:14+live.sh.tries,last:58,lean:'a little sharp',name:'wind sound'}};
+  var held=S.s.held+S.sh.held;
+  function pct(k){return Math.round(S[k].held/S[k].tries*100);}
+  var bars=wk.map(function(d){var t=d.s+d.sh;return '<div class="pg-col">'+(t?'<div class="pg-bar" style="height:'+Math.round(t/max*96)+'px"><i class="s" style="flex:'+d.s+'"></i><i class="sh" style="flex:'+d.sh+'"></i></div>':'<span class="pg-none"></span>')+'<span class="pg-day'+(d.today?' today':'')+'">'+d.lbl+'</span></div>';}).join('');
+  function snd(k,col){var p=pct(k),up=p-S[k].last;
+    return '<div class="pg-snd"><div class="pg-row"><span class="who">'+chip(k)+'<span>'+S[k].name+'</span></span><span class="pg-pct">'+p+'%</span></div>'+
+      '<div class="pg-track"><b style="width:'+p+'%;background:'+col+'"></b></div>'+
+      '<p class="pg-note">Held on target '+S[k].held+' of '+S[k].tries+' tries. Usually lands '+S[k].lean+'. '+(up>0?'<span class="up">Up '+up+'%</span> from last week.':'')+'</p></div>';}
+  // recent stories come from the same week data, so the list always matches the chart
+  var sess=[];for(var j=6;j>=0&&sess.length<3;j--){var dd=wk[j];if(dd.s+dd.sh){var dt=new Date(now);dt.setDate(now.getDate()-(6-j));
+    sess.push({t:'Sid’s Adventure',w:j===6?'Today':j===5?'Yesterday':dt.toLocaleDateString(undefined,{weekday:'long'}),m:dd.s+dd.sh,k:dd.s>=dd.sh?['s','sh']:['sh','s']});}}
+  $('pgMain').innerHTML=
+    '<div class="pg-head"><h1 class="pg-h">'+st.name+'’s practice</h1><p class="pg-sub">This week · '+rng+'</p></div>'+
+    '<div class="pg-tiles"><div class="pg-tile"><div class="pg-num">'+daysOn+'<small>/7</small></div><div class="pg-cap">days practised</div></div>'+
+      '<div class="pg-tile"><div class="pg-num">'+mins+'</div><div class="pg-cap">minutes reading</div></div>'+
+      '<div class="pg-tile"><div class="pg-num">'+held+'</div><div class="pg-cap">sounds held</div></div></div>'+
+    '<div><h2 class="pg-sec">Minutes this week</h2><div class="pg-card"><div class="pg-week">'+bars+'</div>'+
+      '<div class="pg-legend"><span><i style="background:#A9DA82"></i>SSS</span><span><i style="background:#9DB7F5"></i>SHH</span></div></div></div>'+
+    '<div><h2 class="pg-sec">Sounds</h2><div class="pg-card">'+snd('s','#7DBE4F')+snd('sh','#6F8FE8')+
+      '<div class="pg-snd"><div class="pg-soon">'+chip('ch')+chip('f')+chip('v')+'<span>Not started yet</span></div></div></div></div>'+
+    '<div><h2 class="pg-sec">Recent stories</h2><div class="pg-card" style="padding:4px 16px">'+sess.map(function(x){return '<div class="pg-sess"><div><b>'+x.t+'</b><small>'+x.w+' · '+x.m+' min</small></div><div class="r">'+x.k.map(chip).join('')+'</div></div>';}).join('')+'</div></div>'+
+    '<button class="btn soft pg-share" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Share with speech therapist</button>';
+}
+function setTabs(){document.querySelectorAll('.tabbar').forEach(function(nv){var cur=nv.closest('#stickers')?'badges':nv.closest('#progress')?'account':'home';nv.querySelectorAll('.tab').forEach(function(t){var on=t.dataset.tab===cur;t.classList.toggle('on',on);if(on)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});});}
 setTabs();
 document.addEventListener('click',function(e){var t=e.target.closest('.tab[data-tab]');if(!t)return;
   if(t.dataset.tab==='home'&&$('shelf').hidden){buildShelf();show('shelf');}
-  else if(t.dataset.tab==='badges'&&$('stickers').hidden){buildStickers();show('stickers');}});
+  else if(t.dataset.tab==='badges'&&$('stickers').hidden){buildStickers();show('stickers');}
+  else if(t.dataset.tab==='account'&&$('progress').hidden){buildProgress();show('progress');}});
 
 function greeting(){var h=new Date().getHours();return (h<12?'Morning':h<17?'Afternoon':'Evening')+', '+st.name+'! '+(h<17?'☀️':'🌙');}
 function bookAvatar(id){
@@ -863,6 +941,11 @@ function pageFlip(go){
   var dev=$('device'),W=dev.offsetWidth,H=dev.offsetHeight,NS='http://www.w3.org/2000/svg';
   var wrap=document.createElement('div');wrap.className='flipwrap';wrap.setAttribute('aria-hidden','true');wrap.inert=true;
   var leaf=src.cloneNode(true);leaf.classList.remove('enter');leaf.classList.add('flipleaf');wrap.appendChild(leaf);
+  // give the copy its own gradients/filters: once the real page is hidden, its definitions stop rendering and the copy would turn grey
+  var ren={};leaf.querySelectorAll('linearGradient[id],radialGradient[id],filter[id],clipPath[id],mask[id],pattern[id]').forEach(function(d){ren[d.id]='fl-'+d.id;d.id='fl-'+d.id;});
+  if(Object.keys(ren).length)leaf.querySelectorAll('*').forEach(function(el){for(var i=0;i<el.attributes.length;i++){var a=el.attributes[i];
+    if(a.value.indexOf('url(#')>=0)a.value=a.value.replace(/url\(#([^)]+)\)/g,function(m,id){return ren[id]?'url(#'+ren[id]+')':m;});
+    else if((a.name==='href'||a.name==='xlink:href')&&a.value[0]==='#'&&ren[a.value.slice(1)])a.value='#'+ren[a.value.slice(1)];}});
   var sv=document.createElementNS(NS,'svg');sv.setAttribute('class','flipsvg');sv.setAttribute('viewBox','0 0 '+W+' '+H);
   sv.innerHTML='<defs><linearGradient id="flUnder" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#000" stop-opacity=".32"/><stop offset=".35" stop-color="#000" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>'+
     '<linearGradient id="flBack" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#CFCBC5"/><stop offset=".08" stop-color="#ECE9E4"/><stop offset=".3" stop-color="#FBFAF8"/><stop offset="1" stop-color="#E4E0DA"/></linearGradient>'+
@@ -1049,7 +1132,7 @@ function choose(snd){
   $(snd==='s'?'haloS':'haloSh').style.opacity=1;$(snd==='s'?'haloSh':'haloS').style.opacity=0;
   var item=snd==='s'?'sunflower':'shell';st.stickers[item]={img:voiceShape(st.disp.p,.8),when:new Date()};if(st.found.indexOf(item)<0)st.found.push(item);
   var boat=$('boat');boat.classList.add('go');boat.style.transform=snd==='s'?'translate(-222px,9px) scale(1.5)':'translate(219px,-32px) scale(1.5)';
-  setTimeout(function(){var d=$(snd==='s'?'dS':'dSh');if(d){d.classList.add('won');sparkleBurst(d,snd==='s'?330:84,snd==='s'?200:232,1.1);}},1300);
+  setTimeout(function(){var d=$(snd==='s'?'dS':'dSh');if(d){sparkleBurst(d,snd==='s'?330:84,snd==='s'?200:232,1.1);}},1300);
   setStatus(snd==='s'?'Off to Sunflower Hill!':'Off to Shell Beach!');
   $('mic').hidden=true;$('turn').hidden=false;$('turn').textContent='Tap to finish';
 }
@@ -1147,8 +1230,11 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 updateMic();requestAnimationFrame(frame);
-(function(){var sp=$('splash');if(!sp)return;var done=false;
-  function go(){if(done)return;done=true;sp.classList.add('out');setTimeout(function(){sp.remove();},500);}
-  setTimeout(go,reduce?900:2800);document.addEventListener('pointerdown',go,{once:true});})();
+buildShelf();
+// the logo screen opens the app: tapping it dismisses it straight onto Home and asks for the microphone (needs a tap to be allowed)
+(function(){var sp=$('splash');if(!sp){tryMic();return;}var done=false;
+  function go(){if(done)return;done=true;tryMic();sp.classList.add('out');setTimeout(function(){sp.remove();},500);}
+  /* auto-dismiss timer removed while the logo animation is being worked on: the splash now stays until you tap */
+  document.addEventListener('pointerdown',go,{once:true});})();
 })();
 </script>
