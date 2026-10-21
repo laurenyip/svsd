@@ -71,6 +71,32 @@ html,body{margin:0;height:100%;background:#0d0f12}
 .end svg{width:300px}
 .end b{font:700 96px/1 Solway;letter-spacing:-1px}
 .end i{font:500 36px/1.4 Inter;font-style:normal;color:var(--ink2)}
+/* a stat beside a filmed shot */
+.stat{background:#fff;border-radius:32px;padding:48px 52px;box-shadow:0 24px 50px rgba(24,38,58,.12);max-width:560px;display:grid;gap:14px;opacity:0}
+.on .stat{animation:pop .6s 1.2s forwards}
+.stat b{font:700 72px/1 Solway;color:#2F5BB7}
+.stat p{margin:0;font:600 34px/1.3 Inter}
+.stat small{font:500 22px Inter;color:#6a7a8c}
+/* three users */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;max-width:1600px}
+.trio div{background:#fff;border-radius:32px;padding:46px 40px;box-shadow:0 20px 44px rgba(24,38,58,.12);display:grid;gap:14px;opacity:0;transform:translateY(20px)}
+.on .trio div{animation:pop .5s forwards}
+.trio b{font:700 46px/1.1 Solway}.trio p{margin:0;font:500 30px/1.35 Inter;color:var(--ink2)}
+/* frequency scale */
+.scale{width:1500px;display:grid;gap:26px}
+.scale .axis{position:relative;height:150px;border-radius:24px;background:linear-gradient(90deg,#CCDAFB,#D5EFE2 55%,#DBF1C2)}
+.scale .band{position:absolute;top:24px;bottom:24px;border-radius:999px;display:grid;place-items:center;font:700 40px/1 Solway;border:4px solid}
+.scale .sh{left:8%;width:24%;color:var(--sh);border-color:var(--sh);background:var(--sh-bg)}
+.scale .s{left:66%;width:24%;color:var(--s);border-color:var(--s);background:var(--s-bg)}
+.scale .ft{left:40%;width:20%;color:var(--f);border-color:var(--f);background:var(--f-bg);border-style:dashed;opacity:0}
+.on .scale .ft{animation:pop .6s 5s forwards}
+.scale .ends{display:flex;justify-content:space-between;font:600 28px Inter;color:var(--ink2)}
+.scale p{margin:0;font:600 32px/1.3 Inter;text-align:center}
+/* next steps */
+.steps{display:grid;gap:22px;width:1300px;counter-reset:n}
+.steps div{background:#fff;border-radius:26px;padding:30px 40px;font:600 38px/1.25 Inter;display:flex;gap:28px;align-items:center;box-shadow:0 16px 36px rgba(24,38,58,.1);opacity:0;transform:translateY(20px)}
+.steps div::before{counter-increment:n;content:counter(n);font:700 40px/1 Solway;color:#fff;background:#18263A;border-radius:50%;width:66px;height:66px;display:grid;place-items:center;flex:none}
+.on .steps div{animation:pop .5s forwards}
 .start{position:fixed;inset:0;display:grid;place-items:center;z-index:20;background:rgba(13,15,18,.55);color:#fff;font:600 28px Inter;cursor:pointer}
 </style>
 </head>
@@ -99,6 +125,10 @@ function render(s, i) {
     case 'grid': return `<div class="grid n${v.srcs.length === 4 ? 4 : v.srcs.length === 3 ? 3 : 6}">${v.srcs.map((src, j) => `<figure style="animation-delay:${(j * .3).toFixed(1)}s"><img src="${src}">${v.labels ? `<figcaption>${v.labels[j]}</figcaption>` : ''}</figure>`).join('')}</div>`;
     case 'compare': return `<div class="cmp"><figure><img src="${v.a}"><figcaption>${v.la}</figcaption></figure><div class="arrow">→</div><figure class="after"><img src="${v.b}"><figcaption>${v.lb}</figcaption></figure></div>`;
     case 'end': return `<div class="end">${MARK('endG')}<b>soundbook</b><i>See what your voice looks like</i></div>`;
+    case 'camstat': return `${cam(v.note, true)}<div class="stat"><b>${v.stat}</b><p>${v.statSub}</p><small>${v.source}</small></div>`;
+    case 'trio': return `<div class="trio">${v.items.map(([h, p], j) => `<div style="animation-delay:${(1.5 + j * 2.6).toFixed(1)}s"><b>${h}</b><p>${p}</p></div>`).join('')}</div>`;
+    case 'scale': return `<div class="scale"><div class="axis"><span class="band sh">SHH</span><span class="band ft">F · TH</span><span class="band s">SSS</span></div><div class="ends"><span>Soft, lower pitch</span><span>Sharp, higher pitch</span></div><p>SSS and SHH sit far apart, so the app can tell them apart reliably.</p></div>`;
+    case 'steps': return `<div class="steps">${v.items.map((x, j) => `<div style="animation-delay:${(1 + j * 2.4).toFixed(1)}s">${x}</div>`).join('')}</div>`;
   }
 }
 const $ = (id) => document.getElementById(id);
@@ -122,6 +152,8 @@ function tick() {
   }
   const cue = i >= 0 ? TL.scenes[i].sub.find((c) => t >= c.start && t < c.end) : null;
   if (cue !== curCue) { curCue = cue; const cp = $('cap'); if (cue) { cp.innerHTML = cue.lines.join('<br>'); cp.classList.add('on'); } else cp.classList.remove('on'); }
+  // in a normal browser, play the recorded voiceover from its scene (the recorder adds it afterwards instead)
+  if (window.__vo && TL.audio && t >= TL.audio.at && window.__vo.paused && !window.__voStarted) { window.__voStarted = true; window.__vo.currentTime = Math.max(0, t - TL.audio.at); window.__vo.play(); }
   window.__done = t >= TL.end;
 }
 let gen = 0;
@@ -131,7 +163,7 @@ window.__ready = load();
 if (!location.search.includes('rec')) {
   const fit = () => { const k = Math.min(innerWidth / 1920, innerHeight / 1080); $('stage').style.transform = `scale(${k})`; };
   addEventListener('resize', fit); fit();
-  window.__ready.then(() => { const b = document.createElement('div'); b.className = 'start'; b.textContent = 'Click to play the draft'; b.onclick = () => { b.remove(); window.__go(); }; document.body.appendChild(b); });
+  window.__ready.then(() => { const b = document.createElement('div'); b.className = 'start'; b.textContent = 'Click to play the draft'; b.onclick = () => { b.remove(); if (TL.audio) { window.__vo = new Audio(TL.audio.src); window.__voStarted = false; } window.__go(); }; document.body.appendChild(b); });
 }
 </script>
 </body>
