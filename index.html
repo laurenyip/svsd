@@ -45,7 +45,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 .btn{border:0;border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:17px;padding:15px 24px;width:100%}
 .btn.soft{background:var(--surface);color:var(--ink)}
-.h1{font:400 32px/1.25 var(--f-display);margin:0;text-wrap:balance}
+.h1{font:500 32px/1.3 var(--f-display);letter-spacing:-.32px;margin:0;text-wrap:balance}
 .h2{font:500 24px/1.5 var(--f-display);letter-spacing:-.01em;margin:0;text-wrap:pretty;white-space:pre-line}
 .lbl{font-size:13px;font-weight:500;color:var(--ink-2)}
 .muted{color:var(--ink-2);margin:0}
@@ -195,7 +195,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 /* ---------- grown-up progress ---------- */
 #progress{background:var(--paper)}
 #progress::before{content:"";position:absolute;left:0;right:0;top:0;height:64px;background:linear-gradient(var(--paper) 70%,rgba(243,242,241,0));z-index:4;pointer-events:none}
-.pg-main{flex:1;overflow:auto;padding:68px 17px 124px;display:flex;flex-direction:column;gap:24px;scrollbar-width:none}
+.pg-main{flex:1;overflow:auto;padding:96px 17px 124px;display:flex;flex-direction:column;gap:24px;scrollbar-width:none}
 .pg-main::-webkit-scrollbar{display:none}
 .pg-head{display:flex;flex-direction:column;gap:8px}
 .pg-h{font:500 32px/1.3 var(--f-display);letter-spacing:-.32px;margin:0}
@@ -255,7 +255,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 /* grown-up sheet */
 .scrim{position:absolute;inset:0;background:rgba(0,0,0,.3);z-index:8}
 .sheet{position:absolute;left:10px;right:10px;bottom:10px;background:#fff;border-radius:30px;padding:20px;display:grid;gap:12px;z-index:9;box-shadow:0 -10px 40px rgba(0,0,0,.18)}
-.sheet h3{font:400 24px/1.3 var(--f-display);margin:0}
+.sheet h3{font:500 24px/1.3 var(--f-display);margin:0}
 .sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .sheet .opt{display:grid;gap:2px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:12px}
 .sheet .opt b{font-size:15px;font-weight:600}
@@ -292,7 +292,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .confetti{position:absolute;inset:0;pointer-events:none;z-index:-1}
 
 /* ---------- stickers ---------- */
-#stickers{padding:64px 20px 124px;gap:14px;background:var(--paper)}
+#stickers{padding:96px 17px 124px;gap:14px;background:var(--paper)}
 .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 12px;align-content:start;flex:1;overflow:auto}
 .stk{display:grid;gap:6px;justify-items:center;text-align:center}
 .stk .disc{position:relative;width:100%;aspect-ratio:1;border-radius:50%;background:var(--surface);display:grid;place-items:center;overflow:hidden;border:4px solid #fff;box-shadow:0 6px 16px -10px rgba(0,0,0,.45)}
@@ -302,7 +302,7 @@ button:focus-visible,input:focus-visible,.bar:focus-visible{outline:3px solid va
 .stk .disc svg{position:relative;width:60%;height:60%;filter:drop-shadow(0 3px 4px rgba(0,0,0,.18))}
 .stk.empty .disc{background:transparent;border:2px dashed var(--line);box-shadow:none}
 .stk.empty .disc svg{opacity:.2;filter:grayscale(1)}
-.stk b{font-size:15px;font-weight:600}
+.stk b{font:500 15px/1.3 var(--f-display)}
 .stk b mark{background:none;font-weight:700;border-radius:3px;padding:0 1px}
 .stk b mark.s{color:var(--s-ink);background:var(--s-bg)} .stk b mark.sh{color:var(--sh-ink);background:var(--sh-bg)}
 .stk b mark.ch{color:var(--ch-ink);background:var(--ch-bg)} .stk b mark.f{color:var(--f-ink);background:var(--f-bg)}
@@ -809,7 +809,7 @@ function buildProgress(){
   var sess=[];for(var j=6;j>=0&&sess.length<3;j--){var dd=wk[j];if(dd.s+dd.sh){var dt=new Date(now);dt.setDate(now.getDate()-(6-j));
     sess.push({t:'Sid’s Adventure',w:j===6?'Today':j===5?'Yesterday':dt.toLocaleDateString(undefined,{weekday:'long'}),m:dd.s+dd.sh,k:dd.s>=dd.sh?['s','sh']:['sh','s']});}}
   $('pgMain').innerHTML=
-    '<div class="pg-head"><h1 class="pg-h">'+st.name+'’s practice</h1><p class="pg-sub">This week · '+rng+'</p></div>'+
+    '<div class="pg-head"><h1 class="pg-h">'+st.name+'’s progress</h1><p class="pg-sub">This week · '+rng+'</p></div>'+
     '<div class="pg-tiles"><div class="pg-tile"><div class="pg-num">'+daysOn+'<small>/7</small></div><div class="pg-cap">days practised</div></div>'+
       '<div class="pg-tile"><div class="pg-num">'+mins+'</div><div class="pg-cap">minutes reading</div></div>'+
       '<div class="pg-tile"><div class="pg-num">'+held+'</div><div class="pg-cap">sounds held</div></div></div>'+
